@@ -2,6 +2,29 @@ require "rake/testtask"
 
 task default: %w[basic:pass]
 
+namespace :cleanup do
+    task :basic do
+        puts "running basic cleanup"
+        Dir.glob("test/basic/*").select{ |file| /.backup$/.match file }.each do
+            |file| File.delete(file)
+        end
+    end
+
+    task :banana do
+        puts "running banana cleanup"
+        Dir.glob("test/banana/*").select{ |file| /.backup$/.match file }.each do 
+            |file| File.delete(file)
+        end
+    end
+
+    task :potato do
+        puts "running potato cleanup"
+        Dir.glob("test/potato/*").select{ |file| /.backup$/.match file }.each do 
+            |file| File.delete(file)
+        end
+    end
+end
+
 namespace :basic do
     Rake::TestTask.new :pass do |task|
         desc "PASS tests for type BASIC"
@@ -37,7 +60,7 @@ namespace :basic do
         desc "Isolate VBAN tests for type BASIC"
         task.pattern = "test/basic/pass/setvban*.rb"
         task.warning = false 
-    end 
+    end
 end
 
 namespace :banana do
@@ -101,5 +124,5 @@ namespace :potato do
         desc "Isolate VBAN tests for type POTATO"
         task.pattern = "test/potato/pass/setvban*.rb"
         task.warning = false 
-    end 
+    end
 end
