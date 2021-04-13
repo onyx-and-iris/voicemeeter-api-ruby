@@ -19,34 +19,16 @@ class SetAndGetParamsFloat < Minitest::Test
         assert_equal(ON, @@vmr.get_parameter("Strip[2].mono"))
     end
 
-    def test_it_sets_and_gets_strip3_mono_on
-        @@vmr.set_parameter("Strip[3].mono", ON)
+    def test_it_sets_and_gets_strip3_mc_on
+        @@vmr.set_parameter("Strip[3].mc", ON)
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[3].mono"))
+        assert_equal(ON, @@vmr.get_parameter("Strip[3].mc"))
     end
 
-    def test_it_sets_and_gets_strip4_mono_on
-        @@vmr.set_parameter("Strip[4].mono", ON)
+    def test_it_sets_and_gets_strip4_k_on
+        @@vmr.set_parameter("Strip[4].k", ON)
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[4].mono"))
-    end
-
-    def test_it_sets_and_gets_strip5_mc_on
-        @@vmr.set_parameter("Strip[5].mc", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[5].mc"))
-    end
-
-    def test_it_sets_and_gets_strip6_k_on
-        @@vmr.set_parameter("Strip[6].k", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[6].k"))
-    end
-
-    def test_it_sets_and_gets_strip7_mc_on
-        @@vmr.set_parameter("Strip[7].mc", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[7].mc"))
+        assert_equal(ON, @@vmr.get_parameter("Strip[4].k"))
     end
 
     def test_it_sets_and_gets_strip0_mono_off
@@ -67,35 +49,17 @@ class SetAndGetParamsFloat < Minitest::Test
         assert_equal(OFF, @@vmr.get_parameter("Strip[2].mono"))
     end
 
-    def test_it_sets_and_gets_strip3_mono_off
-        @@vmr.set_parameter("Strip[3].mono", OFF)
+    def test_it_sets_and_gets_strip3_mc_off
+        @@vmr.set_parameter("Strip[3].mc", OFF)
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[3].mono"))
+        assert_equal(OFF, @@vmr.get_parameter("Strip[3].mc"))
     end
 
-    def test_it_sets_and_gets_strip4_mono_off
-        @@vmr.set_parameter("Strip[4].mono", OFF)
+    def test_it_sets_and_gets_strip4_k_off
+        @@vmr.set_parameter("Strip[4].k", OFF)
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[4].mono"))
+        assert_equal(OFF, @@vmr.get_parameter("Strip[4].k"))
     end
-
-    def test_it_sets_and_gets_strip5_mc_off
-        @@vmr.set_parameter("Strip[5].mc", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[5].mc"))
-    end
-
-    def test_it_sets_and_gets_strip6_k_off
-        @@vmr.set_parameter("Strip[6].k", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[6].k"))
-    end
-
-    def test_it_sets_and_gets_strip7_mc_off
-        @@vmr.set_parameter("Strip[7].mc", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[7].mc"))
-    end    
 
     def test_it_sets_and_gets_strip0_solo_on
         @@vmr.set_parameter("Strip[0].solo", ON)
@@ -125,24 +89,6 @@ class SetAndGetParamsFloat < Minitest::Test
         @@vmr.set_parameter("Strip[4].solo", ON)
         assert_equal(SUCCESS, @@vmr.ret)
         assert_equal(ON, @@vmr.get_parameter("Strip[4].solo"))
-    end
-
-    def test_it_sets_and_gets_strip5_solo_on
-        @@vmr.set_parameter("Strip[5].solo", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[5].solo"))
-    end
-
-    def test_it_sets_and_gets_strip6_solo_on
-        @@vmr.set_parameter("Strip[6].solo", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[6].solo"))
-    end
-
-    def test_it_sets_and_gets_strip7_solo_on
-        @@vmr.set_parameter("Strip[7].solo", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[7].solo"))
     end
 
     def test_it_sets_and_gets_strip0_solo_off
@@ -175,24 +121,6 @@ class SetAndGetParamsFloat < Minitest::Test
         assert_equal(OFF, @@vmr.get_parameter("Strip[4].solo"))
     end
 
-    def test_it_sets_and_gets_strip5_solo_off
-        @@vmr.set_parameter("Strip[5].solo", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[5].solo"))
-    end
-
-    def test_it_sets_and_gets_strip6_solo_off
-        @@vmr.set_parameter("Strip[6].solo", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[6].solo"))
-    end
-
-    def test_it_sets_and_gets_strip7_solo_off
-        @@vmr.set_parameter("Strip[7].solo", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[7].solo"))
-    end
-
     def test_it_sets_and_gets_strip0_mute_on
         @@vmr.set_parameter("Strip[0].mute", ON)
         assert_equal(SUCCESS, @@vmr.ret)
@@ -221,24 +149,6 @@ class SetAndGetParamsFloat < Minitest::Test
         @@vmr.set_parameter("Strip[4].mute", ON)
         assert_equal(SUCCESS, @@vmr.ret)
         assert_equal(ON, @@vmr.get_parameter("Strip[4].mute"))
-    end
-
-    def test_it_sets_and_gets_strip5_mute_on
-        @@vmr.set_parameter("Strip[5].mute", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[5].mute"))
-    end
-
-    def test_it_sets_and_gets_strip6_mute_on
-        @@vmr.set_parameter("Strip[6].mute", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[6].mute"))
-    end
-
-    def test_it_sets_and_gets_strip7_mute_on
-        @@vmr.set_parameter("Strip[7].mute", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Strip[7].mute"))
     end
 
     def test_it_sets_and_gets_strip0_mute_off
@@ -271,24 +181,6 @@ class SetAndGetParamsFloat < Minitest::Test
         assert_equal(OFF, @@vmr.get_parameter("Strip[4].mute"))
     end
 
-    def test_it_sets_and_gets_strip5_mute_off
-        @@vmr.set_parameter("Strip[5].mute", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[5].mute"))
-    end
-
-    def test_it_sets_and_gets_strip6_mute_off
-        @@vmr.set_parameter("Strip[6].mute", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[6].mute"))
-    end
-
-    def test_it_sets_and_gets_strip7_mute_off
-        @@vmr.set_parameter("Strip[7].mute", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Strip[7].mute"))
-    end
-
     def test_it_gets_bus0_mute_value_on
         @@vmr.set_parameter("Bus[0].mute", ON)
         assert_equal(SUCCESS, @@vmr.ret)
@@ -317,24 +209,6 @@ class SetAndGetParamsFloat < Minitest::Test
         @@vmr.set_parameter("Bus[4].mute", ON)
         assert_equal(SUCCESS, @@vmr.ret)
         assert_equal(ON, @@vmr.get_parameter("Bus[4].mute"))
-    end
-
-    def test_it_gets_bus5_mute_value_on
-        @@vmr.set_parameter("Bus[5].mute", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Bus[5].mute"))
-    end
-
-    def test_it_gets_bus6_mute_value_on
-        @@vmr.set_parameter("Bus[6].mute", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Bus[6].mute"))
-    end
-
-    def test_it_gets_bus7_mute_value_on
-        @@vmr.set_parameter("Bus[7].mute", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Bus[7].mute"))
     end
 
     def test_it_gets_bus0_mute_value_off
@@ -367,24 +241,6 @@ class SetAndGetParamsFloat < Minitest::Test
         assert_equal(OFF, @@vmr.get_parameter("Bus[4].mute"))
     end
 
-    def test_it_gets_bus5_mute_value_off
-        @@vmr.set_parameter("Bus[5].mute", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Bus[5].mute"))
-    end
-
-    def test_it_gets_bus6_mute_value_off
-        @@vmr.set_parameter("Bus[6].mute", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Bus[6].mute"))
-    end
-
-    def test_it_gets_bus7_mute_value_off
-        @@vmr.set_parameter("Bus[7].mute", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Bus[7].mute"))
-    end
-
     def test_it_gets_bus0_mono_value_on
         @@vmr.set_parameter("Bus[0].mono", ON)
         assert_equal(SUCCESS, @@vmr.ret)
@@ -415,24 +271,6 @@ class SetAndGetParamsFloat < Minitest::Test
         assert_equal(ON, @@vmr.get_parameter("Bus[4].mono"))
     end
 
-    def test_it_gets_bus5_mono_value_on
-        @@vmr.set_parameter("Bus[5].mono", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Bus[5].mono"))
-    end
-
-    def test_it_gets_bus6_mono_value_on
-        @@vmr.set_parameter("Bus[6].mono", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Bus[6].mono"))
-    end
-
-    def test_it_gets_bus7_mono_value_on
-        @@vmr.set_parameter("Bus[7].mono", ON)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.get_parameter("Bus[7].mono"))
-    end
-
     def test_it_gets_bus0_mono_value_off
         @@vmr.set_parameter("Bus[0].mono", OFF)
         assert_equal(SUCCESS, @@vmr.ret)
@@ -461,23 +299,5 @@ class SetAndGetParamsFloat < Minitest::Test
         @@vmr.set_parameter("Bus[4].mono", OFF)
         assert_equal(SUCCESS, @@vmr.ret)
         assert_equal(OFF, @@vmr.get_parameter("Bus[4].mono"))
-    end
-
-    def test_it_gets_bus5_mono_value_off
-        @@vmr.set_parameter("Bus[5].mono", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Bus[5].mono"))
-    end
-
-    def test_it_gets_bus6_mono_value_off
-        @@vmr.set_parameter("Bus[6].mono", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Bus[6].mono"))
-    end
-
-    def test_it_gets_bus7_mono_value_off
-        @@vmr.set_parameter("Bus[7].mono", OFF)
-        assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.get_parameter("Bus[7].mono"))
     end
 end

@@ -108,7 +108,9 @@ class MacroButtonStatus < Minitest::Test
         assert_equal(SUCCESS, @@vmr.ret)
         assert_equal(OFF, @@vmr.macro_getstatus(2, 3))
     end
+end
 
+class MacroButtonStatusWithAlias < Minitest::Test
     def test_it_sets_macrobutton0_state_on_with_alias
         @@vmr.button_state(id: 0, set: ON)
         assert_equal(SUCCESS, @@vmr.ret)
