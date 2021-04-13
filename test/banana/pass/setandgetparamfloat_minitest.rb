@@ -1,6 +1,6 @@
 require_relative '../minitest_helper'
 
-class SetAndGetParamsFloat < Minitest::Test
+class SetAndGetParamsFloatStrip < Minitest::Test
     def test_it_sets_and_gets_strip0_mono_on
         @@vmr.set_parameter("Strip[0].mono", ON)
         assert_equal(SUCCESS, @@vmr.ret)
@@ -181,6 +181,116 @@ class SetAndGetParamsFloat < Minitest::Test
         assert_equal(OFF, @@vmr.get_parameter("Strip[4].mute"))
     end
 
+    def test_it_sets_and_gets_strip0_comp_on
+        @@vmr.set_parameter("Strip[0].comp", ON)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(ON, @@vmr.get_parameter("Strip[0].comp"))
+    end
+
+    def test_it_sets_and_gets_strip1_comp_on
+        @@vmr.set_parameter("Strip[1].comp", ON)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(ON, @@vmr.get_parameter("Strip[1].comp"))
+    end
+
+    def test_it_sets_and_gets_strip2_comp_on
+        @@vmr.set_parameter("Strip[2].comp", ON)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(ON, @@vmr.get_parameter("Strip[2].comp"))
+    end
+
+    def test_it_sets_and_gets_strip0_comp_off
+        @@vmr.set_parameter("Strip[0].comp", OFF)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(OFF, @@vmr.get_parameter("Strip[0].comp"))
+    end
+
+    def test_it_sets_and_gets_strip1_comp_off
+        @@vmr.set_parameter("Strip[1].comp", OFF)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(OFF, @@vmr.get_parameter("Strip[1].comp"))
+    end
+
+    def test_it_sets_and_gets_strip2_comp_off
+        @@vmr.set_parameter("Strip[2].comp", OFF)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(OFF, @@vmr.get_parameter("Strip[2].comp"))
+    end
+
+    def test_it_sets_and_gets_strip0_gain_on
+        @@vmr.set_parameter("Strip[0].gain", 1.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(1.0, @@vmr.get_parameter("Strip[0].gain"))
+    end
+
+    def test_it_sets_and_gets_strip1_gain_on
+        @@vmr.set_parameter("Strip[1].gain", 1.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(1.0, @@vmr.get_parameter("Strip[1].gain"))
+    end
+
+    def test_it_sets_and_gets_strip2_gain_on
+        @@vmr.set_parameter("Strip[2].gain", 1.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(1.0, @@vmr.get_parameter("Strip[2].gain"))
+    end
+
+    def test_it_sets_and_gets_strip0_gain_off
+        @@vmr.set_parameter("Strip[0].gain", 0.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(0.0, @@vmr.get_parameter("Strip[0].gain"))
+    end
+
+    def test_it_sets_and_gets_strip1_gain_off
+        @@vmr.set_parameter("Strip[1].gain", 0.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(0.0, @@vmr.get_parameter("Strip[1].gain"))
+    end
+
+    def test_it_sets_and_gets_strip2_gain_off
+        @@vmr.set_parameter("Strip[2].gain", 0.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(0.0, @@vmr.get_parameter("Strip[2].gain"))
+    end
+
+    def test_it_sets_and_gets_strip0_gate_on
+        @@vmr.set_parameter("Strip[0].gate", 1.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(1.0, @@vmr.get_parameter("Strip[0].gate"))
+    end
+
+    def test_it_sets_and_gets_strip1_gate_on
+        @@vmr.set_parameter("Strip[1].gate", 1.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(1.0, @@vmr.get_parameter("Strip[1].gate"))
+    end
+
+    def test_it_sets_and_gets_strip2_gate_on
+        @@vmr.set_parameter("Strip[2].gate", 1.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(1.0, @@vmr.get_parameter("Strip[2].gate"))
+    end
+
+    def test_it_sets_and_gets_strip0_gate_off
+        @@vmr.set_parameter("Strip[0].gate", 0.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(0.0, @@vmr.get_parameter("Strip[0].gate"))
+    end
+
+    def test_it_sets_and_gets_strip1_gate_off
+        @@vmr.set_parameter("Strip[1].gate", 0.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(0.0, @@vmr.get_parameter("Strip[1].gate"))
+    end
+
+    def test_it_sets_and_gets_strip2_gate_off
+        @@vmr.set_parameter("Strip[2].gate", 0.0)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(0.0, @@vmr.get_parameter("Strip[2].gate"))
+    end
+end
+
+class SetAndGetParamsFloatBus < Minitest::Test
     def test_it_gets_bus0_mute_value_on
         @@vmr.set_parameter("Bus[0].mute", ON)
         assert_equal(SUCCESS, @@vmr.ret)

@@ -15,4 +15,18 @@ class SetAndGetParamsString < Minitest::Test
             end
         end
     end
+
+    def test_it_gets_strips_0to2_label_values_with_alias
+        (1..3).each do |num|
+            [
+                "testing[0]",
+                "testing[1]",
+                "testing[2]",
+                "reset"
+            ].each do |label|
+                @@vmr.strip[num].label = label
+                assert_equal(label, @@vmr.strip[num].label)
+            end
+        end
+    end
 end

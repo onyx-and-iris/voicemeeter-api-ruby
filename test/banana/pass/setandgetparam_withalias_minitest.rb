@@ -400,6 +400,36 @@ class SetAndGetParamsFloatWithAliasTrueFalse < Minitest::Test
         @@vmr.strip[5].B2 = false
         assert_equal(false, @@vmr.strip[5].B2)
     end
+
+    def test_it_sets_and_gets_strip0_gain_on_with_alias
+        @@vmr.strip[1].gain = 1.0
+        assert_equal(1.0, @@vmr.strip[1].gain)
+    end
+
+    def test_it_sets_and_gets_strip0_gain_off_with_alias
+        @@vmr.strip[1].gain = 0.0
+        assert_equal(0.0, @@vmr.strip[1].gain)
+    end
+
+    def test_it_sets_and_gets_strip0_limit_on_with_alias
+        @@vmr.strip[1].limit = 1.0
+        assert_equal(1.0, @@vmr.strip[1].limit)
+    end
+
+    def test_it_sets_and_gets_strip0_limit_off_with_alias
+        @@vmr.strip[1].limit = 0.0
+        assert_equal(0.0, @@vmr.strip[1].limit)
+    end
+
+    def test_it_sets_and_gets_strip0_limit_on_with_alias
+        @@vmr.strip[1].limit = 1.0
+        assert_equal(1.0, @@vmr.strip[1].limit)
+    end
+
+    def test_it_sets_and_gets_strip0_limit_off_with_alias
+        @@vmr.strip[1].limit = 0.0
+        assert_equal(0.0, @@vmr.strip[1].limit)
+    end
 end
 
 
