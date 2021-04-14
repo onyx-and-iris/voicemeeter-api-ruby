@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ffi (1.15.0-x64-mingw32)
+    minitest (5.14.4)
+    rake (13.0.3)
+
+PLATFORMS
+  x64-mingw32
+
+DEPENDENCIES
+  ffi (~> 1.9, >= 1.9.10)
+  minitest
+  rake
+
+BUNDLED WITH
+   2.1.4
