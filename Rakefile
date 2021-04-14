@@ -5,22 +5,22 @@ task default: %w[basic:pass]
 namespace :cleanup do
     task :basic do
         puts "running basic cleanup"
-        Dir.glob("test/basic/*").select{ |file| /.backup$/.match file }.each do
-            |file| File.delete(file)
+        Dir.glob("test/basic/*").select{ |file| /.backup$/.match file }.each do |file|
+            File.delete(file)
         end
     end
 
     task :banana do
         puts "running banana cleanup"
-        Dir.glob("test/banana/*").select{ |file| /.backup$/.match file }.each do 
-            |file| File.delete(file)
+        Dir.glob("test/banana/*").select{ |file| /.backup$/.match file }.each do |file|
+            File.delete(file)
         end
     end
 
     task :potato do
         puts "running potato cleanup"
-        Dir.glob("test/potato/*").select{ |file| /.backup$/.match file }.each do 
-            |file| File.delete(file)
+        Dir.glob("test/potato/*").select{ |file| /.backup$/.match file }.each do |file|
+            File.delete(file)
         end
     end
 end
@@ -29,12 +29,6 @@ namespace :basic do
     Rake::TestTask.new :pass do |task|
         desc "PASS tests for type BASIC"
         task.pattern = "test/basic/pass/*_minitest.rb"
-        task.warning = false 
-    end
-
-    Rake::TestTask.new :errors do |task|
-        desc "ERROR tests for type BASIC"
-        task.pattern = "test/basic/errors/*_minitest.rb"
         task.warning = false 
     end
 
@@ -61,18 +55,26 @@ namespace :basic do
         task.pattern = "test/basic/pass/setvban*.rb"
         task.warning = false 
     end
+
+    namespace :errors do
+        Rake::TestTask.new :other do |task|
+            desc "ERROR tests other type BASIC"
+            task.pattern = "test/basic/errors/*_minitest.rb"
+            task.warning = false 
+        end
+
+        Rake::TestTask.new :vbtype do |task|
+            desc "ERROR tests vbtype for type BASIC"
+            task.pattern = "test/basic/errors/*_vbtype.rb"
+            task.warning = false 
+        end
+    end
 end
 
 namespace :banana do
     Rake::TestTask.new :pass do |task|
         desc "PASS tests for type BANANA"
         task.pattern = "test/banana/pass/*_minitest.rb"
-        task.warning = false 
-    end
-    
-    Rake::TestTask.new :errors do |task|
-        desc "ERROR tests for type BANANA"
-        task.pattern = "test/banana/errors/*_minitest.rb"
         task.warning = false 
     end
 
@@ -92,19 +94,27 @@ namespace :banana do
         desc "Isolate VBAN tests for type BANANA"
         task.pattern = "test/banana/pass/setvban*.rb"
         task.warning = false 
-    end 
+    end
+
+    namespace :errors do
+        Rake::TestTask.new :other do |task|
+            desc "ERROR tests for type BANANA"
+            task.pattern = "test/banana/errors/*_minitest.rb"
+            task.warning = false 
+        end
+
+        Rake::TestTask.new :vbtype do |task|
+            desc "ERROR tests for type BANANA"
+            task.pattern = "test/banana/errors/*_vbtype.rb"
+            task.warning = false 
+        end
+    end
 end
 
 namespace :potato do
     Rake::TestTask.new :pass do |task|
         desc "PASS tests for type POTATO"
         task.pattern = "test/potato/pass/*_minitest.rb"
-        task.warning = false 
-    end
-
-    Rake::TestTask.new :errors do |task|
-        desc "ERROR tests for type POTATO"
-        task.pattern = "test/potato/errors/*_minitest.rb"
         task.warning = false 
     end
 
@@ -124,5 +134,19 @@ namespace :potato do
         desc "Isolate VBAN tests for type POTATO"
         task.pattern = "test/potato/pass/setvban*.rb"
         task.warning = false 
+    end
+
+    namespace :errors do
+        Rake::TestTask.new :other do |task|
+            desc "ERROR tests for type POTATO"
+            task.pattern = "test/potato/errors/*_minitest.rb"
+            task.warning = false 
+        end
+
+        Rake::TestTask.new :vbtype do |task|
+            desc "ERROR tests for type POTATO"
+            task.pattern = "test/potato/errors/*_vbtype.rb"
+            task.warning = false 
+        end
     end
 end
