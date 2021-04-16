@@ -65,8 +65,7 @@ the program if it isn't currently running. Voicemeeter version may be one of:
 - potato
 
 If you wish to login/logout manually you may run them independently but you MUST
-call login once at the start and once at the end of your program. Login can be
-called with a keyword argument:
+call login once at the start and logout once at the end of your program. Login can be called with a keyword argument:
 ```ruby
 require 'routines'
 # Login with a keyword argument; logmein
