@@ -28,6 +28,10 @@ module Alias
         @vban_out = value
     end
 
+    def set_multi(value)
+        set_parameter_multi(value)
+    end
+
     def create_alias
         self.recorder = Recorder.new(self)
         self.command = Command.new(self)
@@ -217,7 +221,8 @@ module Alias
         end
 
         def set(param, value = nil)
-            @run.sp_command = param.capitalize
+            param[0] = param[0].capitalize
+            @run.sp_command = param
             if value.nil?
                 @run.set_parameter(@run.sp_command, 1.0)
             else
