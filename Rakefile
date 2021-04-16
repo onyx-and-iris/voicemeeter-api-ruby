@@ -29,7 +29,7 @@ namespace :cleanup do
     end
 
     task :summaries do
-        puts "running cleanup summary"
+        puts "running summary.log cleanup"
         [
             'test/basic/summary.log',
             'test/banana/summary.log',

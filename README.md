@@ -1,7 +1,6 @@
 # Ruby Wrapper for Voicemeeter API
-The purpose of this wrapper is to provide an easy-to-use flexible layer of
+The purpose of this wrapper is to provide an easy-to-use, flexible layer of
 abstraction over the C API provided with the Voicemeeter virtual mixing console.
-
 ## Tested against
 - Basic 1.0.7.8
 - Banana 2.0.5.8
@@ -20,7 +19,15 @@ If you want to run test units then:
 ```
 Bundle install -with test
 ```
-
+### Gem
+Manual install wrapper from your shell
+```
+gem install voicemeeter_api_ruby
+```
+And with development dependencies (test files only on github)
+```
+gem install voicemeeter_api_ruby --development
+```
 ## Use
 Simplest use case, pass a block argument, for example:
 ```ruby
