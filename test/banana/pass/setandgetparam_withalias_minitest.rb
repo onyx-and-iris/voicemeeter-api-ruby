@@ -683,4 +683,54 @@ class SetAndGetParamsFloatWithAliasOnOff < Minitest::Test
         @@vmr.strip[5].B1(OFF)
         assert_equal(false, @@vmr.strip[5].B1)
     end
+
+    def test_it_sets_and_gets_bus0_EQ_on_with_alias
+        @@vmr.bus[1].EQ(ON)
+        assert_equal(true, @@vmr.bus[1].EQ)
+    end
+
+    def test_it_sets_and_gets_bus0_EQ_off_with_alias
+        @@vmr.bus[1].EQ(OFF)
+        assert_equal(false, @@vmr.bus[1].EQ)
+    end
+
+    def test_it_sets_and_gets_bus1_EQ_on_with_alias
+        @@vmr.bus[2].EQ(ON)
+        assert_equal(true, @@vmr.bus[2].EQ)
+    end
+
+    def test_it_sets_and_gets_bus1_EQ_off_with_alias
+        @@vmr.bus[2].EQ(OFF)
+        assert_equal(false, @@vmr.bus[2].EQ)
+    end
+
+    def test_it_sets_and_gets_bus2_EQ_on_with_alias
+        @@vmr.bus[3].EQ(ON)
+        assert_equal(true, @@vmr.bus[3].EQ)
+    end
+
+    def test_it_sets_and_gets_bus2_EQ_off_with_alias
+        @@vmr.bus[3].EQ(OFF)
+        assert_equal(false, @@vmr.bus[3].EQ)
+    end
+
+    def test_it_sets_and_gets_bus3_EQ_on_with_alias
+        @@vmr.bus[4].EQ(ON)
+        assert_equal(true, @@vmr.bus[4].EQ)
+    end
+
+    def test_it_sets_and_gets_bus3_EQ_off_with_alias
+        @@vmr.bus[4].EQ(OFF)
+        assert_equal(false, @@vmr.bus[4].EQ)
+    end
+
+    def test_it_sets_and_gets_bus4_EQ_on_with_alias
+        @@vmr.bus[5].EQ(ON)
+        assert_equal(true, @@vmr.bus[5].EQ)
+    end
+
+    def test_it_sets_and_gets_bus4_EQ_off_with_alias
+        @@vmr.bus[5].EQ(OFF)
+        assert_equal(false, @@vmr.bus[5].EQ)
+    end
 end
