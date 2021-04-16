@@ -4,8 +4,8 @@ module BuildStrips
     include Utils
 
     attr_accessor :is_real_number, :is_bool, :is_float, :num, :strip, :bus, 
-    :this_type
-    attr_reader :layout, :strip_total, :bus_total, :vban_total, \
+    :this_type, :vban_ranges
+    attr_reader :layout, :strip_total, :bus_total, :vban_total,
     :composite_total, :insert_total
 
     ON = 1
@@ -37,6 +37,10 @@ module BuildStrips
 
     def is_real_number=(value)
         @is_real_number = value
+    end
+
+    def vban_ranges=(value)
+        @vban_ranges = value
     end
 
     def strip=(value)
@@ -121,6 +125,8 @@ module BuildStrips
             return num.between?(0, 10)
         elsif name == "limit"
             return num.between?(-40, 12)
+        elsif @vban_ranges.has_key? name
+            return num.between?(*@vban_ranges[name])
         end
         true
     end
@@ -129,24 +135,36 @@ module BuildStrips
         @is_bool = [
             "mono", "solo", "mute", "mc", "k",
             "A1", "A2", "A3", "B1", "B2", "B3",
-            "macrobutton", "vban"
+            "EQ.on",
+            "macrobutton"
         ]
 
         @is_float = ["gain", "comp", "gate", "limit"]
 
         self.is_real_number = @is_bool.|(@is_float)
+
+        self.vban_ranges = {
+            "on" => [0,1],
+            "port" => [0,65535],
+            "sr" => [11025,96000],
+            "channel" => [1,8],
+            "quality" => [0,4],
+            "route" => [0,8]
+        }
     end
 
     def strip_factory
         self.strip = []
-        (0..@strip_total).each_with_index do |num, index|
+        (1..@strip_total).each_with_index do |num, index|
+            num = index if @base_0
             @strip[num] = Strip.new(self, index)
         end
     end
 
     def bus_factory
         self.bus = []
-        (0..@bus_total).each_with_index do |num, index|
+        (1..@bus_total).each_with_index do |num, index|
+            num = index if @base_0
             @bus[num] = Bus.new(self, index)
         end
     end
@@ -164,7 +182,7 @@ module BuildStrips
 
         def initialize(run, index)
             self.run = run
-            self.index = @run.shift(index)
+            self.index = index
         end
 
         def mono=(value)
@@ -258,7 +276,7 @@ module BuildStrips
 
         def gate(value = nil)
             return get(__method__.to_s) if value.nil?
-            self.gain = value
+            self.gate = value
         end
 
         def limit=(value)
@@ -267,7 +285,7 @@ module BuildStrips
 
         def limit(value = nil)
             return get(__method__.to_s) if value.nil?
-            self.gain = value
+            self.limit = value
         end
 
         def A1=(value)
@@ -375,13 +393,13 @@ module BuildStrips
             @run.get_parameter("Bus[#{@index}].#{param}")
         end
 
-        def solo=(value)
-            set(__method__.to_s, value)
+        def EQ=(value)
+            set("EQ.on", value)
         end
 
-        def solo(value = nil)
-            return get(__method__.to_s) if value.nil?
-            self.solo = value
+        def EQ(value = nil)
+            return get("EQ.on") if value.nil?
+            self.EQ = value
         end
     end
 end
