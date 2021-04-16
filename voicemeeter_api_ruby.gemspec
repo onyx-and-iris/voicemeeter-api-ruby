@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-
+require File.expand_path('lib/version', __dir__)
 lib = File.expand_path('./lib')
 
 Gem::Specification.new do |spec|
     spec.name        = 'voicemeeter_api_ruby'
-    spec.version     = '0.0.1'
+    spec.version     = Voicemeeter_API_Ruby::VERSION
     spec.summary     = 'Voicemeeter API wrapper'
     spec.description = 'A wrapper for Voicemeeter virtual mixer API in Ruby'
     spec.authors     = ["onyx_online"]
@@ -16,4 +16,5 @@ Gem::Specification.new do |spec|
     spec.add_runtime_dependency 'ffi', '~> 1.9', '>= 1.9.10'
     spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.3'
     spec.add_development_dependency 'minitest', '~> 5.14', '>= 5.14.4'
-  end
+    spec.required_ruby_version = '>= 2.3'
+end

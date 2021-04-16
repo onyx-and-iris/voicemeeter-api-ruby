@@ -1,3 +1,9 @@
+PATH
+  remote: .
+  specs:
+    voicemeeter_api_ruby (1.0.1)
+      ffi (~> 1.9, >= 1.9.10)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -9,9 +15,9 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  ffi (~> 1.9, >= 1.9.10)
-  minitest
-  rake
+  minitest (~> 5.14, >= 5.14.4)
+  rake (~> 13.0, >= 13.0.3)
+  voicemeeter_api_ruby!
 
 BUNDLED WITH
    2.1.4

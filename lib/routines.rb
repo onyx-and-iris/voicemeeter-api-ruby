@@ -87,7 +87,7 @@ class Routines
             'Reset', 'Save', 'Load'].include? value
             raise ParamComError
         end
-        @sp_command = "Command." + value
+        @sp_command = "Command.#{value}"
     end
 
     def sp_value=(value)
@@ -305,25 +305,6 @@ class Routines
             self.ret = run_as("#{__method__}_string", @param_name, c_get)
             @val = c_get.read_string
         end
-    end
-
-    def special_command(name, value = nil)
-        """ Write only commands """
-        self.sp_command = name
-
-        if value
-            self.sp_value = value
-            self.ret = run_as('set_parameter_string', "#{@sp_command}", @sp_value)
-        else
-            self.ret = run_as('set_parameter_float', "#{@sp_command}", 1.0)
-        end
-
-    rescue ParamComError => error
-        puts "ERROR: #{error.message}"
-        raise
-    rescue ParamTypeError => error
-        puts "ERROR: #{error.message}"
-        raise
     end
 end
 

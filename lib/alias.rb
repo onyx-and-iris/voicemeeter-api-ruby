@@ -1,8 +1,12 @@
 module Alias
-    attr_reader :recorder, :button, :vban, :vban_in, :vban_out
+    attr_reader :recorder, :button, :vban, :vban_in, :vban_out, :command
 
     def recorder=(value)
         @recorder = value
+    end
+
+    def command=(value)
+        @command = value
     end
 
     def button=(value)
@@ -26,6 +30,7 @@ module Alias
 
     def create_alias
         self.recorder = Recorder.new(self)
+        self.command = Command.new(self)
 
         self.button = []
         (1..70).each_with_index do |num, index|
@@ -106,6 +111,10 @@ module Alias
     end
 
     class Recorder < Alias
+        def initialize(run)
+            super
+        end
+
         def set(command, value = nil)
             command.chomp!('=')
             if value.nil?
@@ -199,6 +208,60 @@ module Alias
 
         def name=(value)
             self.set(__method__.to_s, value)
+        end
+    end
+
+    class Command < Alias
+        def initialize(run)
+            super
+        end
+
+        def set(param, value = nil)
+            @run.sp_command = param.capitalize
+            if value.nil?
+                @run.set_parameter(@run.sp_command, 1.0)
+            else
+                @run.set_parameter(@run.sp_command, @sp_value)
+            end
+
+        rescue ParamComError => error
+            puts "ERROR: #{error.message}"
+            raise
+        rescue ParamTypeError => error
+            puts "ERROR: #{error.message}"
+            raise
+        end
+
+        def shutdown
+            self.set(__method__.to_s)
+        end
+
+        def show
+            self.set(__method__.to_s)
+        end
+
+        def restart
+            self.set(__method__.to_s)
+        end
+
+        def eject
+            self.set(__method__.to_s)
+        end
+        
+        def reset
+            self.set(__method__.to_s)
+        end
+
+        def save=(value)
+            self.set(__method__.to_s, value)
+        end
+
+        def load=(value)
+            self.set(__method__.to_s, value)
+        end
+
+        def showvbanchat
+            self.set("DialogShow.VBANCHAT")
         end
     end
 end
