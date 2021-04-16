@@ -13,7 +13,7 @@ class Routines
     include BuildStrips
     include Alias
 
-    attr_accessor :val, :param_cache
+    attr_accessor :val, :param_cache, :base_0
     attr_reader :ret, :type, :logged_in, :logged_out, :sp_command, \
     :param_string, :param_options, :param_float, :param_name, :instdir
 
@@ -115,7 +115,7 @@ class Routines
         will be no boundary testing
         """
         if test_regex(/^(\w+)\[(\d+)\].(\w+)/, value)
-        elsif test_regex(/^vban.(\w+)\[(\d+)\]/, value)
+        elsif test_regex(/^vban.(\w+)\[(\d+)\].(\w+)/, value)
         elsif test_regex(/^Fx.(\w+).On/, value)
         elsif test_regex(/^patch.(\w+)\[(\d+)\]/, value)
         end
@@ -127,13 +127,7 @@ class Routines
         if value.is_a? (String)
             @param_string = value
         else
-            if ["instream", "outstream"].include? @m1
-                param = "vban"
-            else
-                param = @m3
-            end
-
-            if validate(param, value)
+            if validate(@m3, value)
                 @param_float = value
             else
                 raise ParamValueError 
@@ -150,7 +144,7 @@ class Routines
         value.each do |key, val|
             test_regex(/(\w+)_(\d+)/, key)
             name = @m1
-            num = shift(@m2)
+            num = shiftdn(@m2)
 
             val.each do |k, v|
                 if validate(name, num)
@@ -172,7 +166,13 @@ class Routines
         @logical_id = value
     end
 
-    def initialize(type = nil)
+    def base_0=(value)
+        @base_0 = value
+    end
+
+    def initialize(type = nil, base_0 = false)
+        self.base_0 = base_0
+
         if type
             if type == "basic" || type == 1
                 self.type = BASIC
@@ -333,9 +333,9 @@ class Remote < Routines
     Performs log in/out routines cleanly. 
     May yield a block argument otherwise simply login.
     """
-    def initialize(type = nil, logmein = false)
-        super(type)
-        self.run if logmein
+    def initialize(type = nil, **opts)
+        super(type, opts[:base_0])
+        self.run if opts[:logmein]
 
     rescue VBTypeError => error
         puts "ERROR: #{error.message}"

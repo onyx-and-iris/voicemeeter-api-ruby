@@ -10,6 +10,9 @@ module Alias
     end
 
     def vban=(value)
+        if [false,true].include? value
+            value = bool_to_float(value)
+        end
         set_parameter("vban.Enable", value)
     end
 
@@ -23,18 +26,22 @@ module Alias
 
     def create_alias
         self.recorder = Recorder.new(self)
+
         self.button = []
-        (0..69).each_with_index do |num, index|
+        (1..70).each_with_index do |num, index|
+            num = index if @base_0
             @button[num] = Macrobutton.new(self, index)
         end
 
         self.vban_in = []
-        (0..@layout[:in_vban]).each_with_index do |num, index|
-            @vban_in[num] = VBAN.new(self, index, "in")
+        (1..@layout[:in_vban]).each_with_index do |num, index|
+            num = index if @base_0
+            @vban_in[num] = Vban.new(self, index, "in")
         end
         self.vban_out = []
-        (0..@layout[:out_vban]).each_with_index do |num, index|
-            @vban_out[num] = VBAN.new(self, index, "out")
+        (1..@layout[:out_vban]).each_with_index do |num, index|
+            num = index if @base_0
+            @vban_out[num] = Vban.new(self, index, "out")
         end
     end
 
@@ -63,6 +70,9 @@ module Alias
         end
 
         def set(set, mode)
+            if [false,true].include? set
+                set = @run.bool_to_float(set)
+            end
             @run.macro_setstatus(@id, set, mode)
         end
 
@@ -158,7 +168,7 @@ module Alias
         end
     end
 
-    class VBAN < Alias
+    class Vban< Alias
         attr_accessor :id, :direction
 
         def id=(value)
@@ -185,6 +195,10 @@ module Alias
 
         def enable=(value)
             self.set("on", value)
+        end
+
+        def name=(value)
+            self.set(__method__.to_s, value)
         end
     end
 end
