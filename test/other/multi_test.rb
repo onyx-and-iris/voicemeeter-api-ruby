@@ -182,10 +182,10 @@ def special(vmr)
     """
     sleep(DELAY)
     puts "Running command Show"
-    vmr.special_command("Show")
+    vmr.command.show
     sleep(DELAY)
     puts "Running command DialogShow.VBANCHAT"
-    vmr.special_command("DialogShow.VBANCHAT")
+    vmr.command.showvbanchat
 end
 
 def configs(vmr)

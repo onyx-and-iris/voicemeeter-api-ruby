@@ -1,6 +1,6 @@
 require 'routines'
 
-vmr = Remote.new("banana", logmein = false, base_0 = true)
+vmr = Remote.new("banana", logmein: false, base_0: true)
 
 OFF = 0
 ON = 1
