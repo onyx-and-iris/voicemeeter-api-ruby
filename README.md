@@ -1,30 +1,36 @@
 # Ruby Wrapper for Voicemeeter API
 The purpose of this wrapper is to provide an easy-to-use, flexible layer of
 abstraction over the C API provided with the Voicemeeter virtual mixing console.
+
+NOTE. This wrapper is still being worked on, readme will be added to over time.
+
 ## Tested against
 - Basic 1.0.7.8
 - Banana 2.0.5.8
 - Potato 3.0.1.8
 
+You may have success with many commands in earlier versions but some commands (example Macrobuttons) were only added to the API in later releases.
+
 ## Requirements
-- Ruby 2.7 or greater
+- Voicemeeter: https://voicemeeter.com/
+- Ruby 2.3 or greater
 
 ## Installation
 ### Bundler
 If you only want the wrapper then:
 ```
-Bundle install --without test
+bundle install --without development
 ```
 If you want to run test units then:
 ```
-Bundle install -with test
+Bundle install -with development
 ```
 ### Gem
-Manual install wrapper from your shell
+Manual install wrapper from your shell:
 ```
 gem install voicemeeter_api_ruby
 ```
-And with development dependencies (test files only on github)
+And with development dependencies (test files only on github):
 ```
 gem install voicemeeter_api_ruby --development
 ```
@@ -67,10 +73,10 @@ require 'routines'
 vmr = Remote.new("banana", logmein: true)
 
 # Set bus second from the left, mono ON, and then OFF
-vmr.strip[2].mono = true
-puts vmr.strip[2].mono
-vmr.strip[2].mono = false
-puts vmr.strip[2].mono
+vmr.bus[2].mono = true
+puts vmr.bus[2].mono
+vmr.bus[2].mono = false
+puts vmr.bus[2].mono
 
 # Call logout once at the end of your program
 vmr.logout
@@ -87,7 +93,7 @@ vmr.run do
 end
 ```
 In this case the wrapper will determine the version from the running instance
-of Voicemeeter and build the strip layout accordingly.
+of Voicemeeter and build the console layout accordingly.
 
 All alias functions use a base 1 index meaning the strips and buses furthest to
 the left are defined as strip[1], bus[1] and increment rightwards. If you prefer
@@ -145,17 +151,19 @@ vmr.button[3].state = true
 vmr.button[3].state(1)
 # Set macrobutton 4 stateonly (does not run associated scripts) ON
 vmr.button[4].stateonly = true
-vmr.button[4].stateonly(0)
+vmr.button[4].stateonly(1)
 # Set macrobutton 5 trigger OFF
 vmr.button[5].trigger = false
 vmr.button[5].trigger(0)
 ```
 
 #### Run tests
-For available tests use rake --tasks
-
-Then:
+For available tests use
+```
+rake --tasks
+```
+Then, for example, if you wish to run tests for Voicemeeter version basic,
+test type pass:
 ```
 Bundle exec rake basic:pass
 ```
-to run tests for vb type basic test type pass
