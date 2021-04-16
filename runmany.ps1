@@ -7,7 +7,8 @@ param(
         [string]$t,
         [parameter(Mandatory=$false)]
         [switch]$p,[switch]$e,[switch]$m,
-        [switch]$s,[switch]$v,[switch]$a
+        [switch]$s,[switch]$v,[switch]$a,
+        [switch]$b
         )
 
 if ($p) { $type = "pass" }
@@ -16,6 +17,7 @@ elseif ($m) { $type = "macros" }
 elseif ($s) { $type = "setandget" }
 elseif ($v) { $type = "vban" }
 elseif ($a) { $type = "alias" }
+elseif ($b) { $type = "base0" }
 
 $global:failures = 0
 
