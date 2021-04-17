@@ -163,6 +163,12 @@ namespace :potato do
         task.warning = false 
     end
 
+    Rake::TestTask.new :base0 do |task|
+        desc "Isolate base0 tests for type POTATO"
+        task.pattern = "test/potato/pass/*base0_status*.rb"
+        task.warning = false 
+    end
+
     Rake::TestTask.new :vban do |task|
         desc "Isolate VBAN tests for type POTATO"
         task.pattern = "test/potato/pass/setvban*.rb"
