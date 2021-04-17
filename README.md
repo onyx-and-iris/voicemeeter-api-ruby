@@ -23,7 +23,7 @@ Bundle install --without development
 ```
 If you want to run test units then:
 ```
-Bundle install -with development
+Bundle install --with development
 ```
 ### Gem
 Manual install wrapper from your shell:
