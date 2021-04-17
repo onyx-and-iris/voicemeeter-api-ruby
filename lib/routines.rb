@@ -14,7 +14,7 @@ class Routines
     include Alias
 
     attr_accessor :val, :param_cache, :base_0
-    attr_reader :ret, :type, :logged_in, :logged_out, :sp_command, \
+    attr_reader :ret, :type, :logged_in, :logged_out, :sp_command, :sp_value,
     :param_string, :param_options, :param_float, :param_name, :instdir
 
     SIZE = 1

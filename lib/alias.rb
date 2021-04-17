@@ -220,7 +220,7 @@ module Alias
             super
         end
 
-        def set(command, value = nil)
+        def set(command, value = nil, delay)
             command.chomp!('=')
             command[0] = command[0].capitalize
             @run.sp_command = command
@@ -228,7 +228,8 @@ module Alias
                 @run.set_parameter(@run.sp_command, 1.0)
             else
                 @run.sp_value = value
-                @run.set_parameter(@run.sp_command, @sp_value)
+                @run.set_parameter(@run.sp_command, @run.sp_value)
+                sleep(delay)
             end
         end
 
@@ -252,12 +253,12 @@ module Alias
             self.set(__method__.to_s)
         end
 
-        def save=(value)
-            self.set(__method__.to_s, value)
+        def save(value, delay = 0.2)
+            self.set(__method__.to_s, value, delay)
         end
 
-        def load=(value)
-            self.set(__method__.to_s, value)
+        def load(value, delay = 0.2)
+            self.set(__method__.to_s, value, delay)
         end
 
         def showvbanchat
