@@ -1,6 +1,6 @@
 require_relative '../minitest_helper'
 
-class MacroButtonStatusBoundsError < Minitest::Test
+class ErrorTests < Minitest::Test
     def test_it_raises_an_api_error
         """ 
         ERROR: Callback Function Error, return value: -3 in set_parameter 

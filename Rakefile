@@ -74,13 +74,13 @@ namespace :basic do
     namespace :errors do
         Rake::TestTask.new :other do |task|
             desc "ERROR tests other type BASIC"
-            task.pattern = "test/basic/errors/*_minitest.rb"
+            task.pattern = "test/basic/errors/errors*.rb"
             task.warning = false 
         end
 
         Rake::TestTask.new :vbtype do |task|
             desc "ERROR tests vbtype for type BASIC"
-            task.pattern = "test/basic/errors/*_vbtype.rb"
+            task.pattern = "test/basic/errors/vbtype*.rb"
             task.warning = false 
         end
     end
@@ -95,7 +95,7 @@ namespace :banana do
 
     Rake::TestTask.new :macros do |task|
         desc "Isolate Macrobutton tests for type BANANA"
-        task.pattern = "test/banana/pass/macrobutton_*.rb"
+        task.pattern = "test/banana/pass/macrobutton_status*.rb"
         task.warning = false 
     end
     
@@ -113,7 +113,7 @@ namespace :banana do
 
     Rake::TestTask.new :base0 do |task|
         desc "Isolate base0 tests for type BANANA"
-        task.pattern = "test/banana/pass/*_withalias_base0.rb"
+        task.pattern = "test/banana/pass/*base0_status*.rb"
         task.warning = false 
     end
 
@@ -126,13 +126,13 @@ namespace :banana do
     namespace :errors do
         Rake::TestTask.new :other do |task|
             desc "ERROR tests for type BANANA"
-            task.pattern = "test/banana/errors/*_minitest.rb"
+            task.pattern = "test/banana/errors/errors*.rb"
             task.warning = false 
         end
 
         Rake::TestTask.new :vbtype do |task|
             desc "ERROR tests for type BANANA"
-            task.pattern = "test/banana/errors/*_vbtype.rb"
+            task.pattern = "test/banana/errors/vbtype*.rb"
             task.warning = false 
         end
     end
@@ -172,13 +172,13 @@ namespace :potato do
     namespace :errors do
         Rake::TestTask.new :other do |task|
             desc "ERROR tests for type POTATO"
-            task.pattern = "test/potato/errors/*_minitest.rb"
+            task.pattern = "test/potato/errors/errors*.rb"
             task.warning = false 
         end
 
         Rake::TestTask.new :vbtype do |task|
             desc "ERROR tests for type POTATO"
-            task.pattern = "test/potato/errors/*_vbtype.rb"
+            task.pattern = "test/potato/errors/vbtype*.rb"
             task.warning = false 
         end
     end

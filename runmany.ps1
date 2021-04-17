@@ -6,18 +6,21 @@ param(
         [ValidateSet("basic","banana","potato")]
         [string]$t,
         [parameter(Mandatory=$false)]
-        [switch]$p,[switch]$e,[switch]$m,
+        [ValidateSet("other","vbtype")]
+        [string]$e,
+        [parameter(Mandatory=$false)]
+        [switch]$p,[switch]$m,
         [switch]$s,[switch]$v,[switch]$a,
         [switch]$b
         )
 
 if ($p) { $type = "pass" }
-elseif ($e) { $type = "error" }
 elseif ($m) { $type = "macros" }
 elseif ($s) { $type = "setandget" }
 elseif ($v) { $type = "vban" }
 elseif ($a) { $type = "alias" }
 elseif ($b) { $type = "base0" }
+elseif ($e) { $type = "errors" }
 
 $global:failures = 0
 
@@ -27,7 +30,9 @@ Function RunTests {
                 $num = $cycle_num
         }
 
-        $_runtests = "rake ${t}:${type}" 
+        if ($e) { $_runtests = "bundle exec rake ${t}:${type}:${e}" }
+        else { $_runtests = "bundle exec rake ${t}:${type}" }
+        
         $logfile = "test/${t}/${t}_${type}.log"
 
         1..$num | ForEach-Object `
