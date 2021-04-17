@@ -6,5 +6,5 @@ OFF = 0
 ON = 1
 
 vmr.run do
-    vmr.command.shutdown
+    vmr.command.reset
 end

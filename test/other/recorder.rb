@@ -2,8 +2,11 @@ require 'routines'
 
 vmr = Remote.new
 
-vmr.run do
+OFF = 0
+ON = 1
 
+vmr.run do
+=begin
     puts "RECORDING"
     vmr.recorder.record
     sleep(10)
@@ -16,24 +19,25 @@ vmr.run do
     puts "STOP"
     vmr.recorder.stop
     sleep(1)
+=end
+    vmr.recorder.A1(ON)
+    sleep(0.1)
+    vmr.recorder.A1 = false
+    sleep(0.1)
+    vmr.recorder.A2(ON)
+    sleep(0.1)
+    vmr.recorder.A2(OFF)
+    sleep(0.1)
+    vmr.recorder.A3 = true
+    sleep(0.1)
+    vmr.recorder.A3(OFF)
 
-    vmr.recorder.A1 = 1
+    vmr.recorder.B1(ON)
     sleep(0.1)
-    vmr.recorder.A1 = 0
+    vmr.recorder.B1 = false
     sleep(0.1)
-    vmr.recorder.A2 = 1
+    vmr.recorder.B2(ON)
     sleep(0.1)
-    vmr.recorder.A2 = 0
+    vmr.recorder.B2 = false
     sleep(0.1)
-    vmr.recorder.A3 = 1
-    sleep(0.1)
-    vmr.recorder.A3 = 0
-
-    vmr.recorder.B1 = 1
-    sleep(0.1)
-    vmr.recorder.B1 = 0
-    sleep(0.1)
-    vmr.recorder.B2= 1
-    sleep(0.1)
-    vmr.recorder.B2 = 0
 end
