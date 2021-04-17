@@ -48,13 +48,13 @@ vmr.run do
     vmr.strip[1].mute = true
     puts vmr.strip[1].mute  '=> true'
     vmr.strip[1].mute = false
-    puts vmr.strip[1].mute '=> false'
+    puts vmr.strip[1].mute  '=> false'
 
     # If you find this more verbose you may pass an argument value
     vmr.strip[2].mute(ON)
-    puts vmr.strip[2].mute '=> true'
+    puts vmr.strip[2].mute  '=> true'
     vmr.strip[2].mute(OFF)
-    puts vmr.strip[2].mute '=> false'
+    puts vmr.strip[2].mute  '=> false'
 end
 ```
 When using a block argument login and logout routines are handled for you. If
@@ -73,9 +73,9 @@ vmr = Remote.new("banana", logmein: true)
 
 # Set bus second from the left, mono ON, and then OFF
 vmr.bus[2].mono = true
-puts vmr.bus[2].mono '=> true'
+puts vmr.bus[2].mono    '=> true'
 vmr.bus[2].mono = false
-puts vmr.bus[2].mono '=> false'
+puts vmr.bus[2].mono    '=> false'
 
 # Call logout once at the end of your program
 vmr.logout
@@ -176,24 +176,31 @@ Following commands work only for strips
 
 ```ruby
 vmr.strip[1].solo = true
+
 vmr.strip[1].comp = 1.2
 puts vmr.strip[1].comp  '=> 1.2'
+
 vmr.strip[1].gate = 2.5
 puts vmr.strip[1].gate  '=> 2.5'
+
 vmr.strip[1].limit = -6
 puts vmr.strip[1].limit '=> -6'
+
 vmr.strip[4].mc = true
 vmr.strip[5].k = true
 
-vmr.strip[1].A1
-vmr.strip[2].A2
-vmr.strip[3].A3
-vmr.strip[4].A4
-vmr.strip[5].A5
+vmr.strip[1].A1 = true
+puts vmr.strip[1].A1    '=> true'
+vmr.strip[2].A2 = false
+puts vmr.strip[2].A2    '=> false'
+vmr.strip[3].A3(1)
+vmr.strip[4].A4(0)
+vmr.strip[5].A5(1)
 
-vmr.strip[6].B1
-vmr.strip[7].B2
-vmr.strip[8].B3
+vmr.strip[6].B1 = false
+vmr.strip[7].B2(1)
+puts vmr.strip[7].B2    '=> true'
+vmr.strip[8].B3 = true
 ```
 ### Bus
 Following commands work only for buses
