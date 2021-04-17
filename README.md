@@ -297,7 +297,13 @@ For example:
 ```
 .\runmany.ps1 10 -t 'basic' -p
 ```
-Will execute 10 times rake basic:pass
+Will execute 10 times bundle exec rake basic:pass
+
+error type tests can be defined by string argument, for example:
+```
+.\runmany.ps1 5 -t 'banana' -e 'other'
+```
+Will execute 5 times bundle exec rake banana:errors:other
 
 Results will be logged to the directory of the version type tested.
 To clean up files after tests run
