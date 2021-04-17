@@ -73,9 +73,9 @@ vmr = Remote.new("banana", logmein: true)
 
 # Set bus second from the left, mono ON, and then OFF
 vmr.bus[2].mono = true
-puts vmr.bus[2].mono
+puts vmr.bus[2].mono '=> true'
 vmr.bus[2].mono = false
-puts vmr.bus[2].mono
+puts vmr.bus[2].mono '=> false'
 
 # Call logout once at the end of your program
 vmr.logout
@@ -110,6 +110,7 @@ vmr = Remote.new("potato", base_0: true)
 vmr.run do
     # Set strip furthest to the left label name
     vmr.strip[0].label = 'my_strip_name'
+    puts vmr.strip[0].label '=> my_label_name'
     # Set bus furthest to the left mute ON, and then OFF
     vmr.bus[0].mute = true
     vmr.bus[0].mute = false
@@ -178,7 +179,7 @@ vmr.strip[1].solo = true
 vmr.strip[1].comp = 1.2
 puts vmr.strip[1].comp  '=> 1.2'
 vmr.strip[1].gate = 2.5
-puts vmr.strip[1].gate '=> 2.5'
+puts vmr.strip[1].gate  '=> 2.5'
 vmr.strip[1].limit = -6
 puts vmr.strip[1].limit '=> -6'
 vmr.strip[4].mc = true
