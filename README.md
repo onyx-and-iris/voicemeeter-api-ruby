@@ -2,7 +2,7 @@
 The purpose of this wrapper is to provide an easy-to-use, flexible layer of
 abstraction over the C API provided with the Voicemeeter virtual mixing console.
 
-NOTE. This wrapper is still being worked on, readme will be added to over time.
+This wrapper is still being worked on and I will update this readme as I go.
 
 ## Tested against
 - Basic 1.0.7.8
@@ -19,7 +19,7 @@ You may have success with many commands in earlier versions but some commands (e
 ### Bundler
 If you only want the wrapper then:
 ```
-bundle install --without development
+Bundle install --without development
 ```
 If you want to run test units then:
 ```
@@ -65,7 +65,7 @@ the program if it isn't currently running. Voicemeeter type may be one of:
 - potato
 
 If you wish to login/logout manually you may run them independently but you MUST
-call login once at the start and logout once at the end of your program. Login can be called with a keyword argument:
+call login once at the start and logout once at the end of your program. Login may be called with a keyword argument:
 ```ruby
 require 'routines'
 # Login with a keyword argument; logmein
@@ -81,10 +81,10 @@ puts vmr.bus[2].mono
 vmr.logout
 ```
 If you know for sure that Voicemeeter is already running you may omit the
-Voicemeeter version when you call Remote, for example:
+Voicemeeter type when you call Remote, for example:
 ```ruby
 require 'routines'
-# no version passed as argument
+# no type passed as argument
 vmr = Remote.new
 
 vmr.run do
@@ -176,7 +176,7 @@ Following commands work only for strips
 ```ruby
 vmr.strip[1].solo = true
 vmr.strip[1].comp = true
-vmr.strip[1].limit = true
+vmr.strip[1].limit = -6
 vmr.strip[4].mc = true
 vmr.strip[5].k = true
 ```
@@ -188,7 +188,7 @@ vmr.bus[1].EQ = true
 
 
 ### Macrobuttons
-Three modes defined, state, stateonly and trigger.
+Three modes defined: state, stateonly and trigger.
 - Index range (1, 70)
 
 ```ruby
@@ -278,13 +278,15 @@ vmr.command.shutdown
 
 # loads a config file named test2.xml in default config directory
 vmr.command.load('test2.xml')
-# saves a config file named test2.xml in default config directory
+# saves a config file named save0.xml in default config directory
 vmr.command.save('save0.xml')
 ```
-#### Run tests
-For available tests use
+
+
+### Run tests
+To see a list of available tests run:
 ```
-rake --tasks
+Bundle exec rake --tasks
 ```
 Then, for example, if you wish to run tests for Voicemeeter version basic,
 test type pass:
@@ -297,16 +299,16 @@ For example:
 ```
 .\runmany.ps1 10 -t 'basic' -p
 ```
-Will execute 10 times bundle exec rake basic:pass
+Will execute 10 times `Bundle exec rake basic:pass`
 
 error type tests can be defined by string argument, for example:
 ```
 .\runmany.ps1 5 -t 'banana' -e 'other'
 ```
-Will execute 5 times bundle exec rake banana:errors:other
+Will execute 5 times `Bundle exec rake banana:errors:other`
 
 Results will be logged to the directory of the version type tested.
-To clean up files after tests run
+To clean up files after tests run:
 ```
 # clears everything
 Bundle exec rake cleanup:all
@@ -315,3 +317,7 @@ Bundle exec rake cleanup:logs
 # truncates summary files
 Bundle exec rake cleanup:summary
 ```
+
+### Contribute
+If you wish to contribute please target the dev branch and include any relevant
+test. Thank you.
