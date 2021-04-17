@@ -110,7 +110,7 @@ vmr = Remote.new("potato", base_0: true)
 vmr.run do
     # Set strip furthest to the left label name
     vmr.strip[0].label = 'my_strip_name'
-    puts vmr.strip[0].label '=> my_label_name'
+    puts vmr.strip[0].label '=> my_strip_name'
     # Set bus furthest to the left mute ON, and then OFF
     vmr.bus[0].mute = true
     vmr.bus[0].mute = false
