@@ -46,15 +46,15 @@ ON = 1
 vmr.run do
     # Set strip furthest to the left mute ON, and then OFF
     vmr.strip[1].mute = true
-    puts vmr.strip[1].mute
+    puts vmr.strip[1].mute  '=> true'
     vmr.strip[1].mute = false
-    puts vmr.strip[1].mute
+    puts vmr.strip[1].mute '=> false'
 
     # If you find this more verbose you may pass an argument value
     vmr.strip[2].mute(ON)
-    puts vmr.strip[2].mute
+    puts vmr.strip[2].mute '=> true'
     vmr.strip[2].mute(OFF)
-    puts vmr.strip[2].mute
+    puts vmr.strip[2].mute '=> false'
 end
 ```
 When using a block argument login and logout routines are handled for you. If
@@ -175,8 +175,12 @@ Following commands work only for strips
 
 ```ruby
 vmr.strip[1].solo = true
-vmr.strip[1].comp = true
+vmr.strip[1].comp = 1.2
+puts vmr.strip[1].comp  '=> 1.2'
+vmr.strip[1].gate = 2.5
+puts vmr.strip[1].gate '=> 2.5'
 vmr.strip[1].limit = -6
+puts vmr.strip[1].limit '=> -6'
 vmr.strip[4].mc = true
 vmr.strip[5].k = true
 ```
@@ -320,4 +324,4 @@ Bundle exec rake cleanup:summary
 
 ### Contribute
 If you wish to contribute please target the dev branch and include any relevant
-test. Thank you.
+tests. Thank you.

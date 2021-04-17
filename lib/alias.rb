@@ -220,7 +220,7 @@ module Alias
         end
     end
 
-    class Vban< Alias
+    class Vban < Alias
         attr_accessor :id, :direction
 
         def id=(value)
