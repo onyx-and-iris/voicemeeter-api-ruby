@@ -20,6 +20,10 @@ module Alias
         set_parameter("vban.Enable", value)
     end
 
+    def vban(value)
+        self.vban = value
+    end
+
     def vban_in=(value)
         @vban_in = value
     end
@@ -121,10 +125,13 @@ module Alias
 
         def set(command, value = nil)
             command.chomp!('=')
-            if value.nil?
-                @run.set_parameter("recorder.#{command}", 1.0)
-            else
+            if [false,true].include? value
+                value = @run.bool_to_float(value)
+            end
+            if value
                 @run.set_parameter("recorder.#{command}", value)
+            else
+                @run.set_parameter("recorder.#{command}", 1.0)
             end
         end
 
@@ -152,32 +159,64 @@ module Alias
             self.set(__method__.to_s, value)
         end
 
+        def A1(value)
+            self.A1 = value
+        end
+
         def A2=(value)
             self.set(__method__.to_s, value)
+        end
+
+        def A2(value)
+            self.A2 = value
         end
 
         def A3=(value)
             self.set(__method__.to_s, value)
         end
 
+        def A3(value)
+            self.A3 = value
+        end
+
         def A4=(value)
             self.set(__method__.to_s, value)
+        end
+
+        def A4(value)
+            self.A4 = value
         end
 
         def A5=(value)
             self.set(__method__.to_s, value)
         end
 
+        def A5(value)
+            self.A5 = value
+        end
+
         def B1=(value)
             self.set(__method__.to_s, value)
+        end
+
+        def B1(value)
+            self.B1 = value
         end
 
         def B2=(value)
             self.set(__method__.to_s, value)
         end
 
+        def B2(value)
+            self.B2 = value
+        end
+
         def B3=(value)
             self.set(__method__.to_s, value)
+        end
+
+        def B3(value)
+            self.B3 = value
         end
     end
 
@@ -210,6 +249,10 @@ module Alias
             self.set("on", value)
         end
 
+        def enable(value)
+            self.enable(value)
+        end
+
         def name=(value)
             self.set(__method__.to_s, value)
         end
@@ -220,7 +263,7 @@ module Alias
             super
         end
 
-        def set(command, value = nil, delay)
+        def set(command, value = nil, delay = 0.2)
             command.chomp!('=')
             command[0] = command[0].capitalize
             @run.sp_command = command

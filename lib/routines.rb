@@ -154,6 +154,8 @@ class Routines
             num = shiftdn(@m2)
 
             val.each do |k, v|
+                v = bool_to_int(v) if [false,true].include? v
+
                 if validate(name, num)
                     build_str.append(
                         "#{name.capitalize}[#{num.to_s}].#{k} = #{v}"
