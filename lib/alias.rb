@@ -109,7 +109,7 @@ module Alias
             self.set(value, mode=3)
         end
 
-        def trigger(set: nil)
+        def trigger
             self.get(mode=3)        
         end
     end
@@ -220,21 +220,16 @@ module Alias
             super
         end
 
-        def set(param, value = nil)
-            param[0] = param[0].capitalize
-            @run.sp_command = param
+        def set(command, value = nil)
+            command.chomp!('=')
+            command[0] = command[0].capitalize
+            @run.sp_command = command
             if value.nil?
                 @run.set_parameter(@run.sp_command, 1.0)
             else
+                @run.sp_value = value
                 @run.set_parameter(@run.sp_command, @sp_value)
             end
-
-        rescue ParamComError => error
-            puts "ERROR: #{error.message}"
-            raise
-        rescue ParamTypeError => error
-            puts "ERROR: #{error.message}"
-            raise
         end
 
         def shutdown
