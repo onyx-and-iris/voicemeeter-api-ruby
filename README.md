@@ -90,8 +90,8 @@ vmr = Remote.new
 vmr.run do
     vmr.strip[1].A1 = true
     vmr.strip[4].B2 = false
-    vmr.bus[3].A3 = true
-    vmr.bus[5].B4 = false
+    vmr.bus[3].EQ = true
+    vmr.bus[5].mono = false
 
     vmr.vban_in[3].enable = false
     vmr.vban_out[1].enable = true
@@ -184,6 +184,16 @@ vmr.strip[1].limit = -6
 puts vmr.strip[1].limit '=> -6'
 vmr.strip[4].mc = true
 vmr.strip[5].k = true
+
+vmr.strip[1].A1
+vmr.strip[2].A2
+vmr.strip[3].A3
+vmr.strip[4].A4
+vmr.strip[5].A5
+
+vmr.strip[6].B1
+vmr.strip[7].B2
+vmr.strip[8].B3
 ```
 ### Bus
 Following commands work only for buses
