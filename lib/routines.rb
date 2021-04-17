@@ -29,7 +29,8 @@ class Routines
         @ret = value
 
     rescue APIError => error
-        puts "ERROR: #{error.message} #{value}"
+        puts "ERROR: #{error.message} #{value} in #{caller_locations[1].label}"
+        raise
     end
 
     def logged_in=(value)
@@ -56,8 +57,7 @@ class Routines
 
     rescue LoginError => error
         puts "ERROR: #{error.message} #{value}"
-        logout
-        exit(false)
+        raise
     end
 
     def logged_out=(value)
@@ -83,18 +83,25 @@ class Routines
 
     def sp_command=(value)
         unless ['Shutdown', 'Show', 'Restart',
-            'DialogShow.VBANCHAT', 
+            'DialogShow.VBANCHAT', 'Eject',
             'Reset', 'Save', 'Load'].include? value
-            raise ParamComError
+            raise CommandError
         end
         @sp_command = "Command.#{value}"
+
+    rescue CommandError => error
+        puts "ERROR: #{error.message} in #{__callee__}"
+        raise
     end
 
     def sp_value=(value)
         unless value.is_a? (String)
-            raise ParamTypeError
+            raise ValueTypeError
         end
         @sp_value = value
+    rescue ValueTypeError => error
+        puts "ERROR: #{error.message} in #{__callee__}"
+        raise
     end
 
     def param_cache=(*args)
@@ -228,7 +235,7 @@ class Routines
         self.param_cache = ["macros", logical_id, mode, state]
 
     rescue BoundsError => error
-        puts "ERROR: Macrobutton ID out of range"
+        puts "ERROR: Macrobutton ID out of range in #{__callee__}"
         raise
     end
 
@@ -247,6 +254,7 @@ class Routines
 
     rescue BoundsError => error
         puts "ERROR: Logical ID out of range"
+        raise
     end
 
     def set_parameter(name, value)
