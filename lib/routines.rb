@@ -13,7 +13,7 @@ class Routines
     include BuildStrips
     include Alias
 
-    attr_accessor :val, :param_cache, :base_0
+    attr_accessor :val, :param_cache, :base_0, :rundelay
     attr_reader :ret, :type, :logged_in, :logged_out, :sp_command, :sp_value,
     :param_string, :param_options, :param_float, :param_name, :instdir
 
@@ -38,15 +38,15 @@ class Routines
         -2: unexpected login (logout was expected before).
         """
         if value == 0
-          clear_pdirty
-          clear_mdirty
-
           @logged_in = value
         elsif value == 1
             runvb
+            sleep(@rundelay)
         elsif value < 0
             raise LoginError
         end
+        clear_pdirty
+        clear_mdirty
 
     rescue LoginError => error
         puts "#{error.class}: #{error.message} #{value}"
@@ -172,8 +172,11 @@ class Routines
         @base_0 = value
     end
 
-    def initialize(type = nil, base_0 = false)
-        self.base_0 = base_0
+    def initialize(type = nil, opts = {})
+        self.base_0 = opts[:base_0] || false
+        self.setdelay = opts[:setdelay] || ACCESSOR_DELAY
+        self.getdelay = opts[:getdelay] || ACCESSOR_DELAY
+        self.rundelay = opts[:rundelay] || RUNDELAY
 
         if type
             self.type = type
@@ -187,7 +190,6 @@ class Routines
     def runvb
         self.inst_exe = @type
         Open3.popen3(@inst_exe, '')
-        sleep(1)
     rescue EXENotFoundError => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
     end
@@ -308,8 +310,9 @@ class Remote < Routines
     May yield a block argument otherwise simply login.
     """
     def initialize(type = nil, **opts)
-        super(type, opts[:base_0])
-        self.run if opts[:logmein]
+        logmein = opts.delete(:logmein)
+        super(type, **opts)
+        self.run if logmein
     end
 
     def run

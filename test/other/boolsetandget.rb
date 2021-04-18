@@ -1,6 +1,6 @@
 require 'routines'
 
-vmr = Remote.new
+vmr = Remote.new("basic", setdelay: 0.1, rundelay: 1)
 
 OFF = 0
 ON = 1
