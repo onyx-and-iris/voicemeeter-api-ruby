@@ -38,7 +38,7 @@ class Routines
         -2: unexpected login (logout was expected before).
         """
         if value == 0
-          @logged_in = value
+            @logged_in = value
         elsif value == 1
             runvb
             sleep(@rundelay)
@@ -256,18 +256,16 @@ class Routines
         self.param_name = name
         self.param_value = value
 
-        if validate(@m1, @m2)
-            if @param_string
-                self.ret =
-                run_as("#{__method__}_string", @param_name, @param_string)
-                self.param_cache = ["params", @param_name, @param_string]
-            else
-                self.ret =
-                run_as("#{__method__}_float", @param_name, @param_float)
-                self.param_cache = ["params", @param_name, @param_float]
-            end
+        raise BoundsError unless validate(@m1, @m2)
+        
+        if @param_string
+            self.ret =
+            run_as("#{__method__}_string", @param_name, @param_string)
+            self.param_cache = ["params", @param_name, @param_string]
         else
-            raise BoundsError
+            self.ret =
+            run_as("#{__method__}_float", @param_name, @param_float)
+            self.param_cache = ["params", @param_name, @param_float]
         end
     rescue BoundsError, VersionError => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
