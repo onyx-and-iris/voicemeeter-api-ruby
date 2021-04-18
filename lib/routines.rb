@@ -149,7 +149,7 @@ class Routines
         value.each do |key, val|
             test_regex(/(\w+)_(\d+)/, key)
             name = @m1
-            num = shiftdn(@m2)
+            num = (@base_0 ? @m2 : shiftdn(@m2))
 
             val.each do |k, v|
                 v = bool_to_int(v) if [false,true].include? v

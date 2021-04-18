@@ -57,7 +57,7 @@ module BuildStrips
         if @this_type == BASIC
             blueprint({
                 :strip => {:p_in => 2, :v_in=> 1},
-                :bus => {:p_out => 2, :v_out=> 0},
+                :bus => {:p_out => 1, :v_out=> 1},
                 :in_vban => 4, :out_vban => 4,
                 :patch_insert => 0,
                 :composite => 0
