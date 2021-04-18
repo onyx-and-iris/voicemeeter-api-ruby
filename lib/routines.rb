@@ -22,11 +22,9 @@ class Routines
 
     def ret=(value)
         """ C API return value """
-        if value&.nonzero?
-            raise APIError
-        end
-        @ret = value
+        raise APIError if value&.nonzero?
 
+        @ret = value
     rescue APIError => error
         puts "#{error.class}: #{error.message} #{value} in #{caller_locations[1].label}"
         raise
@@ -39,19 +37,19 @@ class Routines
         -1: cannot get client (unexpected)
         -2: unexpected login (logout was expected before).
         """
-        if value == 1
+        if value == 0
+          if vmr_pdirty&.nonzero?
+              clear_pdirty
+          end
+          if vmr_mdirty&.nonzero?
+              clear_mdirty
+          end
+
+          @logged_in = value
+        elsif value == 1
             runvb
         elsif value < 0
             raise LoginError
-        else
-            if vmr_pdirty&.nonzero?
-                clear_pdirty
-            end
-            if vmr_mdirty&.nonzero?
-                clear_mdirty
-            end
-
-            @logged_in = value
         end
 
     rescue LoginError => error
@@ -60,22 +58,21 @@ class Routines
     end
 
     def logged_out=(value)
-        if value&.nonzero?
-            raise LogoutError
-        end
+        raise LogoutError if value&.nonzero?
+
         @logged_out = value
     rescue LogoutError => error
         puts "#{error.class}: #{error.message}"
         raise
     end
 
-    def type=(type)
+    def type=(value)
         """ Determine the Voicemeeter type """
-        if type == "basic" || type == 1
+        if value == "basic" || value == 1
             @type = BASIC
-        elsif type == "banana" || type == 2
+        elsif value == "banana" || value == 2
             @type = BANANA
-        elsif type == "potato" || type == 3
+        elsif value == "potato" || value == 3
             @type = POTATO
         else
             raise VBTypeError
@@ -99,9 +96,8 @@ class Routines
     end
 
     def sp_value=(value)
-        unless value.is_a? (String)
-            raise ValueTypeError
-        end
+        raise ValueTypeError unless value.is_a? (String)
+
         @sp_value = value
     rescue ValueTypeError => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
@@ -138,11 +134,9 @@ class Routines
         if value.is_a? (String)
             @param_string = value
         else
-            if validate(@m3, value)
-                @param_float = value
-            else
-                raise ParamValueError
-            end
+            raise ParamValueError unless validate(@m3, value)
+
+            @param_float = value
         end
     rescue ParamValueError => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
@@ -173,9 +167,8 @@ class Routines
     end
 
     def logical_id=(value)
-        if value < 0 || value > 69
-            raise BoundsError
-        end
+        raise BoundsError unless value.between?(0,69)
+
         @logical_id = value
     end
 
@@ -193,9 +186,6 @@ class Routines
         end
 
         @param_cache = Hash.new
-    rescue VBTypeError => error
-        puts "#{error.class}: #{error.message} in #{__callee__}"
-        raise
     end
 
     def runvb
