@@ -38,12 +38,8 @@ class Routines
         -2: unexpected login (logout was expected before).
         """
         if value == 0
-          if vmr_pdirty&.nonzero?
-              clear_pdirty
-          end
-          if vmr_mdirty&.nonzero?
-              clear_mdirty
-          end
+          clear_pdirty
+          clear_mdirty
 
           @logged_in = value
         elsif value == 1

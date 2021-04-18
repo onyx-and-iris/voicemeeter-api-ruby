@@ -10,6 +10,10 @@ class MiniTest::Test
     @@vmr = Remote.new("banana", logmein: true, base_0: true)
 
     @@param_hash = {
+        :strip_0 => {
+            "mute" => ON, "gain" => ON, "A1" => ON, "A2" => ON, "A3" => ON,
+            "B1" => ON, "B2" => ON,
+        },
         :strip_1 => {
             "mute" => ON, "gain" => ON, "A1" => ON, "A2" => ON, "A3" => ON,
             "B1" => ON, "B2" => ON,
@@ -26,15 +30,11 @@ class MiniTest::Test
             "mute" => ON, "gain" => ON, "A1" => ON, "A2" => ON, "A3" => ON,
             "B1" => ON, "B2" => ON,
         },
-        :strip_5 => {
-            "mute" => ON, "gain" => ON, "A1" => ON, "A2" => ON, "A3" => ON,
-            "B1" => ON, "B2" => ON,
-        },
+        :bus_0 => {"mute" => ON, "gain" => ON, "mono" => ON},
         :bus_1 => {"mute" => ON, "gain" => ON, "mono" => ON},
         :bus_2 => {"mute" => ON, "gain" => ON, "mono" => ON},
         :bus_3 => {"mute" => ON, "gain" => ON, "mono" => ON},
         :bus_4 => {"mute" => ON, "gain" => ON, "mono" => ON},
-        :bus_5 => {"mute" => ON, "gain" => ON, "mono" => ON},
     }
 
     def setup

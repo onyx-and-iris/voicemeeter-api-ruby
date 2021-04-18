@@ -110,7 +110,7 @@ class MacroButtonStatusWithAliasBase0 < Minitest::Test
     end
 end
 
-class SetParamMultiBase0 < Minitest::Test
+class SetParamMultiWithAliasBase0 < Minitest::Test
     def test_it_sets_multiple_params_on_by_hash
         @@param_hash.each do |key, index|
             index.each do |k, v|
@@ -118,7 +118,7 @@ class SetParamMultiBase0 < Minitest::Test
             end
         end
 
-        @@vmr.set_parameter_multi(@@param_hash)
+        @@vmr.set_multi(@@param_hash)
         assert_equal(SUCCESS, @@vmr.ret)
         0.upto(1) do |num|
             [
@@ -149,7 +149,7 @@ class SetParamMultiBase0 < Minitest::Test
             end
         end
 
-        @@vmr.set_parameter_multi(@@param_hash)
+        @@vmr.set_multi(@@param_hash)
         assert_equal(SUCCESS, @@vmr.ret)
         0.upto(1) do |num|
             [

@@ -9,17 +9,18 @@ param(
         [ValidateSet("other","vbtype")]
         [string]$e,
         [parameter(Mandatory=$false)]
-        [switch]$p,[switch]$m,
-        [switch]$s,[switch]$v,[switch]$a,
-        [switch]$b
+        [switch]$p,[switch]$m,[switch]$s,
+        [switch]$mu,[switch]$a,[switch]$b,
+        [switch]$v
         )
 
 if ($p) { $type = "pass" }
 elseif ($m) { $type = "macros" }
 elseif ($s) { $type = "setandget" }
-elseif ($v) { $type = "vban" }
+elseif ($mu) { $type = "multi" }
 elseif ($a) { $type = "alias" }
 elseif ($b) { $type = "base0" }
+elseif ($v) { $type = "vban" }
 elseif ($e) { $type = "errors" }
 
 $global:failures = 0
@@ -32,7 +33,7 @@ Function RunTests {
 
         if ($e) { $_runtests = "bundle exec rake ${t}:${type}:${e}" }
         else { $_runtests = "bundle exec rake ${t}:${type}" }
-        
+
         $logfile = "test/${t}/${t}_${type}.log"
 
         1..$num | ForEach-Object `
@@ -54,7 +55,7 @@ Function ParseLogs {
                 "assertions" = 0
                 "failures" = 0
                 "errors" = 0
-                "skips" = 0                
+                "skips" = 0
         }
 
         ForEach ($line in `
@@ -69,14 +70,14 @@ Function ParseLogs {
                         1..4 | ForEach-Object {
                                 $value = $values[$_].split()[1]
                                 $name = $values[$_].split()[2]
-                                $DATA[$name] += [int]$value                       
+                                $DATA[$name] += [int]$value
                         }
                 }
         }
 
         $savefile = LogRotate -logfile $logfile
         $log_backupfile = Split-Path $savefile -leaf
-        
+
         "============================================`n" + `
         "Version: ${t} | Test type: ${type}`n" + `
         "Logfile for this test run: ${log_backupfile}`n" + `
@@ -94,7 +95,7 @@ Function LogRotate {
         | ForEach-Object {
                 $i = 1
                 $StopLoop = $false
-                
+
                 do {
                         try {
                                 $savefile = "$($_.Fullname)_$i.backup"
@@ -106,7 +107,7 @@ Function LogRotate {
                         catch {
                                 Start-Sleep -m 100
                                 $i++
-                        }      
+                        }
                 } until ($StopLoop -eq $true)
         }
         $savefile

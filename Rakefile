@@ -35,7 +35,7 @@ namespace :cleanup do
             'test/banana/summary.log',
             'test/potato/summary.log'
         ].each do |file|
-            File.open(file, 'w') {|file| file.truncate(0) }
+            File.open(file, 'w') { |file| file.truncate(0) }
         end
     end
 end
@@ -49,7 +49,7 @@ namespace :basic do
 
     Rake::TestTask.new :macros do |task|
         desc "Isolate Macrobutton tests for type BASIC"
-        task.pattern = "test/basic/pass/macrobutton_*.rb"
+        task.pattern = "test/basic/pass/macrobutton_status*.rb"
         task.warning = false
     end
 
@@ -59,9 +59,21 @@ namespace :basic do
         task.warning = false
     end
 
+    Rake::TestTask.new :multi do |task|
+        desc "Isolate Set Multiple Params tests for type BASIC"
+        task.pattern = "test/basic/pass/*multi_minitest.rb"
+        task.warning = false
+    end
+
     Rake::TestTask.new :alias do |task|
         desc "Isolate alias tests for type BASIC"
         task.pattern = "test/basic/pass/*_withalias_minitest.rb"
+        task.warning = false
+    end
+
+    Rake::TestTask.new :base0 do |task|
+        desc "Isolate base0 tests for type BASIC"
+        task.pattern = "test/basic/pass/*base0_status*.rb"
         task.warning = false
     end
 
@@ -102,6 +114,12 @@ namespace :banana do
     Rake::TestTask.new :setandget do |task|
         desc "Isolate Setter and Getter tests for type BANANA"
         task.pattern = "test/banana/pass/setandget*.rb"
+        task.warning = false
+    end
+
+    Rake::TestTask.new :multi do |task|
+        desc "Isolate Set Multiple Params tests for type BANANA"
+        task.pattern = "test/banana/pass/*multi_minitest.rb"
         task.warning = false
     end
 
@@ -154,6 +172,12 @@ namespace :potato do
     Rake::TestTask.new :setandget do |task|
         desc "Isolate Setter and Getter tests for type POTATO"
         task.pattern = "test/potato/pass/setandget*.rb"
+        task.warning = false
+    end
+
+    Rake::TestTask.new :multi do |task|
+        desc "Isolate Set Multiple Params tests for type POTATO"
+        task.pattern = "test/potato/pass/*multi_minitest.rb"
         task.warning = false
     end
 
