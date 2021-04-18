@@ -35,7 +35,7 @@ And with development dependencies (test files only on github):
 gem install voicemeeter_api_ruby --development
 ```
 ## Use
-Simplest use case, pass a block argument, for example:
+Simplest use case, pass a block, for example:
 ```ruby
 require 'routines'
 vmr = Remote.new("basic")
@@ -44,22 +44,17 @@ OFF = 0
 ON = 1
 
 vmr.run do
-    # Set strip furthest to the left mute ON, and then OFF
+    # Set strip furthest to the left mute ON
     vmr.strip[1].mute = true
     puts vmr.strip[1].mute  '=> true'
-    vmr.strip[1].mute = false
-    puts vmr.strip[1].mute  '=> false'
-
     # If you find this more verbose you may pass an argument value
     vmr.strip[2].mute(ON)
     puts vmr.strip[2].mute  '=> true'
-    vmr.strip[2].mute(OFF)
-    puts vmr.strip[2].mute  '=> false'
 end
 ```
-When using a block argument login and logout routines are handled for you. If
-you pass a Voicemeeter type as an argument the wrapper will attempt to load
-the program if it isn't currently running. Voicemeeter type may be one of:
+When passing run a block, login and logout routines are handled for you.
+
+Remote may be instantiated with a Voicemeeter type as an argument, in this case the wrapper will attempt to load the program if it isn't currently running. Voicemeeter type may be one of:
 - basic
 - banana
 - potato
@@ -71,9 +66,10 @@ require 'routines'
 # Login with a keyword argument; logmein
 vmr = Remote.new("banana", logmein: true)
 
-# Set bus second from the left, mono ON, and then OFF
-vmr.bus[2].mono = true
-puts vmr.bus[2].mono    '=> true'
+# Set strip second from the left A3 ON
+vmr.strip[2].A3 = true
+puts vmr.strip[2].A3    '=> true'
+# Set bus second from the left, mono OFF
 vmr.bus[2].mono = false
 puts vmr.bus[2].mono    '=> false'
 
@@ -89,15 +85,13 @@ vmr = Remote.new
 
 vmr.run do
     vmr.strip[1].A1 = true
-    vmr.strip[4].B2 = false
     vmr.bus[3].EQ = true
-    vmr.bus[5].mono = false
 
     vmr.vban_in[3].enable = false
     vmr.vban_out[1].enable = true
 end
 ```
-In this case the wrapper will determine the version from the running instance
+In this case the wrapper will determine the type from the running instance
 of Voicemeeter and build the console layout accordingly.
 
 All alias functions use a base 1 index meaning the strips and buses furthest to
@@ -111,9 +105,6 @@ vmr.run do
     # Set strip furthest to the left label name
     vmr.strip[0].label = 'my_strip_name'
     puts vmr.strip[0].label '=> my_strip_name'
-    # Set bus furthest to the left mute ON, and then OFF
-    vmr.bus[0].mute = true
-    vmr.bus[0].mute = false
 
     # Set top left macrobutton state only ON
     vmr.button[0].stateonly = true
@@ -157,15 +148,12 @@ Following commands work for both strips and buses.
 - gain range (-60, 12)
 
 ```ruby
-# Set mono, mute ON for strip 4
 vmr.strip[4].mono = true
 vmr.strip[4].mute = true
-# Set gain to 3.6 for strip 4
 vmr.strip[4].gain = 3.6
-# Set mono, mute OFF for bus 5
+
 vmr.bus[5].mono = false
 vmr.bus[5].mute = false
-# Set gain to -2.0 for bus 5
 vmr.bus[5].gain = -2.0
 ```
 ### Strip
@@ -190,17 +178,13 @@ vmr.strip[4].mc = true
 vmr.strip[5].k = true
 
 vmr.strip[1].A1 = true
-puts vmr.strip[1].A1    '=> true'
-vmr.strip[2].A2 = false
-puts vmr.strip[2].A2    '=> false'
-vmr.strip[3].A3(1)
-vmr.strip[4].A4(0)
-vmr.strip[5].A5(1)
-
+vmr.strip[2].A2 = true
+vmr.strip[3].A3 = true
+vmr.strip[4].A4 = true
+vmr.strip[5].A5 = true
 vmr.strip[6].B1 = false
-vmr.strip[7].B2(1)
-puts vmr.strip[7].B2    '=> true'
-vmr.strip[8].B3 = true
+vmr.strip[7].B2 = false
+vmr.strip[8].B3 = false
 ```
 ### Bus
 Following commands work only for buses
@@ -211,6 +195,8 @@ vmr.bus[1].EQ = true
 
 ### Macrobuttons
 Three modes defined: state, stateonly and trigger.
+- State runs associated scripts
+- Stateonly does not run associated scripts
 - Index range (1, 70)
 
 ```ruby
@@ -221,13 +207,12 @@ OFF = 0
 ON = 1
 
 vmr.run do
-  # Set macrobutton 3 state (runs associated scripts) ON
   vmr.button[3].state = true
   vmr.button[3].state(ON)
-  # Set macrobutton 4 stateonly (does not run associated scripts) ON
+
   vmr.button[4].stateonly = true
   vmr.button[4].stateonly(ON)
-  # Set macrobutton 5 trigger OFF
+
   vmr.button[5].trigger = false
   vmr.button[5].trigger(OFF)
 end
@@ -242,16 +227,17 @@ OFF = 0
 ON = 1
 
 vmr.run do
-  # record, stop, play
   vmr.recorder.record
   vmr.recorder.stop
   vmr.recorder.play
+  vmr.recorder.ff
+  vmr.recorder.rew
 
   # Set the output channels
   vmr.recorder.A1(ON)
-  vmr.recorder.A2(OFF)
+  vmr.recorder.A2(ON)
   vmr.recorder.A3 = true
-  vmr.recorder.B1(ON)
+  vmr.recorder.B1(OFF)
   vmr.recorder.B2 = false
 end
 ```
@@ -298,9 +284,9 @@ vmr.command.restart
 vmr.command.shutdown
 
 
-# loads a config file named test2.xml in default config directory
+# Loads a config file named test2.xml in default config directory
 vmr.command.load('test2.xml')
-# saves a config file named save0.xml in default config directory
+# Saves a config file named save0.xml in default config directory
 vmr.command.save('save0.xml')
 ```
 
@@ -310,7 +296,7 @@ To see a list of available tests run:
 ```
 Bundle exec rake --tasks
 ```
-Then, for example, if you wish to run tests for Voicemeeter version basic,
+Then, for example, if you wish to run tests for Voicemeeter type basic,
 test type pass:
 ```
 Bundle exec rake basic:pass
@@ -329,16 +315,12 @@ error type tests can be defined by string argument, for example:
 ```
 Will execute 5 times `Bundle exec rake banana:errors:other`
 
-Results will be logged to the directory of the version type tested.
+Results will be logged to the directory of the Voicemeeter type tested.
 To clean up files after tests run:
-```
-# clears everything
-Bundle exec rake cleanup:all
-# clears log files
-Bundle exec rake cleanup:logs
-# truncates summary files
-Bundle exec rake cleanup:summary
-```
+- Cleanup everything `Bundle exec rake cleanup:all`
+- Cleanup logs `Bundle exec rake cleanup:logs`
+- Truncate summary files `Bundle exec rake cleanup:summary`
+
 
 ### Contribute
 If you wish to contribute please target the dev branch and include any relevant
