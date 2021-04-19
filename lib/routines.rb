@@ -1,4 +1,5 @@
 require 'open3'
+require 'pp'
 
 require_relative 'base'
 require_relative 'strips'
@@ -15,7 +16,8 @@ class Routines
 
     attr_accessor :val, :param_cache, :base_0, :rundelay
     attr_reader :ret, :type, :logged_in, :logged_out, :sp_command, :sp_value,
-    :param_string, :param_options, :param_float, :param_name, :instdir
+    :param_string, :param_options, :param_float, :param_name, :instdir, 
+    :inst_exe, :pid
 
     SIZE = 1
     BUFF = 512
@@ -117,10 +119,10 @@ class Routines
         If no matches continue with assignment but there
         will be no boundary testing
         """
-        if test_regex(/^(\w+)\[(\d+)\].(\w+)/, value)
-        elsif test_regex(/^vban.(\w+)\[(\d+)\].(\w+)/, value)
-        elsif test_regex(/^Fx.(\w+).On/, value)
-        elsif test_regex(/^patch.(\w+)\[(\d+)\]/, value)
+        if test_regex(/^(\w+)\[(\d+)\].(\w+)/, value) == 3
+        elsif test_regex(/^vban.(\w+)\[(\d+)\].(\w+)/, value) == 3
+        elsif test_regex(/^Fx.(\w+).On/, value) == 1
+        elsif test_regex(/^patch.(\w+)\[(\d+)\]/, value) == 2
         end
 
         @param_name = value
@@ -141,25 +143,59 @@ class Routines
 
     def param_options=(value)
         """ Test options against regex then build param string """
-        build_str = []
+        @param_options = Hash.new
+        strip_params = []
+        bus_params = []
+        mb_params = []
+        vban_params = []
+
         value.each do |key, val|
-            test_regex(/(\w+)_(\d+)/, key)
-            name = @m1
-            num = (@base_0 ? @m2 : shiftdn(@m2))
+            if test_regex(/(\w+)_(\d+)/, key) == 2
+                name = @m1
+                num = (@base_0 ? @m2 : shiftdn(@m2))
+            elsif test_regex(/(\w+)_([a-z]+)(\d+)/, key) == 3
+                name = @m1
+                dir = @m2
+                num = (@base_0 ? @m3 : shiftdn(@m3))
+            end
 
             val.each do |k, v|
                 v = bool_to_int(v) if [false,true].include? v
 
                 if validate(name, num)
-                    build_str.append(
-                        "#{name.capitalize}[#{num.to_s}].#{k} = #{v}"
-                    )
-                    self.param_cache =
-                    ["params", "#{name.capitalize}[#{num.to_s}].#{k}", v]
+                    if name == "strip"
+                        strip_params.append(
+                            "#{name.capitalize}[#{num.to_s}].#{k} = #{v}"
+                        )
+                        self.param_cache =
+                        ["params", "#{name.capitalize}[#{num.to_s}].#{k}", v]
+                    elsif name == "bus"
+                        bus_params.append(
+                            "#{name.capitalize}[#{num.to_s}].#{k} = #{v}"
+                        )
+                        self.param_cache =
+                        ["params", "#{name.capitalize}[#{num.to_s}].#{k}", v]
+                    elsif name == "mb"
+                        mode = 1 if k == "state"
+                        mode = 2 if k == "stateonly"
+                        mode = 3 if k == "trigger"
+                        mb_params.append(
+                            [num,v,mode]
+                        )
+                        self.param_cache = ["macros", num, mode, v]
+                    elsif name == "vban"
+                        param = "on" if k == "enable"
+                        vban_params.append(
+                            "#{name}.#{dir}stream[#{num.to_s}].#{param} = #{v}"
+                        )
+                    end
                 end
             end
         end
-        @param_options =  build_str.join(";")
+        @param_options[:strip] = strip_params if strip_params.size > 0
+        @param_options[:bus] = bus_params if bus_params.size > 0
+        @param_options[:mb] = mb_params if mb_params.size > 0
+        @param_options[:vban] = vban_params if vban_params.size > 0
     end
 
     def logical_id=(value)
@@ -170,6 +206,14 @@ class Routines
 
     def base_0=(value)
         @base_0 = value
+    end
+
+    def pid=(value)
+        @pid = value
+    end
+
+    def pid
+        @pid
     end
 
     def initialize(type = nil, opts = {})
@@ -189,7 +233,8 @@ class Routines
 
     def runvb
         self.inst_exe = @type
-        Open3.popen3(@inst_exe, '')
+        stdin, stdout, stderr, wait_thread = Open3.popen3(@inst_exe, '')
+        self.pid = wait_thread[:pid]
     rescue EXENotFoundError => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
     end
@@ -212,6 +257,7 @@ class Routines
     end
 
     def logout
+        sleep(0.4)
         self.logged_out = run_as(__method__)
     end
 
@@ -257,7 +303,7 @@ class Routines
         self.param_value = value
 
         raise BoundsError unless validate(@m1, @m2)
-        
+
         if @param_string
             self.ret =
             run_as("#{__method__}_string", @param_name, @param_string)
@@ -273,7 +319,13 @@ class Routines
 
     def set_parameter_multi(param_hash)
         self.param_options = param_hash
-        self.ret = run_as(__method__, @param_options)
+        @param_options.each do |key, val|
+            if key == :mb
+                val.each { |id, state, mode| macro_setstatus(id, state, mode) }            
+            else
+                self.ret = run_as(__method__, val.join(";"))
+            end
+        end
     end
 
     def get_parameter(name)
@@ -318,7 +370,7 @@ class Remote < Routines
 
         if block_given?
             yield
-
+            
             logout
         end
     end

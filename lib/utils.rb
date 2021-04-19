@@ -6,11 +6,19 @@ module Utils
     end
 
     def m2=(value)
-        @m2 = value.to_i
+        if value.to_i.to_s == value
+            @m2 = value.to_i
+        else
+            @m2 = value
+        end
     end
 
     def m3=(value)
-        @m3 = value
+        if value.to_i.to_s == value
+            @m3 = value
+        else
+            @m3 = value
+        end
     end
 
     def test_regex(regex, param)
@@ -18,15 +26,18 @@ module Utils
             self.m1 = m[1]
             self.m2 = m[2]
             self.m3 = m[3]
+            matches = 0
+            (1..m.size).each { |num| matches += 1 if m[num] }
+            return matches
         end
     end
 
     def shiftdn(oldnum)
-        oldnum - 1
+        oldnum.to_i - 1
     end
 
     def shiftup(oldnum)
-        oldnum + 1
+        oldnum.to_i + 1
     end
 
     def bool_to_float(value)
@@ -51,7 +62,9 @@ module Utils
             return num < @strip_total
         elsif name == "bus"
             return num < @bus_total
-        elsif name == "instream" || name == "outstream"
+        elsif name == "mb"
+            return num.between?(0, 69)
+        elsif ["vban", "instream", "outstream"].include? name
             return num < @vban_total
         elsif name == "composite"
             return num < @composite_total
