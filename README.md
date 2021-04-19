@@ -2,14 +2,16 @@
 The purpose of this wrapper is to provide an easy-to-use, flexible layer of
 abstraction over the C API provided with the Voicemeeter virtual mixing console.
 
-This wrapper is still being worked on and I will update this readme as I go.
+This wrapper is still being worked on, for an outline of future changes refer to:
+[Project CHANGELOG](docs/CHANGELOG.md)
 
 ## Tested against
 - Basic 1.0.7.8
 - Banana 2.0.5.8
 - Potato 3.0.1.8
 
-You may have success with many commands in earlier versions but some commands (example Macrobuttons) were only added to the API in later releases.
+You may have success with many commands in earlier versions but some commands 
+(example Macrobuttons) were only added to the API in later releases.
 
 ## Requirements
 - Voicemeeter: https://voicemeeter.com/
@@ -26,7 +28,7 @@ If you want to run test units then:
 Bundle install --with development
 ```
 ### Gem
-Manual install wrapper from your shell:
+Manually install wrapper from your shell:
 ```
 gem install voicemeeter_api_ruby
 ```
@@ -43,6 +45,7 @@ vmr = Remote.new("basic")
 OFF = 0
 ON = 1
 
+# pass a block to vmr.run
 vmr.run do
     # Set strip furthest to the left mute ON
     vmr.strip[1].mute = true
@@ -52,15 +55,18 @@ vmr.run do
     puts vmr.strip[2].mute  '=> true'
 end
 ```
-When passing run a block, login and logout routines are handled for you.
+When passing a block, login and logout routines are handled for you.
 
-Remote may be instantiated with a Voicemeeter type as an argument, in this case the wrapper will attempt to load the program if it isn't currently running. Voicemeeter type may be one of:
+Remote may be instantiated with a Voicemeeter type argument, in which case the 
+wrapper will attempt to load that Voicemeeter type if it isn't currently running. 
+Voicemeeter type may be one of:
 - basic
 - banana
 - potato
 
 If you wish to login/logout manually you may run them independently but you MUST
-call login once at the start and logout once at the end of your program. Login may be called with a keyword argument:
+call login once at the start of your program, then logout once at the end of your 
+program. Login may be called with a keyword argument:
 ```ruby
 require 'routines'
 # Login with a keyword argument; logmein
