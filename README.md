@@ -3,7 +3,7 @@ The purpose of this wrapper is to provide an easy-to-use, flexible layer of
 abstraction over the C API provided with the Voicemeeter virtual mixing console.
 
 This wrapper is still being worked on, for an outline of future changes refer to:
-[Project CHANGELOG](docs/CHANGELOG.md)
+[Project CHANGELOG](CHANGELOG.md)
 
 ## Tested against
 - Basic 1.0.7.8
