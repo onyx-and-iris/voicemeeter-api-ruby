@@ -1,6 +1,28 @@
 require "rake/testtask"
+require 'routines'
 
 task default: %w[basic:pass]
+task :everything do
+    test = Remote.new("basic")
+    test.run do 
+
+        puts "Running all BASIC tests"
+        Rake.application.in_namespace(:basic){|namespace| namespace.tasks.each(&:invoke)}
+        test.command.shutdown
+        sleep(0.2)
+
+        puts "Running all BANANA tests"
+        Rake.application.in_namespace(:banana){|namespace| namespace.tasks.each(&:invoke)}
+        test.command.shutdown
+        sleep(0.2)
+
+        puts "Running all POTATO tests"
+        Rake.application.in_namespace(:potato){|namespace| namespace.tasks.each(&:invoke)}
+        sleep(0.2)
+        test.command.shutdown
+
+    end
+end
 
 namespace :cleanup do
     task :all => [:basic, :banana, :potato, :summary]
@@ -41,6 +63,8 @@ namespace :cleanup do
 end
 
 namespace :basic do
+    task :all => [:pass, :macros, :setandget, :multi, :alias, :base0, :vban]
+
     Rake::TestTask.new :pass do |task|
         desc "PASS tests for type BASIC"
         task.pattern = "test/basic/pass/*_minitest.rb"
@@ -84,6 +108,8 @@ namespace :basic do
     end
 
     namespace :errors do
+        task :all => [:other, :vbtype]
+
         Rake::TestTask.new :other do |task|
             desc "ERROR tests other type BASIC"
             task.pattern = "test/basic/errors/errors*.rb"
@@ -99,6 +125,8 @@ namespace :basic do
 end
 
 namespace :banana do
+    task :all => [:pass, :macros, :setandget, :multi, :alias, :base0, :vban]
+
     Rake::TestTask.new :pass do |task|
         desc "PASS tests for type BANANA"
         task.pattern = "test/banana/pass/*_minitest.rb"
@@ -142,6 +170,8 @@ namespace :banana do
     end
 
     namespace :errors do
+        task :all => [:other, :vbtype]
+
         Rake::TestTask.new :other do |task|
             desc "ERROR tests for type BANANA"
             task.pattern = "test/banana/errors/errors*.rb"
@@ -157,6 +187,8 @@ namespace :banana do
 end
 
 namespace :potato do
+    task :all => [:pass, :macros, :setandget, :multi, :alias, :base0, :vban]
+
     Rake::TestTask.new :pass do |task|
         desc "PASS tests for type POTATO"
         task.pattern = "test/potato/pass/*_minitest.rb"
@@ -200,6 +232,8 @@ namespace :potato do
     end
 
     namespace :errors do
+        task :all => [:other, :vbtype]
+
         Rake::TestTask.new :other do |task|
             desc "ERROR tests for type POTATO"
             task.pattern = "test/potato/errors/errors*.rb"
