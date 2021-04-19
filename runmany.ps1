@@ -3,7 +3,7 @@ param(
         [Int] $num = 1,
         [switch]$cycle,
         [parameter(Mandatory=$true)]
-        [ValidateSet("basic","banana","potato")]
+        [ValidateSet("basic","banana","potato", "all")]
         [string]$t,
         [parameter(Mandatory=$false)]
         [ValidateSet("other","vbtype")]
@@ -113,13 +113,56 @@ Function LogRotate {
         $savefile
 }
 
+Function Verify {
+    $logfile = "test/all/all.log"
+    $_runtests = "bundle exec rake everything"
+    $RESULT_PATTERN = "^[0-9]+\s"
+
+    1..$num | ForEach-Object `
+    { "Running test $_ of $num" | Tee-Object -FilePath $logfile -Append
+    Invoke-Expression $_runtests | Tee-Object -FilePath $logfile -Append }
+
+    $DATA = @{
+            "runs" = 0
+            "assertions" = 0
+            "failures" = 0
+            "errors" = 0
+            "skips" = 0
+    }
+
+    ForEach ($line in `
+    $(Get-content -Path "${logfile}")) {
+            if ($line -match $RESULT_PATTERN) {
+                    $values = $line.split(",")
+
+                    $value = $values[0].split()[0]
+                    $name = $values[0].split()[1]
+                    $DATA[$name] += [int]$value
+
+                    1..4 | ForEach-Object {
+                            $value = $values[$_].split()[1]
+                            $name = $values[$_].split()[2]
+                            $DATA[$name] += [int]$value
+                    }
+            }
+    }
+
+    Clear-Content $logfile
+    ${DATA} | ForEach-Object { $_ } | Tee-Object -FilePath $logfile -Append
+}
+
 
 if ($MyInvocation.InvocationName -ne ".")
 {
-        if ($cycle) {
-                @(100, 200, 500, 1000) | ForEach-Object {
-                        RunTests -cycle_num $_
-                        if ($global:failures -gt 0) { break }
-                }
-        } else { RunTests }
+        if ($t -eq "all") {
+            Verify
+        }
+        else {
+            if ($cycle) {
+                    @(100, 200, 500, 1000) | ForEach-Object {
+                            RunTests -cycle_num $_
+                            if ($global:failures -gt 0) { break }
+                    }
+            } else { RunTests }
+        }
 }
