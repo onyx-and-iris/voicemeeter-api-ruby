@@ -8,7 +8,7 @@ class VBTypeErrorTest < MiniTest::Test
         ERROR: Unknown Voicemeeter type
         """
         assert_raises(VBTypeError) do
-            @@vmr = Remote.new("garbagevalue", logmein: true)
+            vmr = Remote.new("garbagevalue")
         end
     end
 end
