@@ -192,10 +192,10 @@ class Routines
                 end
             end
         end
-        @param_options[:strip] = strip_params if strip_params.size > 0
-        @param_options[:bus] = bus_params if bus_params.size > 0
-        @param_options[:mb] = mb_params if mb_params.size > 0
-        @param_options[:vban] = vban_params if vban_params.size > 0
+        @param_options[:strip] = strip_params if strip_params.any?
+        @param_options[:bus] = bus_params if bus_params.any?
+        @param_options[:mb] = mb_params if mb_params.any?
+        @param_options[:vban] = vban_params if vban_params.any?
     end
 
     def logical_id=(value)
@@ -232,11 +232,18 @@ class Routines
     end
 
     def runvb
+        raise VBTypeError if @type.nil?
+
         self.inst_exe = @type
         stdin, stdout, stderr, wait_thread = Open3.popen3(@inst_exe, '')
         self.pid = wait_thread[:pid]
+    rescue VBTypeError => error
+        error.set_backtrace([])
+        puts "#{error.class}: #{error.on_launch}"
+        raise
     rescue EXENotFoundError => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
+        raise
     end
 
     def vbtype

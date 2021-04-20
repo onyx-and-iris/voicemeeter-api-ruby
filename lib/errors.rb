@@ -12,6 +12,13 @@ module Errors
     end
 
     class VBTypeError < StandardError
+        def on_launch
+            "Login was requested but no Voicemeeter type was provided,
+            nor was Voicemeeter running. To fix do either of the following:
+            a) Provide a Voicemeeter type when you call Remote.new
+            b) Ensure that Voicemeeter is running before your program starts"
+        end
+
         def message
             "Unknown Voicemeeter type"
         end
