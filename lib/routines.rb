@@ -264,7 +264,7 @@ class Routines
     end
 
     def logout
-        sleep(0.4)
+        sleep(0.02)
         self.logged_out = run_as(__method__)
     end
 
