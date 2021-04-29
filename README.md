@@ -3,19 +3,19 @@ The purpose of this wrapper is to provide an easy-to-use, flexible layer of
 abstraction over the C API provided with the Voicemeeter virtual mixing console.
 
 This wrapper is still being worked on, for an outline of future changes refer to:
-[Project CHANGELOG](CHANGELOG.md)
+[CHANGELOG](CHANGELOG.md)
 
 ## Tested against
 - Basic 1.0.7.8
 - Banana 2.0.5.8
 - Potato 3.0.1.8
 
-You may have success with many commands in earlier versions but some commands 
+You may have success with many commands in earlier versions but some commands
 (example Macrobuttons) were only added to the API in later releases.
 
 ## Requirements
 - Voicemeeter: https://voicemeeter.com/
-- Ruby 2.3 or greater
+- Ruby 2.7 or greater
 
 ## Installation
 ### Bundler
@@ -57,49 +57,19 @@ end
 ```
 When passing a block, login and logout routines are handled for you.
 
-Remote may be instantiated with a Voicemeeter type argument, in which case the 
-wrapper will attempt to load that Voicemeeter type if it isn't currently running. 
-Voicemeeter type may be one of:
+## Remote
+Remote can be called a few ways, for example:
+
+- `vmr = Remote.new` : If you know for sure that Voicemeeter is already running you may omit the Voicemeeter type when you call Remote. In this case the wrapper will determine the type from the running instance of Voicemeeter and build the console layout accordingly.
+
+- `vmr = Remote.new("potato")` : Remote may be instantiated with a Voicemeeter type argument, in which case the wrapper will attempt to load that Voicemeeter type if it isn't currently running. Voicemeeter type may be one of:
 - basic
 - banana
 - potato
 
-If you wish to login/logout manually you may run them independently but you MUST
-call login once at the start of your program, then logout once at the end of your 
-program. Login may be called with a keyword argument:
-```ruby
-require 'routines'
-# Login with a keyword argument; logmein
-vmr = Remote.new("banana", logmein: true)
+- `vmr = Remote.new("banana", logmein: true)` : If you wish to login/logout manually you may run them independently but you MUST call login once at the start of your program, then logout once at the end of your program. Login may be called with a keyword argument.
 
-# Set strip second from the left A3 ON
-vmr.strip[2].A3 = true
-puts vmr.strip[2].A3    '=> true'
-# Set bus second from the left, mono OFF
-vmr.bus[2].mono = false
-puts vmr.bus[2].mono    '=> false'
-
-# Call logout once at the end of your program
-vmr.logout
-```
-If you know for sure that Voicemeeter is already running you may omit the
-Voicemeeter type when you call Remote, for example:
-```ruby
-require 'routines'
-# no type passed as argument
-vmr = Remote.new
-
-vmr.run do
-    vmr.strip[1].A1 = true
-    vmr.bus[3].EQ = true
-
-    vmr.vban_in[3].enable = false
-    vmr.vban_out[1].enable = true
-end
-```
-In this case the wrapper will determine the type from the running instance
-of Voicemeeter and build the console layout accordingly.
-
+## Base 1|0
 All alias functions use a base 1 index meaning the strips and buses furthest to
 the left are defined as strip[1], bus[1] and increment rightwards. If you prefer
 to use a base 0 index you may pass a keyword argument base_0, for example:
@@ -120,7 +90,9 @@ end
 ```
 As you see, the same applies to macrobutton and vban instream/outstream methods.
 
-Set many strip/bus parameters at once by passing set_multi a hash, for example:
+## Multiple Parameters
+Set many strip/bus/vban/button parameters at once by passing set_multi a hash,
+for example:
 ```ruby
 require 'routines'
 vmr = Remote.new
@@ -129,20 +101,18 @@ OFF = 0
 ON = 1
 # using a base 1 index by default
 vmr.run do
-  vmr.set_multi({
-      :strip_1 => {"mute" => ON, "gain" => 3.2, "A1" => ON},
-      :strip_2 => {"mute" => true, "gain" => -4.8, "A1" => true},
-      :strip_3 => {"mute" => ON, "gain" => 0.0, "A1" => ON},
-      :bus_1 => {"mute" => true, "gain" => -3.3, "mono" => true},
-      :bus_2 => {"mute" => ON, "gain" => 8.6, "mono" => ON},
+    vmr.set_multi({
+        :strip_1 => {"mute" => true, "gain" => 3.2, "A1" => true},
+        :bus_1 => {"mute" => true, "gain" => -3.3, "mono" => true},
+        :mb_34 => {"stateonly" => OFF},
+        :vban_in3 => {"enable" => OFF},
   })
 
   vmr.set_multi({
-      :strip_1 => {"mute" => false, "gain" => 0.0, "A1" => false},
-      :strip_2 => {"mute" => OFF, "gain" => -2.1, "A1" => OFF},
       :strip_3 => {"mute" => false, "gain" => 3.0, "A1" => false},
-      :bus_1 => {"mute" => OFF, "gain" => -8.3, "mono" => OFF},
       :bus_2 => {"mute" => false, "gain" => 10.6, "mono" => false},
+      :mb_34 => {"state" => OFF},
+      :vban_in3 => {"enable" => ON},
   })
 end
 ```
