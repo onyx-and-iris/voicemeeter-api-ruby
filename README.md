@@ -39,7 +39,7 @@ gem install voicemeeter_api_ruby --development
 ## Use
 Simplest use case, pass a block, for example:
 ```ruby
-require 'routines'
+require 'voicemeeter'
 vmr = Remote.new("basic")
 
 OFF = 0
@@ -60,21 +60,22 @@ When passing a block, login and logout routines are handled for you.
 ## Remote
 Remote can be called a few ways, for example:
 
-- `vmr = Remote.new` : If you know for sure that Voicemeeter is already running you may omit the Voicemeeter type when you call Remote. In this case the wrapper will determine the type from the running instance of Voicemeeter and build the console layout accordingly.
+- `vmr = Remote.new` : If you know for sure that Voicemeeter is already running you may omit the Voicemeeter type when you call Remote. In this case the wrapper will determine the type from the running instance of Voicemeeter and build the console layout accordingly. This could be useful if you don't always use the same version of Voicemeeter but prefer to write a single script.
+Then fire up Voicemeeter first according to your needs and then start the script.
 
 - `vmr = Remote.new("potato")` : Remote may be instantiated with a Voicemeeter type argument, in which case the wrapper will attempt to load that Voicemeeter type if it isn't currently running. Voicemeeter type may be one of:
 - basic
 - banana
 - potato
 
-- `vmr = Remote.new("banana", logmein: true)` : If you wish to login/logout manually you may run them independently but you MUST call login once at the start of your program, then logout once at the end of your program. Login may be called with a keyword argument.
+- `vmr = Remote.new("banana", logmein: true)` : If you wish to login/logout manually you may run them independently but you MUST call login once at the start of your program, then logout once at the end of your program. Login may be called with a keyword argument. At the end of your script use `vmr.logout`. Use this method of invocation if you don't intend to pass a block.
 
 ## Base 1|0
 All alias functions use a base 1 index meaning the strips and buses furthest to
 the left are defined as strip[1], bus[1] and increment rightwards. If you prefer
 to use a base 0 index you may pass a keyword argument base_0, for example:
 ```ruby
-require 'routines'
+require 'voicemeeter'
 vmr = Remote.new("potato", base_0: true)
 
 vmr.run do
@@ -94,7 +95,7 @@ As you see, the same applies to macrobutton and vban instream/outstream methods.
 Set many strip/bus/vban/button parameters at once by passing set_multi a hash,
 for example:
 ```ruby
-require 'routines'
+require 'voicemeeter'
 vmr = Remote.new
 
 OFF = 0
@@ -168,7 +169,6 @@ Following commands work only for buses
 vmr.bus[1].EQ = true
 ```
 
-
 ### Macrobuttons
 Three modes defined: state, stateonly and trigger.
 - State runs associated scripts
@@ -176,7 +176,7 @@ Three modes defined: state, stateonly and trigger.
 - Index range (1, 70)
 
 ```ruby
-require 'routines'
+require 'voicemeeter'
 vmr = Remote.new
 
 OFF = 0
@@ -196,7 +196,7 @@ end
 
 ### Recorder
 ```ruby
-require 'routines'
+require 'voicemeeter'
 vmr = Remote.new
 
 OFF = 0
@@ -220,7 +220,7 @@ end
 
 ### VBAN
 ```ruby
-require 'routines'
+require 'voicemeeter'
 vmr = Remote.new("potato", logmein: true)
 
 OFF = 0
@@ -290,6 +290,8 @@ error type tests can be defined by string argument, for example:
 .\runmany.ps1 5 -t 'banana' -e 'other'
 ```
 Will execute 5 times `Bundle exec rake banana:errors:other`
+
+Run all tests for all versions with `Bundle exec rake everything`
 
 Results will be logged to the directory of the Voicemeeter type tested.
 To clean up files after tests run:
