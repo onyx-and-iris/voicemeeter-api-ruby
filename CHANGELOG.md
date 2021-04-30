@@ -7,15 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Before any minor/major patch is released all test units will be run to verify they pass.
 
 ## [Unreleased]
-- [ ] Support for other types of parameters in multi_set
 - [ ] Add loading/saving of EQ profiles.
 - [ ] Add more settable commands for VBAN parameters
 - [ ] Consider adding a multi_get function.
-- [ ] Add delay for save/load special commands as settable attributes.
-- [ ] Add settable delay before shutdown to avoid race condition on last command
 
-- [x] Add support for other param types in multi_set
-- [x] Automate running of every test for every version
+## [1.0.9] - 2021-04-30
+### Added
+- Support for other types of parameters in multi_set
+- Automate running of every test for every version
+- Settable delay before logout to avoid race condition on last command
+- Delay for save/load special commands is now settable.
+- Delay for shutdown special command is now settable.
+
+### Changed
+- Remote subclass moved into 'voicemeeter.rb'.
+- All tests updated to reflect changes.
+- Updated README to reflect changes.
 
 ## [1.0.8] - 2021-04-18
 ### Added
