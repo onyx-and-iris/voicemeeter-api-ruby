@@ -1,5 +1,4 @@
 require 'open3'
-require 'pp'
 
 require_relative 'base'
 require_relative 'strips'
@@ -16,7 +15,7 @@ class Routines
 
     attr_accessor :val, :param_cache, :base_0, :rundelay
     attr_reader :ret, :type, :logged_in, :logged_out, :sp_command, :sp_value,
-    :param_string, :param_options, :param_float, :param_name, :instdir, 
+    :param_string, :param_options, :param_float, :param_name, :instdir,
     :inst_exe, :pid
 
     SIZE = 1
@@ -221,6 +220,9 @@ class Routines
         self.setdelay = opts[:setdelay] || ACCESSOR_DELAY
         self.getdelay = opts[:getdelay] || ACCESSOR_DELAY
         self.rundelay = opts[:rundelay] || RUNDELAY
+        self.logoutdelay = opts[:logoutdelay] || LOGOUTDELAY
+        self.shutdowndelay = opts[:shutdowndelay] || SHUTDOWNDELAY
+        self.saveloaddelay = opts[:saveloaddelay] || SAVELOADDELAY
 
         if type
             self.type = type
@@ -264,7 +266,7 @@ class Routines
     end
 
     def logout
-        sleep(0.02)
+        sleep(@logoutdelay)
         self.logged_out = run_as(__method__)
     end
 
@@ -328,7 +330,7 @@ class Routines
         self.param_options = param_hash
         @param_options.each do |key, val|
             if key == :mb
-                val.each { |id, state, mode| macro_setstatus(id, state, mode) }            
+                val.each { |id, state, mode| macro_setstatus(id, state, mode) }
             else
                 self.ret = run_as(__method__, val.join(";"))
             end
@@ -356,29 +358,6 @@ class Routines
             c_get = FFI::MemoryPointer.new(:string, BUFF, true)
             self.ret = run_as("#{__method__}_string", @param_name, c_get)
             @val = c_get.read_string
-        end
-    end
-end
-
-class Remote < Routines
-    """
-    subclass to BaseRoutines.
-    Performs log in/out routines cleanly.
-    May yield a block argument otherwise simply login.
-    """
-    def initialize(type = nil, **opts)
-        logmein = opts.delete(:logmein)
-        super(type, **opts)
-        self.run if logmein
-    end
-
-    def run
-        login
-
-        if block_given?
-            yield
-            
-            logout
         end
     end
 end

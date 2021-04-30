@@ -82,39 +82,39 @@ module Alias
             self.id = index
         end
 
-        def set(set, mode)
+        def setter(set, mode)
             if [false,true].include? set
                 set = @run.bool_to_float(set)
             end
             @run.macro_setstatus(@id, set, mode)
         end
 
-        def get(mode)
+        def getter(mode)
             @run.macro_getstatus(@id, mode)
         end
 
         def state=(value)
-            self.set(value, mode=1)
+            self.setter(value, mode=1)
         end
 
         def state
-            self.get(mode=1)
+            self.getter(mode=1)
         end
 
         def stateonly=(value)
-            self.set(value, mode=2)
+            self.setter(value, mode=2)
         end
 
         def stateonly
-            self.get(mode=2)
+            self.getter(mode=2)
         end
 
         def trigger=(value)
-            self.set(value, mode=3)
+            self.setter(value, mode=3)
         end
 
         def trigger
-            self.get(mode=3)
+            self.getter(mode=3)
         end
     end
 
@@ -123,7 +123,7 @@ module Alias
             super
         end
 
-        def set(command, value = nil)
+        def setter(command, value = nil)
             command.chomp!('=')
             if [false,true].include? value
                 value = @run.bool_to_float(value)
@@ -136,27 +136,27 @@ module Alias
         end
 
         def play
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
         def stop
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
         def record
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
         def ff
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
         def rew
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
         def A1=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
 
         def A1(value)
@@ -164,7 +164,7 @@ module Alias
         end
 
         def A2=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
 
         def A2(value)
@@ -172,7 +172,7 @@ module Alias
         end
 
         def A3=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
 
         def A3(value)
@@ -180,7 +180,7 @@ module Alias
         end
 
         def A4=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
 
         def A4(value)
@@ -188,7 +188,7 @@ module Alias
         end
 
         def A5=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
 
         def A5(value)
@@ -196,7 +196,7 @@ module Alias
         end
 
         def B1=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
 
         def B1(value)
@@ -204,7 +204,7 @@ module Alias
         end
 
         def B2=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
 
         def B2(value)
@@ -212,7 +212,7 @@ module Alias
         end
 
         def B3=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
 
         def B3(value)
@@ -237,7 +237,7 @@ module Alias
             self.direction = dir
         end
 
-        def set(command, value)
+        def setter(command, value)
             command.chomp!('=')
             if [false,true].include? value
                 value = @run.bool_to_float(value)
@@ -246,7 +246,7 @@ module Alias
         end
 
         def enable=(value)
-            self.set("on", value)
+            self.setter("on", value)
         end
 
         def enable(value)
@@ -254,7 +254,7 @@ module Alias
         end
 
         def name=(value)
-            self.set(__method__.to_s, value)
+            self.setter(__method__.to_s, value)
         end
     end
 
@@ -263,7 +263,7 @@ module Alias
             super
         end
 
-        def set(command, value = nil, delay = 0.2)
+        def setter(command, value = nil, delay = @run.saveloaddelay)
             command.chomp!('=')
             command[0] = command[0].capitalize
             @run.sp_command = command
@@ -277,35 +277,36 @@ module Alias
         end
 
         def shutdown
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
+            sleep(@run.shutdowndelay)
         end
 
         def show
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
         def restart
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
         def eject
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
         def reset
-            self.set(__method__.to_s)
+            self.setter(__method__.to_s)
         end
 
-        def save(value, delay = 0.2)
-            self.set(__method__.to_s, value, delay)
+        def save(value, delay = @run.saveloaddelay)
+            self.setter(__method__.to_s, value, delay)
         end
 
-        def load(value, delay = 0.2)
-            self.set(__method__.to_s, value, delay)
+        def load(value, delay = @run.saveloaddelay)
+            self.setter(__method__.to_s, value, delay)
         end
 
         def showvbanchat
-            self.set("DialogShow.VBANCHAT")
+            self.setter("DialogShow.VBANCHAT")
         end
     end
 end
