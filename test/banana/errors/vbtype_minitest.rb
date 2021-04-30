@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'routines'
+require 'voicemeeter'
 
 
 class VBTypeErrorTest < MiniTest::Test

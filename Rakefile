@@ -1,5 +1,5 @@
 require "rake/testtask"
-require 'routines'
+require 'voicemeeter'
 
 task default: %w[basic:pass]
 task :everything do
@@ -9,16 +9,13 @@ task :everything do
         puts "Running all BASIC tests"
         Rake.application.in_namespace(:basic){|namespace| namespace.tasks.each(&:invoke)}
         test.command.shutdown
-        sleep(0.2)
 
         puts "Running all BANANA tests"
         Rake.application.in_namespace(:banana){|namespace| namespace.tasks.each(&:invoke)}
         test.command.shutdown
-        sleep(0.2)
 
         puts "Running all POTATO tests"
         Rake.application.in_namespace(:potato){|namespace| namespace.tasks.each(&:invoke)}
-        sleep(0.2)
         test.command.shutdown
 
     end

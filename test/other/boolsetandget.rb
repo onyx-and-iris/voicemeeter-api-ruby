@@ -1,4 +1,4 @@
-require 'routines'
+require 'voicemeeter'
 
 vmr = Remote.new("basic", setdelay: 0.1, rundelay: 1)
 

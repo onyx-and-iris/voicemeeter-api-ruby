@@ -1,4 +1,4 @@
-require 'routines'
+require 'voicemeeter'
 
 vmr = Remote.new
 
@@ -58,7 +58,6 @@ vmr.run do
         :bus_6 => {"mute" => OFF, "gain" => OFF, "mono" => OFF},
         :bus_12 => {"mute" => OFF, "gain" => OFF, "mono" => OFF},
         :bus_15 => {"mute" => OFF, "gain" => OFF, "mono" => OFF},
-
         :mb_1 => {"stateonly" => OFF},
         :mb_2 => {"stateonly" => OFF},
         :mb_3 => {"stateonly" => OFF},
