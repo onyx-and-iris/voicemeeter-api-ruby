@@ -51,6 +51,7 @@ vmr.run do
     vmr.strip[1].mute = true
     puts vmr.strip[1].mute  '=> true'
     # If you find this more verbose you may pass an argument value
+    # This is true for any parameter that accepts a boolean value
     vmr.strip[2].mute(ON)
     puts vmr.strip[2].mute  '=> true'
 end
@@ -85,8 +86,8 @@ vmr.run do
 
     # Set top left macrobutton state only ON
     vmr.button[0].stateonly = true
-    # Set vban outstream strip nearest to the top ON
-    vmr.vban_out[0].enable = true
+    # Set vban outstream strip fourth from the top ON
+    vmr.vban_out[3].on = true
 end
 ```
 As you see, the same applies to macrobutton and vban instream/outstream methods.
@@ -117,54 +118,45 @@ vmr.run do
   })
 end
 ```
-Again, using true, false, 1 and 0 interchangeably.
 
 ## Available commands
 ### Strip|Bus
 Following commands work for both strips and buses.
-- gain range (-60, 12)
+- mono: accepts boolean
+- mute: accepts boolean
+- gain: accepts range from -60 to 12
 
+Example,
 ```ruby
 vmr.strip[4].mono = true
-vmr.strip[4].mute = true
-vmr.strip[4].gain = 3.6
 
-vmr.bus[5].mono = false
-vmr.bus[5].mute = false
+vmr.strip[4].mute = true
+
 vmr.bus[5].gain = -2.0
 ```
 ### Strip
 Following commands work only for strips
-- mc, k replace mono at different strips locations for each Voicemeeter type.
-- comp, gate range (0, 10)
-- limit range (-40, 12)
+- mc, k: accepts boolean
+- comp, gate: accepts range from 0 to 10
+- limit: accepts range from -40 to 12
+- A1-A5, B1-B3: accepts boolean
 
+Example,
 ```ruby
 vmr.strip[1].solo = true
 
 vmr.strip[1].comp = 1.2
 puts vmr.strip[1].comp  '=> 1.2'
 
-vmr.strip[1].gate = 2.5
-puts vmr.strip[1].gate  '=> 2.5'
-
-vmr.strip[1].limit = -6
-puts vmr.strip[1].limit '=> -6'
-
 vmr.strip[4].mc = true
 vmr.strip[5].k = true
 
-vmr.strip[1].A1 = true
-vmr.strip[2].A2 = true
 vmr.strip[3].A3 = true
-vmr.strip[4].A4 = true
-vmr.strip[5].A5 = true
 vmr.strip[6].B1 = false
-vmr.strip[7].B2 = false
-vmr.strip[8].B3 = false
 ```
 ### Bus
 Following commands work only for buses
+- EQ: accepts boolean
 ```ruby
 vmr.bus[1].EQ = true
 ```
@@ -184,13 +176,10 @@ ON = 1
 
 vmr.run do
   vmr.button[3].state = true
-  vmr.button[3].state(ON)
 
   vmr.button[4].stateonly = true
-  vmr.button[4].stateonly(ON)
 
   vmr.button[5].trigger = false
-  vmr.button[5].trigger(OFF)
 end
 ```
 
@@ -198,9 +187,6 @@ end
 ```ruby
 require 'voicemeeter'
 vmr = Remote.new
-
-OFF = 0
-ON = 1
 
 vmr.run do
   vmr.recorder.record
@@ -210,15 +196,25 @@ vmr.run do
   vmr.recorder.rew
 
   # Set the output channels
-  vmr.recorder.A1(ON)
-  vmr.recorder.A2(ON)
   vmr.recorder.A3 = true
-  vmr.recorder.B1(OFF)
+
   vmr.recorder.B2 = false
 end
 ```
 
 ### VBAN
+Following commands available for instream and outstream
+- on: accepts boolean
+- name: accepts string
+- ip: accepts string
+- port: accepts range from 1024 to 65535
+- sr: accepts one of
+(11025, 16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000)
+- channel: accepts range from 1 to 8
+- bit: accepts 16 or 24
+- quality: accepts range from 0 to 4
+- route: accepts range from 0 to 8
+
 ```ruby
 require 'voicemeeter'
 vmr = Remote.new("potato", logmein: true)
@@ -228,19 +224,12 @@ ON = 1
 
 # Enable VBAN
 vmr.vban = true
-
 # Set instream nearest the top ON and instream third from top OFF
-vmr.vban_in[1].enable = true
-vmr.vban_in[3].enable = false
-
-# Set outstream nearest the top ON and outstream third from top OFF
-vmr.vban_out[1].enable(ON)
-vmr.vban_out[3].enable(OFF)
-
-# Set instream fifth from the top name and outstream seventh from the top name
-vmr.vban_in[5].name = "my_stream_name"
-vmr.vban_out[7].name = "my_other_stream_name"
-
+vmr.vban_in[3].on = true
+# Set outstream seventh from the top name
+vmr.vban_out[7].name = 'stream_name'
+puts vmr.vban_out[7].name   '=> stream_name'
+vmr.vban_in[4] = 24
 # Disable VBAN
 vmr.vban = false
 
