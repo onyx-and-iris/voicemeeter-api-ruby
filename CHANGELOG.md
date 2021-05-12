@@ -8,8 +8,18 @@ Before any minor/major patch is released all test units will be run to verify th
 
 ## [Unreleased]
 - [ ] Add loading/saving of EQ profiles.
-- [ ] Add more settable commands for VBAN parameters
 - [ ] Consider adding a multi_get function.
+
+## [1.0.10] - 2021-05-12
+### Added
+- More settable commands for VBAN parameters
+
+### Changed
+- Update unit tests to reflect changes
+- Updated README to reflect changes.
+
+### Fixed
+- Alias functions that accept boolean values now return true or false
 
 ## [1.0.9] - 2021-04-30
 ### Added
