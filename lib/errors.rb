@@ -71,4 +71,10 @@ module Errors
             "Parameter value out of range"
         end
     end
+
+    class WriteError < StandardError
+        def message
+            "Parameter is read only"
+        end
+    end
 end

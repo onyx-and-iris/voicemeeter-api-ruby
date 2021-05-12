@@ -90,31 +90,34 @@ module Alias
         end
 
         def getter(mode)
-            @run.macro_getstatus(@id, mode)
+            return !@run.macro_getstatus(@id, mode).zero?
         end
 
         def state=(value)
             self.setter(value, mode=1)
         end
 
-        def state
-            self.getter(mode=1)
+        def state(value = nil)
+            return self.getter(mode=1) if value.nil?
+            self.state = value
         end
 
         def stateonly=(value)
             self.setter(value, mode=2)
         end
 
-        def stateonly
-            self.getter(mode=2)
+        def stateonly(value = nil)
+            return self.getter(mode=2) if value.nil?
+            self.stateonly = value
         end
 
         def trigger=(value)
             self.setter(value, mode=3)
         end
 
-        def trigger
-            self.getter(mode=3)
+        def trigger(value = nil)
+            return self.getter(mode=3) if value.nil?
+            self.trigger = value
         end
     end
 
@@ -133,6 +136,10 @@ module Alias
             else
                 @run.set_parameter("recorder.#{command}", 1.0)
             end
+        end
+
+        def getter(command)
+            return !@run.get_parameter("recorder.#{command}").zero?
         end
 
         def play
@@ -159,7 +166,8 @@ module Alias
             self.setter(__method__.to_s, value)
         end
 
-        def A1(value)
+        def A1(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
             self.A1 = value
         end
 
@@ -167,7 +175,8 @@ module Alias
             self.setter(__method__.to_s, value)
         end
 
-        def A2(value)
+        def A2(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
             self.A2 = value
         end
 
@@ -175,7 +184,8 @@ module Alias
             self.setter(__method__.to_s, value)
         end
 
-        def A3(value)
+        def A3(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
             self.A3 = value
         end
 
@@ -183,7 +193,8 @@ module Alias
             self.setter(__method__.to_s, value)
         end
 
-        def A4(value)
+        def A4(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
             self.A4 = value
         end
 
@@ -191,7 +202,8 @@ module Alias
             self.setter(__method__.to_s, value)
         end
 
-        def A5(value)
+        def A5(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
             self.A5 = value
         end
 
@@ -199,7 +211,8 @@ module Alias
             self.setter(__method__.to_s, value)
         end
 
-        def B1(value)
+        def B1(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
             self.B1 = value
         end
 
@@ -207,7 +220,8 @@ module Alias
             self.setter(__method__.to_s, value)
         end
 
-        def B2(value)
+        def B2(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
             self.B2 = value
         end
 
@@ -215,7 +229,8 @@ module Alias
             self.setter(__method__.to_s, value)
         end
 
-        def B3(value)
+        def B3(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
             self.B3 = value
         end
     end
@@ -245,16 +260,103 @@ module Alias
             @run.set_parameter("vban.#{@direction}stream[#{@id}].#{command}", value)
         end
 
-        def enable=(value)
-            self.setter("on", value)
+        def getter(command)
+            if @run.is_bool.include? command
+                val = @run.get_parameter("vban.#{@direction}stream[#{@id}].#{command}")
+                return !val.zero?
+            end
+            @run.get_parameter("vban.#{@direction}stream[#{@id}].#{command}")
         end
 
-        def enable(value)
-            self.enable(value)
+        def on=(value)
+            self.setter(__method__.to_s, value)
+        end
+
+        def on(value = nil)
+            return self.getter(__method__.to_s) if value.nil?
+            self.on = value
         end
 
         def name=(value)
             self.setter(__method__.to_s, value)
+        end
+
+        def name
+            return self.getter(__method__.to_s)
+        end
+
+        def ip=(value)
+            self.setter(__method__.to_s, value)
+        end
+
+        def ip
+            return self.getter(__method__.to_s)
+        end
+
+        def port=(value)
+            self.setter(__method__.to_s, value)
+        end
+
+        def port
+            return self.getter(__method__.to_s)
+        end
+
+        def sr=(value)
+            raise WriteError if self.direction == "in"
+            self.setter(__method__.to_s, value)
+        rescue WriteError => error
+            puts "#{error.class}: #{error.message} in #{__callee__}"
+            raise
+        end
+
+        def sr
+            return self.getter(__method__.to_s)
+        end
+
+        def channel=(value)
+            raise WriteError if self.direction == "in"
+            self.setter(__method__.to_s, value)
+        rescue WriteError => error
+            puts "#{error.class}: #{error.message} in #{__callee__}"
+            raise
+        end
+
+        def channel
+            return self.getter(__method__.to_s)
+        end
+
+        def bit=(value)
+            raise WriteError if self.direction == "in"
+            self.setter(__method__.to_s, value == 16 ? 1 : 2)
+        rescue WriteError => error
+            puts "#{error.class}: #{error.message} in #{__callee__}"
+            raise
+        end
+
+        def bit
+            return self.getter(__method__.to_s) == 1 ? 16 : 24
+        end
+
+        def quality=(value)
+            self.setter(__method__.to_s, value)
+        rescue WriteError => error
+            puts "#{error.class}: #{error.message} in #{__callee__}"
+            raise
+        end
+
+        def quality
+            return self.getter(__method__.to_s)
+        end
+
+        def route=(value)
+            self.setter(__method__.to_s, value)
+        rescue WriteError => error
+            puts "#{error.class}: #{error.message} in #{__callee__}"
+            raise
+        end
+
+        def route
+            return self.getter(__method__.to_s)
         end
     end
 
