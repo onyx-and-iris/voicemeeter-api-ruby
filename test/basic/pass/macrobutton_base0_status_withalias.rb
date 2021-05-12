@@ -2,111 +2,111 @@ require_relative '../minitest_helper_base0'
 
 class MacroButtonStatusWithAliasBase0 < Minitest::Test
     def test_it_sets_macrobutton0_state_on_with_alias
-        @@vmr.button[0].state = ON
+        @@vmr.button[0].state = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[0].state)
+        assert_equal(true, @@vmr.button[0].state)
     end
 
     def test_it_sets_macrobutton1_state_on_with_alias
-        @@vmr.button[1].state = ON
+        @@vmr.button[1].state = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[1].state)
+        assert_equal(true, @@vmr.button[1].state)
     end
 
     def test_it_sets_macrobutton2_state_on_with_alias
-        @@vmr.button[2].state = ON
+        @@vmr.button[2].state = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[2].state)
+        assert_equal(true, @@vmr.button[2].state)
     end
 
     def test_it_sets_macrobutton0_state_off_with_alias
-        @@vmr.button[0].state = OFF
+        @@vmr.button[0].state = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[0].state)
+        assert_equal(false, @@vmr.button[0].state)
     end
 
     def test_it_sets_macrobutton1_state_off_with_alias
-        @@vmr.button[1].state = OFF
+        @@vmr.button[1].state = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[1].state)
+        assert_equal(false, @@vmr.button[1].state)
     end
 
     def test_it_sets_macrobutton2_state_off_with_alias
-        @@vmr.button[2].state = OFF
+        @@vmr.button[2].state = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[2].state)
+        assert_equal(false, @@vmr.button[2].state)
     end
 
     def test_it_sets_macrobutton0_stateonly_on_with_alias
-        @@vmr.button[0].stateonly = ON
+        @@vmr.button[0].stateonly = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[0].stateonly)
+        assert_equal(true, @@vmr.button[0].stateonly)
     end
 
     def test_it_sets_macrobutton1_stateonly_on_with_alias
-        @@vmr.button[1].stateonly = ON
+        @@vmr.button[1].stateonly = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[1].stateonly)
+        assert_equal(true, @@vmr.button[1].stateonly)
     end
 
     def test_it_sets_macrobutton2_stateonly_on_with_alias
-        @@vmr.button[2].stateonly = ON
+        @@vmr.button[2].stateonly = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[2].stateonly)
+        assert_equal(true, @@vmr.button[2].stateonly)
     end
 
     def test_it_sets_macrobutton0_stateonly_off_with_alias
-        @@vmr.button[0].stateonly = OFF
+        @@vmr.button[0].stateonly = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[0].stateonly)
+        assert_equal(false, @@vmr.button[0].stateonly)
     end
 
     def test_it_sets_macrobutton1_stateonly_off_with_alias
-        @@vmr.button[1].stateonly = OFF
+        @@vmr.button[1].stateonly = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[1].stateonly)
+        assert_equal(false, @@vmr.button[1].stateonly)
     end
 
     def test_it_sets_macrobutton2_stateonly_off_with_alias
-        @@vmr.button[2].stateonly = OFF
+        @@vmr.button[2].stateonly = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[2].stateonly)
+        assert_equal(false, @@vmr.button[2].stateonly)
     end
 
     def test_it_sets_macrobutton0_trigger_on_with_alias
-        @@vmr.button[0].trigger = ON
+        @@vmr.button[0].trigger = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[0].trigger)
+        assert_equal(true, @@vmr.button[0].trigger)
     end
 
     def test_it_sets_macrobutton1_trigger_on_with_alias
-        @@vmr.button[1].trigger = ON
+        @@vmr.button[1].trigger = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[1].trigger)
+        assert_equal(true, @@vmr.button[1].trigger)
     end
 
     def test_it_sets_macrobutton2_trigger_on_with_alias
-        @@vmr.button[2].trigger = ON
+        @@vmr.button[2].trigger = true
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(ON, @@vmr.button[2].trigger)
+        assert_equal(true, @@vmr.button[2].trigger)
     end
 
     def test_it_sets_macrobutton0_trigger_off_with_alias
-        @@vmr.button[0].trigger = OFF
+        @@vmr.button[0].trigger = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[0].trigger)
+        assert_equal(false, @@vmr.button[0].trigger)
     end
 
     def test_it_sets_macrobutton1_trigger_off_with_alias
-        @@vmr.button[1].trigger = OFF
+        @@vmr.button[1].trigger = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[1].trigger)
+        assert_equal(false, @@vmr.button[1].trigger)
     end
 
     def test_it_sets_macrobutton2_trigger_off_with_alias
-        @@vmr.button[2].trigger = OFF
+        @@vmr.button[2].trigger = false
         assert_equal(SUCCESS, @@vmr.ret)
-        assert_equal(OFF, @@vmr.button[2].trigger)
+        assert_equal(false, @@vmr.button[2].trigger)
     end
 end
 
