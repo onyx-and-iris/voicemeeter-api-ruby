@@ -1,7 +1,7 @@
 require 'open3'
 
 require_relative 'base'
-require_relative 'strips'
+require_relative 'channels'
 require_relative 'alias'
 
 class Routines
@@ -122,6 +122,11 @@ class Routines
         elsif test_regex(/^vban.(\w+)\[(\d+)\].(\w+)/, value) == 3
         elsif test_regex(/^Fx.(\w+).On/, value) == 1
         elsif test_regex(/^patch.(\w+)\[(\d+)\]/, value) == 2
+        elsif test_regex(/^(recorder).([A-B][1-5])/, value) == 2
+        else
+            @m1 = nil
+            @m2 = nil
+            @m3 = nil
         end
 
         @param_name = value
@@ -131,6 +136,9 @@ class Routines
         if value.is_a? (String)
             @param_string = value
         else
+            if ["recorder"].include? @m1
+                raise ParamValueError unless validate(@m2, value)
+            end
             raise ParamValueError unless validate(@m3, value)
 
             @param_float = value
@@ -201,6 +209,12 @@ class Routines
         raise BoundsError unless value.between?(0,69)
 
         @logical_id = value
+    end
+
+    def mb_state=(value)
+        raise BoundsError unless [0,1].include? value
+
+        @mb_state = value
     end
 
     def base_0=(value)
@@ -275,7 +289,8 @@ class Routines
         set macrobutton by number, state and mode
         """
         self.logical_id = logical_id
-        self.ret = run_as(__method__, @logical_id, state.to_f, mode)
+        self.mb_state = state
+        self.ret = run_as(__method__, @logical_id, @mb_state, mode)
         self.param_cache = ["macros", logical_id, mode, state]
 
     rescue BoundsError => error

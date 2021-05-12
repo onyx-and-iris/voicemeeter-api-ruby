@@ -17,9 +17,14 @@ Before any minor/major patch is released all test units will be run to verify th
 ### Changed
 - Update unit tests to reflect changes
 - Updated README to reflect changes.
+- define_types moved into utils.rb since it defines types for channels,
+macrobuttons and vban
+- number set int and real_number added to utils.rb to better define different
+value types.
 
 ### Fixed
 - Alias functions that accept boolean values now return true or false
+- Bug in boundary test fixed by resetting match attributes m1,m2,m3 if no current match found
 
 ## [1.0.9] - 2021-04-30
 ### Added
