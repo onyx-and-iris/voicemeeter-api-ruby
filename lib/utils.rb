@@ -1,5 +1,6 @@
 module Utils
-    attr_reader :m1, :m2, :m3
+    attr_reader :m1, :m2, :m3, :is_bool, :is_int, :is_float,
+    :is_real_number, :is_natural_number, :vban_ranges
 
     def m1=(value)
         @m1 = value.downcase
@@ -19,6 +20,18 @@ module Utils
         else
             @m3 = value
         end
+    end
+
+    def is_natural_number=(value)
+        @is_natural_number = value
+    end
+
+    def is_real_number=(value)
+        @is_real_number = value
+    end
+
+    def vban_ranges=(value)
+        @vban_ranges = value
     end
 
     def test_regex(regex, param)
@@ -49,12 +62,41 @@ module Utils
     end
 
     def type_return(param, value)
-        return value.to_i if @is_bool.include? param
+        return value.to_i if @is_natural_number.include? param
         return value.round(1) if @is_float.include? param
         value
     end
 
-    def validate(name, num)
+    def define_types
+        @is_bool = [
+            "mono", "solo", "mute", "mc", "k",
+            "A1", "A2", "A3", "B1", "B2", "B3",
+            "EQ.on",
+            "macrobutton",
+            "on"
+        ]
+
+        @is_int = [
+            "sr", "channel", "bit", "quality", "route"
+        ]
+
+        @is_float = ["gain", "comp", "gate", "limit"]
+
+        self.is_natural_number = @is_bool.|(@is_int)
+        self.is_real_number = @is_float.|(@is_natural_number)
+
+        self.vban_ranges = {
+            "on" => [0,1],
+            "port" => [0,65535],
+            "sr" => [11025, 16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000],
+            "channel" => [1,8],
+            "quality" => [0,4],
+            "route" => [0,8],
+            "bit" => [1,2]
+        }
+    end
+
+    def validate(name, num = nil)
         """
         Validate boundaries unless param requires none
         """
@@ -83,6 +125,7 @@ module Utils
         elsif name == "limit"
             return num.between?(-40, 12)
         elsif @vban_ranges.has_key? name
+            return @vban_ranges[name].include? num if name == "bit" || name == "sr"
             return num.between?(*@vban_ranges[name])
         end
         true
