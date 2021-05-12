@@ -229,7 +229,7 @@ vmr.vban_in[3].on = true
 # Set outstream seventh from the top name
 vmr.vban_out[7].name = 'stream_name'
 puts vmr.vban_out[7].name   '=> stream_name'
-vmr.vban_in[4] = 24
+vmr.vban_in[4].bit = 24
 # Disable VBAN
 vmr.vban = false
 
