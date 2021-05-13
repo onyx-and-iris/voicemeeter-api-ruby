@@ -7,11 +7,11 @@ vmr.run do
     puts 'Waiting 3 seconds after enable vban...'
     sleep(3)
 
-    vmr.vban_out[1].bit = 16
-    puts vmr.vban_out[1].bit
+    vmr.vban_in[1].port = 7000
 
-    vmr.vban_out[1].bit = 24
-    puts vmr.vban_out[1].bit
+    sleep(3)
+
+    vmr.vban_out[3].quality = 4
 
     puts 'Waiting 5 seconds before disable vban...'
     sleep(5)

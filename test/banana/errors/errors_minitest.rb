@@ -1,18 +1,18 @@
 require_relative '../minitest_helper'
 
 class ErrorTests < Minitest::Test
-    def test_it_raises_an_api_error
+    def test_it_raises_a_capi_error
         """ 
-        ERROR: Callback Function Error, return value: -3 in set_parameter 
+        CAPIError: Callback Function Error, return value: -3 in set_parameter
         """
-        assert_raises(APIError) do
+        assert_raises(CAPIError) do
             @@vmr.set_parameter("garbagevalue", 1)
         end
     end
-
+    
     def test_it_raises_a_login_error
         """ 
-        ERROR: Failed to login, success return value:
+        LoginError: Failed to login, success return value: -1
         """
         assert_raises(LoginError) do
             @@vmr.logged_in = -1
@@ -21,7 +21,7 @@ class ErrorTests < Minitest::Test
 
     def test_it_raises_a_logout_error
         """ 
-        ERROR: There was an error logging out 
+        LogoutError: There was an error logging out
         """
         assert_raises(LogoutError) do
             @@vmr.logged_out = -1
@@ -30,7 +30,7 @@ class ErrorTests < Minitest::Test
 
     def test_it_raises_a_vbtype_error_0
         """ 
-        ERROR: Unknown Voicemeeter type
+        VBTypeError: Unknown Voicemeeter type in type=
         """
         assert_raises(VBTypeError) do
             @@vmr.type = 0
@@ -39,31 +39,57 @@ class ErrorTests < Minitest::Test
 
     def test_it_raises_a_vbtype_error_4
         """ 
-        ERROR: Unknown Voicemeeter type
+        VBTypeError: Unknown Voicemeeter type in type=
         """
         assert_raises(VBTypeError) do
             @@vmr.type = 4
         end
     end
 
-    def test_it_raises_a_bounds_error_for_macrobutton_99
-        """ ERROR: Macrobutton ID out of range """
-        assert_raises(BoundsError) do
-            @@vmr.macro_setstatus(99, ON, 2)
-        end
-    end
-
-    def test_it_raises_a_paramcom_error
-        """ ERROR: Command not supported """
+    def test_it_raises_a_command_error
+        """ 
+        CommandError: Command not supported in sp_command=
+        """
         assert_raises(CommandError) do
             @@vmr.sp_command = "garbagevalue"
         end
     end
 
-    def test_it_raises_a_paramtype_error
-        """ ERROR: Incorrect value type """
+    def test_it_raises_a_valuetype_error
+        """ 
+        ValueTypeError: Incorrect value type in sp_value=
+        """
         assert_raises(ValueTypeError) do
             @@vmr.sp_value = 1
+        end
+    end
+end
+
+class BoundsErrorTests < Minitest::Test
+    def test_it_raises_a_bounds_error_for_macrobutton_99
+        """ 
+        BoundsError: Logical ID out of range in macro_setstatus
+        """
+        assert_raises(BoundsError) do
+            @@vmr.macro_setstatus(99, ON, 2)
+        end
+    end
+
+    def test_it_raises_a_bounds_error_for_macrobutton_state_3
+        """ 
+        BoundsError: MB State out of range in macro_setstatus
+        """
+        assert_raises(BoundsError) do
+            @@vmr.macro_setstatus(0, 3, 2)
+        end
+    end
+
+    def test_it_raises_a_bounds_error_for_recorder_A1_3
+        """ 
+        ERROR: Macrobutton state out of range 
+        """
+        assert_raises(ValueTypeError) do
+            @@vmr.recorder.A1 = 3
         end
     end
 end
