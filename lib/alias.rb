@@ -334,9 +334,9 @@ module Alias
         end
 
         def bit=(value)
-            raise WriteError if self.direction == "in"
+            raise IOError::WriteError if self.direction == "in"
             self.setter(__method__.to_s, value == 16 ? 1 : 2)
-        rescue WriteError => error
+        rescue IOError => error
             puts "#{error.class}: #{error.message} in #{__callee__}"
             raise
         end
@@ -347,9 +347,6 @@ module Alias
 
         def quality=(value)
             self.setter(__method__.to_s, value)
-        rescue WriteError => error
-            puts "#{error.class}: #{error.message} in #{__callee__}"
-            raise
         end
 
         def quality
@@ -358,9 +355,6 @@ module Alias
 
         def route=(value)
             self.setter(__method__.to_s, value)
-        rescue WriteError => error
-            puts "#{error.class}: #{error.message} in #{__callee__}"
-            raise
         end
 
         def route
