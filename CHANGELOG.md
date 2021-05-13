@@ -9,6 +9,9 @@ Before any minor/major patch is released all test units will be run to verify th
 ## [Unreleased]
 - [ ] Add loading/saving of EQ profiles.
 - [ ] Consider adding a multi_get function.
+- [ ] Add delay section to readme to explain all settables
+- [x] Add further error unit tests
+- [x] Organise error classes into subclasses and factories error logic
 
 ## [1.0.10] - 2021-05-12
 ### Added
