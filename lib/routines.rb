@@ -23,12 +23,9 @@ class Routines
 
     def ret=(value)
         """ C API return value """
-        raise APIError if value&.nonzero?
+        raise BaseErrors::CAPIError.new(value) if value&.nonzero?
 
         @ret = value
-    rescue APIError => error
-        puts "#{error.class}: #{error.message} #{value} in #{caller_locations[1].label}"
-        raise
     end
 
     def logged_in=(value)
@@ -44,21 +41,21 @@ class Routines
             runvb
             sleep(@rundelay)
         elsif value < 0
-            raise LoginError
+            raise ConnectionErrors::LoginError
         end
         clear_pdirty
         clear_mdirty
 
-    rescue LoginError => error
+    rescue ConnectionErrors => error
         puts "#{error.class}: #{error.message} #{value}"
         raise
     end
 
     def logged_out=(value)
-        raise LogoutError if value&.nonzero?
+        raise ConnectionErrors::LogoutError if value&.nonzero?
 
         @logged_out = value
-    rescue LogoutError => error
+    rescue ConnectionErrors => error
         puts "#{error.class}: #{error.message}"
         raise
     end
@@ -72,9 +69,9 @@ class Routines
         elsif value == "potato" || value == 3
             @type = POTATO
         else
-            raise VBTypeError
+            raise ConnectionErrors::VBTypeError
         end
-    rescue VBTypeError => error
+    rescue ConnectionErrors => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end
@@ -83,20 +80,20 @@ class Routines
         unless ['Shutdown', 'Show', 'Restart',
             'DialogShow.VBANCHAT', 'Eject',
             'Reset', 'Save', 'Load'].include? value
-            raise CommandError
+            raise BaseErrors::CommandError
         end
         @sp_command = "Command.#{value}"
 
-    rescue CommandError => error
+    rescue BaseErrors => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end
 
     def sp_value=(value)
-        raise ValueTypeError unless value.is_a? (String)
+        raise BaseErrors::ValueTypeError.new(value,'string') unless value.is_a? (String)
 
         @sp_value = value
-    rescue ValueTypeError => error
+    rescue BaseErrors => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end
@@ -137,13 +134,13 @@ class Routines
             @param_string = value
         else
             if ["recorder"].include? @m1
-                raise ParamValueError unless validate(@m2, value)
+                raise BaseErrors::ParamValueError unless validate(@m2, value)
             end
-            raise ParamValueError unless validate(@m3, value)
+            raise BaseErrors::ParamValueError unless validate(@m3, value)
 
             @param_float = value
         end
-    rescue ParamValueError => error
+    rescue BaseErrors => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end
@@ -206,13 +203,13 @@ class Routines
     end
 
     def logical_id=(value)
-        raise BoundsError unless value.between?(0,69)
+        raise BaseErrors::BoundsError.new('Logical ID') unless value.between?(0,69)
 
         @logical_id = value
     end
 
     def mb_state=(value)
-        raise BoundsError unless [0,1].include? value
+        raise BaseErrors::BoundsError.new('MB State') unless [0,1].include? value
 
         @mb_state = value
     end
@@ -248,16 +245,16 @@ class Routines
     end
 
     def runvb
-        raise VBTypeError if @type.nil?
+        raise ConnectionErrors::VBTypeError if @type.nil?
 
         self.inst_exe = @type
         stdin, stdout, stderr, wait_thread = Open3.popen3(@inst_exe, '')
         self.pid = wait_thread[:pid]
-    rescue VBTypeError => error
+    rescue ConnectionErrors => error
         error.set_backtrace([])
         puts "#{error.class}: #{error.on_launch}"
         raise
-    rescue EXENotFoundError => error
+    rescue InstallError => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end
@@ -268,6 +265,9 @@ class Routines
 
         self.ret = run_as(__method__, c_get)
         c_get.read_long
+    rescue BaseErrors => error
+        puts "#{error.class}: #{error.message} in #{__callee__}"
+        raise
     end
 
     def login
@@ -293,8 +293,8 @@ class Routines
         self.ret = run_as(__method__, @logical_id, @mb_state, mode)
         self.param_cache = ["macros", logical_id, mode, state]
 
-    rescue BoundsError => error
-        puts "#{error.class}: Macrobutton ID out of range in #{__callee__}"
+    rescue BaseErrors => error
+        puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end
 
@@ -311,8 +311,8 @@ class Routines
         self.ret = run_as(__method__, @logical_id, c_get, mode)
         @val = type_return("macrobutton", c_get.read_float)
 
-    rescue BoundsError => error
-        puts "#{error.class}: Logical ID out of range in #{__callee__}"
+    rescue BaseErrors => error
+        puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end
 
@@ -326,7 +326,7 @@ class Routines
         self.param_name = name
         self.param_value = value
 
-        raise BoundsError unless validate(@m1, @m2)
+        raise BaseErrors::BoundsError.new('Parameter') unless validate(@m1, @m2)
 
         if @param_string
             self.ret =
@@ -337,8 +337,9 @@ class Routines
             run_as("#{__method__}_float", @param_name, @param_float)
             self.param_cache = ["params", @param_name, @param_float]
         end
-    rescue BoundsError, VersionError => error
+    rescue BaseErrors => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
+        raise
     end
 
     def set_parameter_multi(param_hash)
@@ -350,6 +351,9 @@ class Routines
                 self.ret = run_as(__method__, val.join(";"))
             end
         end
+    rescue BaseErrors => error
+        puts "#{error.class}: #{error.message} in #{__callee__}"
+        raise
     end
 
     def get_parameter(name)
@@ -374,5 +378,8 @@ class Routines
             self.ret = run_as("#{__method__}_string", @param_name, c_get)
             @val = c_get.read_string
         end
+    rescue BaseErrors => error
+        puts "#{error.class}: #{error.message} in #{__callee__}"
+        raise
     end
 end

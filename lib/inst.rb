@@ -39,7 +39,7 @@ def get_vbpath
             end
         end
     end
-    raise DLLNotFoundError
+    raise InstallErrors::DLLPathNotFoundError
 end
 
 def inst_exe=(value)
@@ -57,7 +57,7 @@ def inst_exe=(value)
     if get_vbpath.join(exe).executable?
         @inst_exe = String(get_vbpath.join(exe))
     else
-        raise EXENotFoundError
+        raise InstallErrors::EXENotFoundError
     end
 end
 
@@ -65,7 +65,7 @@ def vmr_dll=(value)
     if value.file?
         @vmr_dll = value
     else
-        raise DLLNotFoundError
+        raise InstallErrors::DLLNotFoundError
     end
 end
 

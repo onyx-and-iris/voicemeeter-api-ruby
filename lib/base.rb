@@ -15,7 +15,7 @@ module FunctionHooks
 
     begin
         self.vmr_dll = get_vbpath.join(dll_name)
-    rescue DLLNotFoundError => error
+    rescue InstallError => error
         puts "ERROR: #{error.message}"
         raise
     end

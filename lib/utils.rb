@@ -61,6 +61,10 @@ module Utils
         (value ? 1 : 0)
     end
 
+    def is_a_bool?(value)
+        return !!value == value
+    end
+
     def type_return(param, value)
         return value.to_i if @is_natural_number.include? param
         return value.round(1) if @is_float.include? param
@@ -88,7 +92,9 @@ module Utils
         self.vban_ranges = {
             "on" => [0,1],
             "port" => [0,65535],
-            "sr" => [11025, 16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000],
+            "sr" => [
+            11025, 16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000
+            ],
             "channel" => [1,8],
             "quality" => [0,4],
             "route" => [0,8],
@@ -96,7 +102,7 @@ module Utils
         }
     end
 
-    def validate(name, num = nil)
+    def validate(name, num)
         """
         Validate boundaries unless param requires none
         """
@@ -112,10 +118,10 @@ module Utils
             return num < @composite_total
         elsif name == "insert"
             return (num < @insert_total) if @type == POTATO
-            raise VersionError
+            raise BaseErrors::VersionError
         elsif name == "reverb" || name == "delay"
             return @type == POTATO
-            raise VersionError
+            raise BaseErrors::VersionError
         elsif @is_bool.include? name
             return [0,1].include? num
         elsif name == "gain"

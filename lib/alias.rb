@@ -83,10 +83,14 @@ module Alias
         end
 
         def setter(set, mode)
+            raise BaseErrors::ValueTypeError.new(set,'bool') unless @run.is_a_bool?(set)
             if [false,true].include? set
                 set = @run.bool_to_float(set)
             end
             @run.macro_setstatus(@id, set, mode)
+        rescue BaseErrors => error
+            puts "#{error.class}: #{error.message} in #{__callee__}"
+            raise
         end
 
         def getter(mode)
@@ -128,6 +132,7 @@ module Alias
 
         def setter(command, value = nil)
             command.chomp!('=')
+            raise BaseErrors::ValueTypeError.new(value,'bool') unless @run.is_a_bool?(value)
             if [false,true].include? value
                 value = @run.bool_to_float(value)
             end
@@ -136,6 +141,9 @@ module Alias
             else
                 @run.set_parameter("recorder.#{command}", 1.0)
             end
+        rescue BaseErrors => error
+            puts "#{error.class}: #{error.message} in #{__callee__}"
+            raise
         end
 
         def getter(command)
@@ -302,9 +310,9 @@ module Alias
         end
 
         def sr=(value)
-            raise WriteError if self.direction == "in"
+            raise IOError::WriteError if self.direction == "in"
             self.setter(__method__.to_s, value)
-        rescue WriteError => error
+        rescue IOError => error
             puts "#{error.class}: #{error.message} in #{__callee__}"
             raise
         end
@@ -314,9 +322,9 @@ module Alias
         end
 
         def channel=(value)
-            raise WriteError if self.direction == "in"
+            raise IOError::WriteError if self.direction == "in"
             self.setter(__method__.to_s, value)
-        rescue WriteError => error
+        rescue IOError => error
             puts "#{error.class}: #{error.message} in #{__callee__}"
             raise
         end
