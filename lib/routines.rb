@@ -1,5 +1,6 @@
 require 'open3'
 
+require_relative 'meta'
 require_relative 'base'
 require_relative 'channels'
 require_relative 'alias'
@@ -88,7 +89,7 @@ class Routines
         puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end
-
+    
     def sp_value=(value)
         raise BaseErrors::ValueTypeError.new(value,'string') unless value.is_a? (String)
 
@@ -254,7 +255,7 @@ class Routines
         error.set_backtrace([])
         puts "#{error.class}: #{error.on_launch}"
         raise
-    rescue InstallError => error
+    rescue InstallErrors => error
         puts "#{error.class}: #{error.message} in #{__callee__}"
         raise
     end

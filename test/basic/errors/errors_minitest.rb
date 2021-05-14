@@ -91,7 +91,7 @@ class ValueTypeErrorTests < Minitest::Test
         ValueTypeError: Incorrect value type, expected type bool in setter 
         """
         assert_raises(ValueTypeError) do
-            @@vmr.button[1].stateonly = 1
+            @@vmr.button[1].stateonly = 2
         end
     end
 

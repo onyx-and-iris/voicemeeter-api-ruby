@@ -107,6 +107,7 @@ module BuildStrips
     end
 
     class Channel
+        include Make_Accessors
         attr_accessor :run, :index
 
         def run=(value)
@@ -120,39 +121,15 @@ module BuildStrips
         def initialize(run, index)
             self.run = run
             self.index = index
-        end
-
-        def mono=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def mono(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.mono = value
-        end
-
-        def mute=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def mute(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.mute = value
-        end
-
-        def gain=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def gain(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.gain = value
+            self.make_accessor_bool :mono, :mute, :gain
         end
     end
 
     class Strip < Channel
         def initialize(run, index)
             super
+            self.make_accessor_bool :solo, :mc, :k, :comp, :gate, :limit,
+            :A1, :A2, :A3, :A4, :A5, :B1, :B2, :B3, :label
         end
 
         def setter(param, value)
@@ -169,141 +146,6 @@ module BuildStrips
                 return !val.zero?
             end
             @run.get_parameter("Strip[#{@index}].#{param}")
-        end
-
-        def solo=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def solo(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.solo = value
-        end
-
-        def mc=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def mc(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.mc = value
-        end
-
-        def k=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def k(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.k = value
-        end
-
-        def comp=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def comp(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.comp = value
-        end
-
-        def gate=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def gate(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.gate = value
-        end
-
-        def limit=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def limit(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.limit = value
-        end
-
-        def A1=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A1(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A1 = value
-        end
-
-        def A2=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A2(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A2 = value
-        end
-
-        def A3=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A3(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A3 = value
-        end
-
-        def A4=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A4(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A4 = value
-        end
-
-        def A5=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A5(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A5 = value
-        end
-
-        def B1=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def B1(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.B1 = value
-        end
-
-        def B2=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def B2(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.B2 = value
-        end
-
-        def B3=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def B3(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.B3 = value
-        end
-
-        def label=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def label(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.label = value
         end
     end
 

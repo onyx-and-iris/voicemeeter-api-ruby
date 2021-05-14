@@ -59,6 +59,7 @@ module Alias
     end
 
     class Alias
+        include Make_Accessors
         attr_accessor :run
 
         def run=(value)
@@ -80,6 +81,7 @@ module Alias
         def initialize(run, index)
             super(run)
             self.id = index
+            self.make_accessor_buttons :state, :stateonly, :trigger
         end
 
         def setter(set, mode)
@@ -96,38 +98,13 @@ module Alias
         def getter(mode)
             return !@run.macro_getstatus(@id, mode).zero?
         end
-
-        def state=(value)
-            self.setter(value, mode=1)
-        end
-
-        def state(value = nil)
-            return self.getter(mode=1) if value.nil?
-            self.state = value
-        end
-
-        def stateonly=(value)
-            self.setter(value, mode=2)
-        end
-
-        def stateonly(value = nil)
-            return self.getter(mode=2) if value.nil?
-            self.stateonly = value
-        end
-
-        def trigger=(value)
-            self.setter(value, mode=3)
-        end
-
-        def trigger(value = nil)
-            return self.getter(mode=3) if value.nil?
-            self.trigger = value
-        end
     end
 
     class Recorder < Alias
         def initialize(run)
             super
+            self.make_accessor_bool :A1, :A2, :A3, :A4, :A5, :B1, :B2, :B3
+            self.make_setter_action :play, :stop, :record, :ff, :rew
         end
 
         def setter(command, value = nil)
@@ -149,98 +126,6 @@ module Alias
         def getter(command)
             return !@run.get_parameter("recorder.#{command}").zero?
         end
-
-        def play
-            self.setter(__method__.to_s)
-        end
-
-        def stop
-            self.setter(__method__.to_s)
-        end
-
-        def record
-            self.setter(__method__.to_s)
-        end
-
-        def ff
-            self.setter(__method__.to_s)
-        end
-
-        def rew
-            self.setter(__method__.to_s)
-        end
-
-        def A1=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A1(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A1 = value
-        end
-
-        def A2=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A2(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A2 = value
-        end
-
-        def A3=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A3(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A3 = value
-        end
-
-        def A4=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A4(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A4 = value
-        end
-
-        def A5=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def A5(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.A5 = value
-        end
-
-        def B1=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def B1(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.B1 = value
-        end
-
-        def B2=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def B2(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.B2 = value
-        end
-
-        def B3=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def B3(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.B3 = value
-        end
     end
 
     class Vban < Alias
@@ -258,6 +143,9 @@ module Alias
             super(run)
             self.id = index
             self.direction = dir
+            self.make_accessor_bool :on
+            self.make_accessor_standard :name, :ip, :port, :quality, :route
+            self.make_accessor_in_is_readonly :sr, :channel, :bit
         end
 
         def setter(command, value)
@@ -275,96 +163,12 @@ module Alias
             end
             @run.get_parameter("vban.#{@direction}stream[#{@id}].#{command}")
         end
-
-        def on=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def on(value = nil)
-            return self.getter(__method__.to_s) if value.nil?
-            self.on = value
-        end
-
-        def name=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def name
-            return self.getter(__method__.to_s)
-        end
-
-        def ip=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def ip
-            return self.getter(__method__.to_s)
-        end
-
-        def port=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def port
-            return self.getter(__method__.to_s)
-        end
-
-        def sr=(value)
-            raise IOError::WriteError if self.direction == "in"
-            self.setter(__method__.to_s, value)
-        rescue IOError => error
-            puts "#{error.class}: #{error.message} in #{__callee__}"
-            raise
-        end
-
-        def sr
-            return self.getter(__method__.to_s)
-        end
-
-        def channel=(value)
-            raise IOError::WriteError if self.direction == "in"
-            self.setter(__method__.to_s, value)
-        rescue IOError => error
-            puts "#{error.class}: #{error.message} in #{__callee__}"
-            raise
-        end
-
-        def channel
-            return self.getter(__method__.to_s)
-        end
-
-        def bit=(value)
-            raise IOError::WriteError if self.direction == "in"
-            self.setter(__method__.to_s, value == 16 ? 1 : 2)
-        rescue IOError => error
-            puts "#{error.class}: #{error.message} in #{__callee__}"
-            raise
-        end
-
-        def bit
-            return self.getter(__method__.to_s) == 1 ? 16 : 24
-        end
-
-        def quality=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def quality
-            return self.getter(__method__.to_s)
-        end
-
-        def route=(value)
-            self.setter(__method__.to_s, value)
-        end
-
-        def route
-            return self.getter(__method__.to_s)
-        end
     end
 
     class Command < Alias
         def initialize(run)
             super
+            self.make_setter_action :show, :restart, :eject, :reset
         end
 
         def setter(command, value = nil, delay = @run.saveloaddelay)
@@ -383,22 +187,6 @@ module Alias
         def shutdown
             self.setter(__method__.to_s)
             sleep(@run.shutdowndelay)
-        end
-
-        def show
-            self.setter(__method__.to_s)
-        end
-
-        def restart
-            self.setter(__method__.to_s)
-        end
-
-        def eject
-            self.setter(__method__.to_s)
-        end
-
-        def reset
-            self.setter(__method__.to_s)
         end
 
         def save(value, delay = @run.saveloaddelay)

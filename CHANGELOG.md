@@ -12,6 +12,7 @@ Before any minor/major patch is released all test units will be run to verify th
 - [ ] Add delay section to readme to explain all settables
 - [x] Add further error unit tests
 - [x] Organise error classes into subclasses and factories error logic
+- [x] Added metafunctions for generating setters and getters
 
 ## [1.0.10] - 2021-05-12
 ### Added

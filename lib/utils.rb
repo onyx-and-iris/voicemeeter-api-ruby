@@ -62,7 +62,7 @@ module Utils
     end
 
     def is_a_bool?(value)
-        return !!value == value
+        return !!value == value || [0,1].include?(value)
     end
 
     def type_return(param, value)
