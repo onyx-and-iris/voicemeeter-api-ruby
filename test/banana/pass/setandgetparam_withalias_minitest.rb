@@ -685,52 +685,52 @@ class SetAndGetParamsFloatWithAliasOnOff < Minitest::Test
     end
 
     def test_it_sets_and_gets_bus0_EQ_on_with_alias
-        @@vmr.bus[1].EQ(ON)
-        assert_equal(true, @@vmr.bus[1].EQ)
+        @@vmr.bus[1].eq(ON)
+        assert_equal(true, @@vmr.bus[1].eq)
     end
 
     def test_it_sets_and_gets_bus0_EQ_off_with_alias
-        @@vmr.bus[1].EQ(OFF)
-        assert_equal(false, @@vmr.bus[1].EQ)
+        @@vmr.bus[1].eq(OFF)
+        assert_equal(false, @@vmr.bus[1].eq)
     end
 
     def test_it_sets_and_gets_bus1_EQ_on_with_alias
-        @@vmr.bus[2].EQ(ON)
-        assert_equal(true, @@vmr.bus[2].EQ)
+        @@vmr.bus[2].eq(ON)
+        assert_equal(true, @@vmr.bus[2].eq)
     end
 
     def test_it_sets_and_gets_bus1_EQ_off_with_alias
-        @@vmr.bus[2].EQ(OFF)
-        assert_equal(false, @@vmr.bus[2].EQ)
+        @@vmr.bus[2].eq(OFF)
+        assert_equal(false, @@vmr.bus[2].eq)
     end
 
     def test_it_sets_and_gets_bus2_EQ_on_with_alias
-        @@vmr.bus[3].EQ(ON)
-        assert_equal(true, @@vmr.bus[3].EQ)
+        @@vmr.bus[3].eq(ON)
+        assert_equal(true, @@vmr.bus[3].eq)
     end
 
     def test_it_sets_and_gets_bus2_EQ_off_with_alias
-        @@vmr.bus[3].EQ(OFF)
-        assert_equal(false, @@vmr.bus[3].EQ)
+        @@vmr.bus[3].eq(OFF)
+        assert_equal(false, @@vmr.bus[3].eq)
     end
 
     def test_it_sets_and_gets_bus3_EQ_on_with_alias
-        @@vmr.bus[4].EQ(ON)
-        assert_equal(true, @@vmr.bus[4].EQ)
+        @@vmr.bus[4].eq(ON)
+        assert_equal(true, @@vmr.bus[4].eq)
     end
 
     def test_it_sets_and_gets_bus3_EQ_off_with_alias
-        @@vmr.bus[4].EQ(OFF)
-        assert_equal(false, @@vmr.bus[4].EQ)
+        @@vmr.bus[4].eq(OFF)
+        assert_equal(false, @@vmr.bus[4].eq)
     end
 
     def test_it_sets_and_gets_bus4_EQ_on_with_alias
-        @@vmr.bus[5].EQ(ON)
-        assert_equal(true, @@vmr.bus[5].EQ)
+        @@vmr.bus[5].eq(ON)
+        assert_equal(true, @@vmr.bus[5].eq)
     end
 
     def test_it_sets_and_gets_bus4_EQ_off_with_alias
-        @@vmr.bus[5].EQ(OFF)
-        assert_equal(false, @@vmr.bus[5].EQ)
+        @@vmr.bus[5].eq(OFF)
+        assert_equal(false, @@vmr.bus[5].eq)
     end
 end

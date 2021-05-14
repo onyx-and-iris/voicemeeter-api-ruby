@@ -283,3 +283,35 @@ class SetAndGetParamsFloatWithAliasOnOff < Minitest::Test
         assert_equal(false, @@vmr.strip[3].B1)
     end
 end
+
+class SetAndGetParamsStringWithAlias < Minitest::Test
+    def test_it_sets_and_gets_strip0_label_test0_with_alias
+        @@vmr.strip[1].label = 'test0'
+        assert_equal('test0', @@vmr.strip[1].label)
+    end
+
+    def test_it_sets_and_gets_strip0_label_test1_with_alias
+        @@vmr.strip[1].label = 'test1'
+        assert_equal('test1', @@vmr.strip[1].label)
+    end
+
+    def test_it_sets_and_gets_strip1_label_test0_with_alias
+        @@vmr.strip[2].label = 'test0'
+        assert_equal('test0', @@vmr.strip[2].label)
+    end
+
+    def test_it_sets_and_gets_strip1_label_test1_with_alias
+        @@vmr.strip[2].label = 'test1'
+        assert_equal('test1', @@vmr.strip[2].label)
+    end
+
+    def test_it_sets_and_gets_strip2_label_test0_with_alias
+        @@vmr.strip[3].label = 'test0'
+        assert_equal('test0', @@vmr.strip[3].label)
+    end
+
+    def test_it_sets_and_gets_strip2_label_test1_with_alias
+        @@vmr.strip[3].label = 'test1'
+        assert_equal('test1', @@vmr.strip[3].label)
+    end
+end

@@ -129,7 +129,8 @@ module BuildStrips
         def initialize(run, index)
             super
             self.make_accessor_bool :solo, :mc, :k, :comp, :gate, :limit,
-            :A1, :A2, :A3, :A4, :A5, :B1, :B2, :B3, :label
+            :A1, :A2, :A3, :A4, :A5, :B1, :B2, :B3
+            self.make_accessor_standard :label
         end
 
         def setter(param, value)
@@ -172,13 +173,13 @@ module BuildStrips
             @run.get_parameter("Bus[#{@index}].#{param}")
         end
 
-        def EQ=(value)
+        def eq=(value)
             self.setter("EQ.on", value)
         end
 
-        def EQ(value = nil)
+        def eq(value = nil)
             return self.getter("EQ.on") if value.nil?
-            self.EQ = value
+            self.eq = value
         end
     end
 end
