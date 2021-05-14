@@ -156,9 +156,9 @@ vmr.strip[6].B1 = false
 ```
 ### Bus
 Following commands work only for buses
-- EQ: accepts boolean
+- eq: accepts boolean
 ```ruby
-vmr.bus[1].EQ = true
+vmr.bus[1].eq = true
 ```
 
 ### Macrobuttons
