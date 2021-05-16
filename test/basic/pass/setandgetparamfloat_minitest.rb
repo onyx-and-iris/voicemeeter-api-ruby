@@ -109,6 +109,18 @@ class SetAndGetParamsFloat < Minitest::Test
         assert_equal(OFF, @@vmr.get_parameter("Strip[2].mute"))
     end
 
+    def test_it_sets_and_gets_strip0_gain_on
+        @@vmr.set_parameter("Strip[0].gain", 3.6)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(3.6, @@vmr.get_parameter("Strip[0].gain"))
+    end
+
+    def test_it_sets_and_gets_strip1_gain_on
+        @@vmr.set_parameter("Strip[1].gain", -0.4)
+        assert_equal(SUCCESS, @@vmr.ret)
+        assert_equal(-0.4, @@vmr.get_parameter("Strip[1].gain"))
+    end
+
     def test_it_gets_bus0_mute_value_on
         @@vmr.set_parameter("Bus[0].mute", ON)
         assert_equal(SUCCESS, @@vmr.ret)

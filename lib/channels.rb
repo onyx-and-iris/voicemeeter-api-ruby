@@ -121,15 +121,18 @@ module BuildStrips
         def initialize(run, index)
             self.run = run
             self.index = index
-            self.make_accessor_bool :mono, :mute, :gain
+            self.make_accessor_bool :mono, :mute
+            self.make_accessor_float :gain
         end
     end
 
     class Strip < Channel
         def initialize(run, index)
             super
-            self.make_accessor_bool :solo, :mc, :k, :comp, :gate, :limit,
+            self.make_accessor_bool :solo, :mc, :k,
             :A1, :A2, :A3, :A4, :A5, :B1, :B2, :B3
+            self.make_accessor_int :limit
+            self.make_accessor_float :comp, :gate
             self.make_accessor_standard :label
         end
 

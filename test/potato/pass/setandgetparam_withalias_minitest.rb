@@ -1,6 +1,6 @@
 require_relative '../minitest_helper'
 
-class SetAndGetParamsFloatWithAliasTrueFalse < Minitest::Test
+class SetAndGetParamsBoolWithAliasTrueFalse < Minitest::Test
     def test_it_sets_and_gets_strip0_mute_on_with_alias
         @@vmr.strip[1].mute = true
         assert_equal(true, @@vmr.strip[1].mute)
@@ -643,7 +643,7 @@ class SetAndGetParamsFloatWithAliasTrueFalse < Minitest::Test
 end
 
 
-class SetAndGetParamsFloatWithAliasOnOff < Minitest::Test
+class SetAndGetParamsBoolWithAliasOnOff < Minitest::Test
     def test_it_sets_and_gets_strip0_mute_on_with_alias
         @@vmr.strip[1].mute(ON)
         assert_equal(true, @@vmr.strip[1].mute)
@@ -1045,82 +1045,261 @@ class SetAndGetParamsFloatWithAliasOnOff < Minitest::Test
     end
 
     def test_it_sets_and_gets_bus0_EQ_on_with_alias
-        @@vmr.bus[1].EQ(ON)
-        assert_equal(true, @@vmr.bus[1].EQ)
+        @@vmr.bus[1].eq(ON)
+        assert_equal(true, @@vmr.bus[1].eq)
     end
 
     def test_it_sets_and_gets_bus0_EQ_off_with_alias
-        @@vmr.bus[1].EQ(OFF)
-        assert_equal(false, @@vmr.bus[1].EQ)
+        @@vmr.bus[1].eq(OFF)
+        assert_equal(false, @@vmr.bus[1].eq)
     end
 
     def test_it_sets_and_gets_bus1_EQ_on_with_alias
-        @@vmr.bus[2].EQ(ON)
-        assert_equal(true, @@vmr.bus[2].EQ)
+        @@vmr.bus[2].eq(ON)
+        assert_equal(true, @@vmr.bus[2].eq)
     end
 
     def test_it_sets_and_gets_bus1_EQ_off_with_alias
-        @@vmr.bus[2].EQ(OFF)
-        assert_equal(false, @@vmr.bus[2].EQ)
+        @@vmr.bus[2].eq(OFF)
+        assert_equal(false, @@vmr.bus[2].eq)
     end
 
     def test_it_sets_and_gets_bus2_EQ_on_with_alias
-        @@vmr.bus[3].EQ(ON)
-        assert_equal(true, @@vmr.bus[3].EQ)
+        @@vmr.bus[3].eq(ON)
+        assert_equal(true, @@vmr.bus[3].eq)
     end
 
     def test_it_sets_and_gets_bus2_EQ_off_with_alias
-        @@vmr.bus[3].EQ(OFF)
-        assert_equal(false, @@vmr.bus[3].EQ)
+        @@vmr.bus[3].eq(OFF)
+        assert_equal(false, @@vmr.bus[3].eq)
     end
 
     def test_it_sets_and_gets_bus3_EQ_on_with_alias
-        @@vmr.bus[4].EQ(ON)
-        assert_equal(true, @@vmr.bus[4].EQ)
+        @@vmr.bus[4].eq(ON)
+        assert_equal(true, @@vmr.bus[4].eq)
     end
 
     def test_it_sets_and_gets_bus3_EQ_off_with_alias
-        @@vmr.bus[4].EQ(OFF)
-        assert_equal(false, @@vmr.bus[4].EQ)
+        @@vmr.bus[4].eq(OFF)
+        assert_equal(false, @@vmr.bus[4].eq)
     end
 
     def test_it_sets_and_gets_bus4_EQ_on_with_alias
-        @@vmr.bus[5].EQ(ON)
-        assert_equal(true, @@vmr.bus[5].EQ)
+        @@vmr.bus[5].eq(ON)
+        assert_equal(true, @@vmr.bus[5].eq)
     end
 
     def test_it_sets_and_gets_bus4_EQ_off_with_alias
-        @@vmr.bus[5].EQ(OFF)
-        assert_equal(false, @@vmr.bus[5].EQ)
+        @@vmr.bus[5].eq(OFF)
+        assert_equal(false, @@vmr.bus[5].eq)
     end
 
     def test_it_sets_and_gets_bus5_EQ_on_with_alias
-        @@vmr.bus[6].EQ(ON)
-        assert_equal(true, @@vmr.bus[6].EQ)
+        @@vmr.bus[6].eq(ON)
+        assert_equal(true, @@vmr.bus[6].eq)
     end
 
     def test_it_sets_and_gets_bus5_EQ_off_with_alias
-        @@vmr.bus[6].EQ(OFF)
-        assert_equal(false, @@vmr.bus[6].EQ)
+        @@vmr.bus[6].eq(OFF)
+        assert_equal(false, @@vmr.bus[6].eq)
     end
 
     def test_it_sets_and_gets_bus6_EQ_on_with_alias
-        @@vmr.bus[7].EQ(ON)
-        assert_equal(true, @@vmr.bus[7].EQ)
+        @@vmr.bus[7].eq(ON)
+        assert_equal(true, @@vmr.bus[7].eq)
     end
 
     def test_it_sets_and_gets_bus6_EQ_off_with_alias
-        @@vmr.bus[7].EQ(OFF)
-        assert_equal(false, @@vmr.bus[7].EQ)
+        @@vmr.bus[7].eq(OFF)
+        assert_equal(false, @@vmr.bus[7].eq)
     end
 
     def test_it_sets_and_gets_bus7_EQ_on_with_alias
-        @@vmr.bus[8].EQ(ON)
-        assert_equal(true, @@vmr.bus[8].EQ)
+        @@vmr.bus[8].eq(ON)
+        assert_equal(true, @@vmr.bus[8].eq)
     end
 
     def test_it_sets_and_gets_bus7_EQ_off_with_alias
-        @@vmr.bus[8].EQ(OFF)
-        assert_equal(false, @@vmr.bus[8].EQ)
+        @@vmr.bus[8].eq(OFF)
+        assert_equal(false, @@vmr.bus[8].eq)
+    end
+end
+
+
+class SetAndGetParamsFloatWithAlias < Minitest::Test
+    def test_it_sets_and_gets_strip0_gain_42_with_alias
+        @@vmr.strip[1].gain = 4.2
+        assert_equal(4.2, @@vmr.strip[1].gain)
+    end
+
+    def test_it_sets_and_gets_strip0_gain_75_with_alias
+        @@vmr.strip[1].gain = -7.5
+        assert_equal(-7.5, @@vmr.strip[1].gain)
+    end
+
+    def test_it_sets_and_gets_strip1_gain_27_with_alias
+        @@vmr.strip[2].gain = -2.7
+        assert_equal(-2.7, @@vmr.strip[2].gain)
+    end
+
+    def test_it_sets_and_gets_strip1_gain_43_with_alias
+        @@vmr.strip[2].gain = 4.3
+        assert_equal(4.3, @@vmr.strip[2].gain)
+    end
+
+    def test_it_sets_and_gets_strip2_gain_18_with_alias
+        @@vmr.strip[3].gain = 1.8
+        assert_equal(1.8, @@vmr.strip[3].gain)
+    end
+
+    def test_it_sets_and_gets_strip2_gain_108_with_alias
+        @@vmr.strip[3].gain = -10.8
+        assert_equal(-10.8, @@vmr.strip[3].gain)
+    end
+
+    def test_it_sets_and_gets_bus0_gain_42_with_alias
+        @@vmr.bus[1].gain = 4.2
+        assert_equal(4.2, @@vmr.bus[1].gain)
+    end
+
+    def test_it_sets_and_gets_bus0_gain_75_with_alias
+        @@vmr.bus[1].gain = -7.5
+        assert_equal(-7.5, @@vmr.bus[1].gain)
+    end
+
+    def test_it_sets_and_gets_bus1_gain_27_with_alias
+        @@vmr.bus[2].gain = -2.7
+        assert_equal(-2.7, @@vmr.bus[2].gain)
+    end
+
+    def test_it_sets_and_gets_bus1_gain_43_with_alias
+        @@vmr.bus[2].gain = 4.3
+        assert_equal(4.3, @@vmr.bus[2].gain)
+    end
+
+    def test_it_sets_and_gets_strip0_comp_42_with_alias
+        @@vmr.strip[1].comp = 4.2
+        assert_equal(4.2, @@vmr.strip[1].comp)
+    end
+
+    def test_it_sets_and_gets_strip0_comp_75_with_alias
+        @@vmr.strip[1].comp = 7.5
+        assert_equal(7.5, @@vmr.strip[1].comp)
+    end
+
+    def test_it_sets_and_gets_strip1_comp_27_with_alias
+        @@vmr.strip[2].comp = 2.7
+        assert_equal(2.7, @@vmr.strip[2].comp)
+    end
+
+    def test_it_sets_and_gets_strip1_comp_43_with_alias
+        @@vmr.strip[2].comp = 4.3
+        assert_equal(4.3, @@vmr.strip[2].comp)
+    end
+
+    def test_it_sets_and_gets_strip2_comp_18_with_alias
+        @@vmr.strip[3].comp = 1.8
+        assert_equal(1.8, @@vmr.strip[3].comp)
+    end
+
+    def test_it_sets_and_gets_strip2_comp_10_with_alias
+        @@vmr.strip[3].comp = 10
+        assert_equal(10, @@vmr.strip[3].comp)
+    end
+
+    def test_it_sets_and_gets_strip0_gate_42_with_alias
+        @@vmr.strip[1].gate = 4.2
+        assert_equal(4.2, @@vmr.strip[1].gate)
+    end
+
+    def test_it_sets_and_gets_strip0_gate_75_with_alias
+        @@vmr.strip[1].gate = 7.5
+        assert_equal(7.5, @@vmr.strip[1].gate)
+    end
+
+    def test_it_sets_and_gets_strip1_gate_27_with_alias
+        @@vmr.strip[2].gate = 2.7
+        assert_equal(2.7, @@vmr.strip[2].gate)
+    end
+
+    def test_it_sets_and_gets_strip1_gate_43_with_alias
+        @@vmr.strip[2].gate = 4.3
+        assert_equal(4.3, @@vmr.strip[2].gate)
+    end
+
+    def test_it_sets_and_gets_strip2_gate_18_with_alias
+        @@vmr.strip[3].gate = 1.8
+        assert_equal(1.8, @@vmr.strip[3].gate)
+    end
+
+    def test_it_sets_and_gets_strip2_gate_10_with_alias
+        @@vmr.strip[3].gate = 10
+        assert_equal(10, @@vmr.strip[3].gate)
+    end
+end
+
+
+class SetAndGetParamsIntWithAlias < Minitest::Test
+    def test_it_sets_and_gets_strip0_limit_4_with_alias
+        @@vmr.strip[1].limit = -4
+        assert_equal(-4, @@vmr.strip[1].limit)
+    end
+
+    def test_it_sets_and_gets_strip0_limit_7_with_alias
+        @@vmr.strip[1].limit = -7
+        assert_equal(-7, @@vmr.strip[1].limit)
+    end
+
+    def test_it_sets_and_gets_strip1_limit_2_with_alias
+        @@vmr.strip[2].limit = -2
+        assert_equal(-2, @@vmr.strip[2].limit)
+    end
+
+    def test_it_sets_and_gets_strip1_limit_8_with_alias
+        @@vmr.strip[2].limit = -8
+        assert_equal(-8, @@vmr.strip[2].limit)
+    end
+
+    def test_it_sets_and_gets_strip2_limit_1_with_alias
+        @@vmr.strip[3].limit = 1
+        assert_equal(1, @@vmr.strip[3].limit)
+    end
+
+    def test_it_sets_and_gets_strip2_limit_10_with_alias
+        @@vmr.strip[3].limit = -10
+        assert_equal(-10, @@vmr.strip[3].limit)
+    end
+end
+
+
+class SetAndGetParamsStringWithAlias < Minitest::Test
+    def test_it_sets_and_gets_strip0_label_test0_with_alias
+        @@vmr.strip[1].label = 'test0'
+        assert_equal('test0', @@vmr.strip[1].label)
+    end
+
+    def test_it_sets_and_gets_strip0_label_test1_with_alias
+        @@vmr.strip[1].label = 'test1'
+        assert_equal('test1', @@vmr.strip[1].label)
+    end
+
+    def test_it_sets_and_gets_strip1_label_test0_with_alias
+        @@vmr.strip[2].label = 'test0'
+        assert_equal('test0', @@vmr.strip[2].label)
+    end
+
+    def test_it_sets_and_gets_strip1_label_test1_with_alias
+        @@vmr.strip[2].label = 'test1'
+        assert_equal('test1', @@vmr.strip[2].label)
+    end
+
+    def test_it_sets_and_gets_strip2_label_test0_with_alias
+        @@vmr.strip[3].label = 'test0'
+        assert_equal('test0', @@vmr.strip[3].label)
+    end
+
+    def test_it_sets_and_gets_strip2_label_test1_with_alias
+        @@vmr.strip[3].label = 'test1'
+        assert_equal('test1', @@vmr.strip[3].label)
     end
 end

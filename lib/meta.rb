@@ -11,6 +11,30 @@ module Make_Accessors
         end
     end
 
+    def make_accessor_float(*params)
+        params.each do |method|
+            define_singleton_method("#{method}") do |arg=nil|
+                return self.getter("#{method}") if arg.nil?
+                send("#{method}=", arg)
+            end
+            define_singleton_method("#{method}=") do |arg|
+                self.setter("#{method}", arg)
+            end
+        end
+    end
+
+    def make_accessor_int(*params)
+        params.each do |method|
+            define_singleton_method("#{method}") do |arg=nil|
+                return self.getter("#{method}") if arg.nil?
+                send("#{method}=", arg)
+            end
+            define_singleton_method("#{method}=") do |arg|
+                self.setter("#{method}", arg)
+            end
+        end
+    end
+
     def make_accessor_buttons(*params)
         params.each_with_index do |method, index|
             define_singleton_method("#{method}") do |arg=nil|
