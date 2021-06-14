@@ -42,25 +42,6 @@ def get_vbpath
     raise InstallErrors::DLLPathNotFoundError
 end
 
-def inst_exe=(value)
-    if value == BASIC
-        exe = "voicemeeter.exe"
-    elsif value == BANANA
-        exe = "voicemeeterpro.exe"
-    elsif value == POTATO
-        if @os_bits == 64
-            exe = "voicemeeter8x64.exe"
-        else
-            exe = "voicemeeter8.exe"
-        end
-    end
-    if get_vbpath.join(exe).executable?
-        @inst_exe = String(get_vbpath.join(exe))
-    else
-        raise InstallErrors::EXENotFoundError
-    end
-end
-
 def vmr_dll=(value)
     if value.file?
         @vmr_dll = value

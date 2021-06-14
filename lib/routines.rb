@@ -227,6 +227,23 @@ class Routines
         @pid
     end
 
+    def inst_exe=(value)
+        case value
+        when BASIC
+            exe = "voicemeeter.exe"
+        when BANANA
+            exe = "voicemeeterpro.exe"
+        when POTATO
+            exe = "voicemeeter8#{get_arch == 64 ? "x64" : ""}.exe"
+        end
+    
+        if get_vbpath.join(exe).executable?
+            @inst_exe = String(get_vbpath.join(exe))
+        else
+            raise InstallErrors::EXENotFoundError
+        end
+    end
+
     def initialize(type = nil, opts = {})
         self.base_0 = opts[:base_0] || false
         self.setdelay = opts[:setdelay] || ACCESSOR_DELAY

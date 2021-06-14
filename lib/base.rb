@@ -4,18 +4,14 @@ require_relative 'inst'
 module FunctionHooks
     extend FFI::Library
 
-    attr_reader :vmr_dll, :os_bits, :setdelay, :getdelay, :rundelay,
+    attr_reader :vmr_dll, :setdelay, :getdelay, :rundelay,
     :shutdowndelay, :saveloaddelay, :logoutdelay
 
-    if ((@os_bits = get_arch) == 64)
-        dll_name = "VoicemeeterRemote64.dll"
-    elsif @os_bits == 32
-        dll_name = "VoicemeeterRemote.dll"
-    end
+    dll_name = "VoicemeeterRemote#{get_arch == 64 ? "64" : ""}.dll"
 
     begin
         self.vmr_dll = get_vbpath.join(dll_name)
-    rescue InstallError => error
+    rescue InstallErrors => error
         puts "ERROR: #{error.message}"
         raise
     end
