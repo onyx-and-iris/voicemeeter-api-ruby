@@ -63,11 +63,12 @@ class Routines
 
     def type=(value)
         """ Determine the Voicemeeter type """
-        if value == "basic" || value == 1
+        case value
+        when "basic" || 1
             @type = BASIC
-        elsif value == "banana" || value == 2
+        when "banana" || 2
             @type = BANANA
-        elsif value == "potato" || value == 3
+        when "potato" || 3
             @type = POTATO
         else
             raise ConnectionErrors::VBTypeError
@@ -168,19 +169,20 @@ class Routines
                 v = bool_to_int(v) if [false,true].include? v
 
                 if validate(name, num)
-                    if name == "strip"
+                    case name
+                    when "strip"
                         strip_params.append(
                             "#{name.capitalize}[#{num.to_s}].#{k} = #{v}"
                         )
                         self.param_cache =
                         ["params", "#{name.capitalize}[#{num.to_s}].#{k}", v]
-                    elsif name == "bus"
+                    when "bus"
                         bus_params.append(
                             "#{name.capitalize}[#{num.to_s}].#{k} = #{v}"
                         )
                         self.param_cache =
                         ["params", "#{name.capitalize}[#{num.to_s}].#{k}", v]
-                    elsif name == "mb"
+                    when "mb"
                         mode = 1 if k == "state"
                         mode = 2 if k == "stateonly"
                         mode = 3 if k == "trigger"
@@ -188,7 +190,7 @@ class Routines
                             [num,v,mode]
                         )
                         self.param_cache = ["macros", num, mode, v]
-                    elsif name == "vban"
+                    when "vban"
                         param = "on" if k == "enable"
                         vban_params.append(
                             "#{name}.#{dir}stream[#{num.to_s}].#{param} = #{v}"
