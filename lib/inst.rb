@@ -42,6 +42,6 @@ end
 
 
 if __FILE__ == $PROGRAM_NAME
-    puts get_vbpath(64)
+    puts get_vmpath(64)
     puts get_arch
 end
