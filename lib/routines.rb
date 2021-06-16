@@ -14,7 +14,7 @@ class Routines
     include BuildStrips
     include Alias
 
-    attr_accessor :val, :param_cache, :base_0, :rundelay
+    attr_accessor :val, :param_cache, :base_0, :rundelay, :os_bits, :vm_path
     attr_reader :ret, :type, :logged_in, :logged_out, :sp_command, :sp_value,
     :param_string, :param_options, :param_float, :param_name, :instdir,
     :inst_exe, :pid
@@ -227,20 +227,22 @@ class Routines
         @pid
     end
 
+    def os_bits=(value)
+        if value
+            @os_bits = value
+        else
+            @os_bits = get_arch
+        end
+    end
+
     def inst_exe=(value)
         case value
         when BASIC
-            exe = "voicemeeter.exe"
+            @inst_exe = "voicemeeter.exe"
         when BANANA
-            exe = "voicemeeterpro.exe"
+            @inst_exe = "voicemeeterpro.exe"
         when POTATO
-            exe = "voicemeeter8#{get_arch == 64 ? "x64" : ""}.exe"
-        end
-    
-        if get_vbpath.join(exe).executable?
-            @inst_exe = String(get_vbpath.join(exe))
-        else
-            raise InstallErrors::EXENotFoundError
+            @inst_exe = "voicemeeter8#{@os_bits == 64 ? "x64" : ""}.exe"
         end
     end
 
@@ -264,8 +266,16 @@ class Routines
 
     def runvb
         raise ConnectionErrors::VBTypeError if @type.nil?
-
+        self.os_bits = os_bits
         self.inst_exe = @type
+        self.vm_path = get_vmpath(@os_bits)
+
+        if @vm_path.join(@inst_exe).executable?
+            @inst_exe = String(@vm_path.join(@inst_exe))
+        else
+            raise InstallErrors::EXENotFoundError
+        end
+
         stdin, stdout, stderr, wait_thread = Open3.popen3(@inst_exe, '')
         self.pid = wait_thread[:pid]
     rescue ConnectionErrors => error

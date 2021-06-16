@@ -6,11 +6,14 @@ module FunctionHooks
 
     attr_reader :vmr_dll, :setdelay, :getdelay, :rundelay,
     :shutdowndelay, :saveloaddelay, :logoutdelay
+  
+    os_bits = get_arch
+    vm_path = get_vmpath(os_bits)
 
-    dll_name = "VoicemeeterRemote#{get_arch == 64 ? "64" : ""}.dll"
+    dll_name = "VoicemeeterRemote#{os_bits == 64 ? "64" : ""}.dll"
 
     begin
-        self.vmr_dll = get_vbpath.join(dll_name)
+        self.vmr_dll = vm_path.join(dll_name)
     rescue InstallErrors => error
         puts "ERROR: #{error.message}"
         raise
