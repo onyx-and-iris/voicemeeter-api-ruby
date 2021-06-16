@@ -246,6 +246,14 @@ class Routines
         end
     end
 
+    def vm_path=(value)
+        if value
+            @vm_path = value
+        else
+            @vm_path = get_vmpath(@os_bits)
+        end
+    end
+
     def initialize(type = nil, opts = {})
         self.base_0 = opts[:base_0] || false
         self.setdelay = opts[:setdelay] || ACCESSOR_DELAY
@@ -268,7 +276,7 @@ class Routines
         raise ConnectionErrors::VBTypeError if @type.nil?
         self.os_bits = os_bits
         self.inst_exe = @type
-        self.vm_path = get_vmpath(@os_bits)
+        self.vm_path = vm_path
 
         if @vm_path.join(@inst_exe).executable?
             @inst_exe = String(@vm_path.join(@inst_exe))
