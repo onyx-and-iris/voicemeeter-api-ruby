@@ -29,19 +29,13 @@ def get_vmpath(os_bits)
         pn = Pathname.new(value)
         return pn.dirname
     end
-    raise InstallErrors::DLLPathNotFoundError
+    raise InstallErrors('Could not get the Voicemeeter path')
 end
 
 def vmr_dll=(value)
     if value.file?
         @vmr_dll = value
     else
-        raise InstallErrors::DLLNotFoundError
+        raise InstallErrors('Could not fetch the dll file')
     end
-end
-
-
-if __FILE__ == $PROGRAM_NAME
-    puts get_vmpath(64)
-    puts get_arch
 end

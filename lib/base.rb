@@ -1,12 +1,10 @@
 require 'ffi'
 require_relative 'inst'
 
-module FunctionHooks
+
+module Base
     extend FFI::Library
 
-    attr_reader :vmr_dll, :setdelay, :getdelay, :rundelay,
-    :shutdowndelay, :saveloaddelay, :logoutdelay
-  
     os_bits = get_arch
     vm_path = get_vmpath(os_bits)
 
@@ -47,63 +45,19 @@ module FunctionHooks
     attach_function :vmr_set_parameter_multi, :VBVMR_SetParameters, \
     [:string], :long
 
-    ACCESSOR_DELAY = 0.001
-    RUNDELAY = 1
-    LOGOUTDELAY = 0.02
-    SHUTDOWNDELAY = 0.4
-    SAVELOADDELAY = 0.2
+    DELAY = 0.001
+    MAX_POLLS = 8
 
-    """ Timer functions """
-    def setdelay=(value)
-        @setdelay = value
-    end
-
-    def getdelay=(value)
-        @getdelay = value
-    end
-
-    def rundelay=(value)
-        @rundelay = value
-    end
-
-    def shutdowndelay=(value)
-        @shutdowndelay = value
-    end
-
-    def logoutdelay=(value)
-        @logoutdelay = value
-    end
-
-    def saveloaddelay=(value)
-        @saveloaddelay = value
-    end
-
-    def clear_pdirty
-        while vmr_pdirty&.nonzero?
-        end
-    end
-
-    def wait_pdirty
-        until vmr_pdirty&.nonzero?
-        end
-    end
-
-    def clear_mdirty
-        while vmr_mdirty&.nonzero?
-        end
-    end
-
-    def wait_mdirty
-        until vmr_mdirty&.nonzero?
+    def polling
+        MAX_POLLS.times do
+            break if vmr_pdirty&.zero? && vmr_mdirty&.zero?
+            sleep(DELAY)
         end
     end
 
     def run_as(func, *args)
-        torun = 'vmr_' + func.to_s
-        val = send(torun, *args)
-
-        sleep(@setdelay) if torun.include? 'set_'
-        sleep(@getdelay) if torun.include? 'get_'
-        val
+        torun = 'vmr_' + func
+        send(torun, *args)
+        sleep(DELAY * 20) if torun.include? 'set'
     end
 end
