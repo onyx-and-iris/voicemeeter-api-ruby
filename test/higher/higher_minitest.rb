@@ -56,6 +56,26 @@ class SetAndGetVban < Minitest::Test
         @@vmr.vban.instream[0].on = false
         assert_equal(false, @@vmr.vban.instream[0].on)
     end
+
+    def test_it_sets_and_gets_vban_instream4_name
+        @@vmr.vban.instream[4].name = 'test'
+        assert_equal('test', @@vmr.vban.instream[4].name)
+    end
+
+    def test_it_sets_and_gets_vban_instream4_name
+        @@vmr.vban.instream[4].name = 'Stream5'
+        assert_equal('Stream5', @@vmr.vban.instream[4].name)
+    end
+
+    def test_it_sets_and_gets_vban_outstream4_ip
+        @@vmr.vban.outstream[4].ip = '0.0.0.0'
+        assert_equal('0.0.0.0', @@vmr.vban.outstream[4].ip)
+    end
+
+    def test_it_sets_and_gets_vban_instream4_ip
+        @@vmr.vban.outstream[4].ip = '127.0.0.1'
+        assert_equal('127.0.0.1', @@vmr.vban.outstream[4].ip)
+    end
 end
 
 class SetAndGetRecorder < Minitest::Test
