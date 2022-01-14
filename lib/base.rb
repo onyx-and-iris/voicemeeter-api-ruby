@@ -1,17 +1,18 @@
 require 'ffi'
 require_relative 'inst'
 
+include InstallationFunctions
 
 module Base
     extend FFI::Library
 
-    os_bits = get_arch
-    vm_path = get_vmpath(os_bits)
+    OS_BITS = get_arch
+    VM_PATH = get_vmpath(OS_BITS)
 
-    dll_name = "VoicemeeterRemote#{os_bits == 64 ? "64" : ""}.dll"
+    dll_name = "VoicemeeterRemote#{OS_BITS == 64 ? "64" : ""}.dll"
 
     begin
-        self.vmr_dll = vm_path.join(dll_name)
+        self.vmr_dll = VM_PATH.join(dll_name)
     rescue InstallErrors => error
         puts "ERROR: #{error.message}"
         raise
@@ -59,9 +60,10 @@ module Base
 
     def run_as(func, *args)
         val = send('vmr_' + func, *args)
+        self.retval = [val, func]
         sleep(DELAY * 20) if func.include? 'set_param'
         sleep(DELAY * 50) if func.include? 'macro_set'
 
-        val
+        @retval
     end
 end

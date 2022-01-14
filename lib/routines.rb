@@ -1,5 +1,6 @@
 require_relative 'base'
-require_relative 'layout'
+require_relative 'define'
+require_relative 'run'
 require_relative 'strip'
 require_relative 'bus'
 require_relative 'vban'
@@ -13,21 +14,33 @@ class Routines
     mixin modules
     """
     include Base
-    include Layout
+    include Run
+    include Define_Version
 
-    attr_accessor :layout, :strip, :bus, :vban, :command, :recorder
+    attr_accessor :properties, :layout, :strip, :bus, :vban, :command, :recorder,
+    :logged_in
+
+    attr_reader :retval
 
     SIZE = 1
     BUFF = 512
 
     def initialize(type)
-        define_layout(type)
+        define_version(type)
 
         self.strip = Strip.make(self, @layout[:strip], @layout[:bus])
         self.bus = Bus.make(self, @layout[:bus])
         self.vban = Vban.make(self, @layout[:vban])
         self.command = Command.new(self)
         self.recorder = Recorder.new(self, @layout[:bus])
+    end
+
+    def retval=(values)
+        """ Writer validation for CAPI calls """
+        retval, func = *values
+        raise CAPIErrors.new(retval, func) if retval&.nonzero?
+
+        @retval = retval
     end
 
     def pdirty
@@ -40,7 +53,16 @@ class Routines
 
     def login
         run_as("login")
+        self.logged_in = true
+
         while self.pdirty || self.mdirty
+        end
+    rescue CAPIErrors => error
+        case
+        when error.value == 1
+            run_voicemeeter
+        when error.value < 0
+            raise error
         end
     end
 

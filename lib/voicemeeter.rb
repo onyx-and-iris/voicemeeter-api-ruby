@@ -9,16 +9,17 @@ class Remote < Routines
     """
     def initialize(type = nil)
         super
-        self.run
     end
 
-    def run
-        login
+    def connect
+        login unless @logged_in
 
         if block_given?
             yield
             
             logout
+        else
+            return self
         end
     end
 end

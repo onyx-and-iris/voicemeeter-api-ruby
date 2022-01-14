@@ -8,18 +8,12 @@ class Bus < IChannel
         "
         p_out = layout_bus[:p_out]
         v_out = layout_bus[:v_out]
-
-        bus = []
-
-        bus = (0..(p_out + v_out - 1)).map.each_with_index do |i|
+        
+        bus = (0...(p_out + v_out)).map.each_with_index do |i|
             i < p_out ? \
             PhysicalBus.new(remote, i) : \
             VirtualBus.new(remote, i)
         end
-    end
-
-    def initialize(remote, index)
-        super(remote, index)
     end
 
     def cmd
