@@ -48,16 +48,20 @@ module Base
     DELAY = 0.001
     MAX_POLLS = 8
 
-    def polling
+    def polling(func)
         MAX_POLLS.times do
-            break if vmr_pdirty&.zero? && vmr_mdirty&.zero?
+            break if func.include?('param') && !self.pdirty
+            break if func.include?('macro') && !self.mdirty
+
             sleep(DELAY)
         end
     end
 
     def run_as(func, *args)
-        torun = 'vmr_' + func
-        send(torun, *args)
-        sleep(DELAY * 20) if torun.include? 'set'
+        val = send('vmr_' + func, *args)
+        sleep(DELAY * 20) if func.include? 'set_param'
+        sleep(DELAY * 50) if func.include? 'macro_set'
+
+        val
     end
 end
