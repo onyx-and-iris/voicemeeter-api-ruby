@@ -2,6 +2,9 @@ require_relative 'base'
 require_relative 'layout'
 require_relative 'strip'
 require_relative 'bus'
+require_relative 'vban'
+require_relative 'command'
+require_relative 'recorder'
 
 
 class Routines
@@ -12,29 +15,42 @@ class Routines
     include Base
     include Layout
 
-    attr_accessor :layout, :strip, :bus
+    attr_accessor :layout, :strip, :bus, :vban, :command, :recorder
 
     SIZE = 1
     BUFF = 512
-
 
     def initialize(type)
         define_layout(type)
 
         self.strip = Strip.make(self, @layout[:strip], @layout[:bus])
         self.bus = Bus.make(self, @layout[:bus])
+        self.vban = Vban.make(self, @layout[:vban])
+        self.command = Command.new(self)
+        self.recorder = Recorder.new(self, @layout[:bus])
+    end
+
+    def pdirty
+        return vmr_pdirty&.nonzero?
+    end
+
+    def mdirty
+        return vmr_mdirty&.nonzero?
     end
 
     def login
         run_as("login")
+        while self.pdirty || self.mdirty
+        end
     end
 
     def logout
+        sleep(0.02)
         run_as("logout")
     end
 
     def get_parameter(name, is_string=false)
-        self.polling
+        self.polling(__method__.to_s)
 
         if is_string
             c_get = FFI::MemoryPointer.new(:string, BUFF, true)
@@ -43,7 +59,7 @@ class Routines
         else
             c_get = FFI::MemoryPointer.new(:float, SIZE)
             run_as("get_parameter_float", name, c_get)
-            c_get.read_float.to_i
+            c_get.read_float.round(1)
         end
     end
 
@@ -56,7 +72,7 @@ class Routines
     end
 
     def macro_getstatus(id, mode)
-        self.polling
+        self.polling(__method__.to_s)
 
         c_get = FFI::MemoryPointer.new(:float, SIZE)
         run_as("macro_getstatus", id, c_get, mode)
