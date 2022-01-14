@@ -2,7 +2,7 @@ require_relative 'channel'
 
 
 class Bus < IChannel
-	def self.make(remote, layout_bus)
+    def self.make(remote, layout_bus)
         "
         Factory function for Strip classes.
         "
@@ -18,7 +18,7 @@ class Bus < IChannel
             end
         end
         bus
-	end
+    end
 
     def initialize(remote, index)
         super(remote, index)
