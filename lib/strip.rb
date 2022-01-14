@@ -2,6 +2,8 @@ require_relative 'channel'
 
 
 class Strip < IChannel
+    attr_reader :num_A, :num_B
+
 	def self.make(remote, layout_strip, out_channels)
         "
         Factory function for Strip classes.
@@ -32,19 +34,6 @@ class Strip < IChannel
 
     def cmd
         return "Strip[#{@index}]"
-    end
-
-    def _make_channel_props(num_A, num_B)
-        channels = []
-        (1..(num_A + num_B)).each do |i|
-            if i <= num_A
-                channels[i] = "A#{i}"
-            else
-                channels[i] = "B#{i - num_A}"
-            end
-        end
-
-        self.make_accessor_bool *channels
     end
 end
 

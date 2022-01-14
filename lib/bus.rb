@@ -10,11 +10,11 @@ class Bus < IChannel
         v_out = layout_bus[:v_out]
 
         bus = []
-        (0..(p_out + v_out - 1)).each_with_index do |index|
-            if index < p_out
-                bus[index] = PhysicalBus.new(remote, index)
+        (0..(p_out + v_out - 1)).each_with_index do |i|
+            if i < p_out
+                bus[i] = PhysicalBus.new(remote, i)
             else
-                bus[index] = VirtualBus.new(remote, index)
+                bus[i] = VirtualBus.new(remote, i)
             end
         end
         bus
