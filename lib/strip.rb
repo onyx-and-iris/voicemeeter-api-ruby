@@ -13,15 +13,11 @@ class Strip < IChannel
         num_A = out_channels[:p_out]
         num_B = out_channels[:v_out]
 
-        strip = []
-        (0..(p_in + v_in -1)).each_with_index do |i|
-            if i < p_in
-                strip[i] = PhysicalStrip.new(remote, i, num_A, num_B)
-            else
-                strip[i] = VirtualStrip.new(remote, i, num_A, num_B)
-            end
+        strip = (0..(p_in + v_in -1)).map.each_with_index do |i|
+            i < p_in ? \
+            PhysicalStrip.new(remote, i, num_A, num_B) : \
+            VirtualStrip.new(remote, i, num_A, num_B) 
         end
-        strip
 	end
 
     def initialize(remote, index, num_A, num_B)

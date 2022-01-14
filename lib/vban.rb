@@ -42,13 +42,12 @@ class Vban < IVban
             attr_accessor :instream, :outstream
         end
 
-        self.instream = []
-        (0..(vban_streams[:instream] - 1)).each_with_index do |i|
-            self.instream[i] = VbanInstream.new(remote, i)
+        self.instream = (0..(vban_streams[:instream] - 1)).map.each_with_index do |i|
+            VbanInstream.new(remote, i)
         end
-        self.outstream = []
-        (0..(vban_streams[:outstream] - 1)).each_with_index do |i|
-            self.outstream[i] = VbanOutstream.new(remote, i)
+
+        self.outstream = (0..(vban_streams[:outstream] - 1)).map.each_with_index do |i|
+            VbanOutstream.new(remote, i)
         end
 
         return self

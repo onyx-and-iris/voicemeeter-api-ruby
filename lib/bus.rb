@@ -4,20 +4,18 @@ require_relative 'channel'
 class Bus < IChannel
     def self.make(remote, layout_bus)
         "
-        Factory function for Strip classes.
+        Factory function for Bus classes.
         "
         p_out = layout_bus[:p_out]
         v_out = layout_bus[:v_out]
 
         bus = []
-        (0..(p_out + v_out - 1)).each_with_index do |i|
-            if i < p_out
-                bus[i] = PhysicalBus.new(remote, i)
-            else
-                bus[i] = VirtualBus.new(remote, i)
-            end
+
+        bus = (0..(p_out + v_out - 1)).map.each_with_index do |i|
+            i < p_out ? \
+            PhysicalBus.new(remote, i) : \
+            VirtualBus.new(remote, i)
         end
-        bus
     end
 
     def initialize(remote, index)
