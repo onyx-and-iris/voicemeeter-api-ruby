@@ -51,13 +51,13 @@ class SetAndGetMacroButtonStatus < Minitest::Test
     end
 
     def test_it_sets_and_gets_macrobutton20_trigger_on
-        id, set, mode = 20, 1, 2
+        id, set, mode = 20, 1, 3
         @@vmr.macro_setstatus(id, set, mode)
         assert_equal(1, @@vmr.macro_getstatus(id, mode))
     end
 
     def test_it_sets_and_gets_macrobutton20_trigger_off
-        id, set, mode = 20, 0, 2
+        id, set, mode = 20, 0, 3
         @@vmr.macro_setstatus(id, set, mode)
         assert_equal(0, @@vmr.macro_getstatus(id, mode))
     end
