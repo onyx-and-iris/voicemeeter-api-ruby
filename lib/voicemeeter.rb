@@ -3,7 +3,7 @@ require_relative 'routines'
 
 class Remote < Routines
     def self.make
-        _remotes = ["basic", "banana", "potato"].to_h do |kind|
+        ["basic", "banana", "potato"].to_h do |kind|
             [kind, Remote.new(kind)]
         end
     end

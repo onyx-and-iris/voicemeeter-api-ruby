@@ -24,8 +24,6 @@ class Strip < IChannel
         super(remote, index)
 
         self.make_accessor_bool :solo
-        self.make_accessor_float :comp, :gate
-        self.make_accessor_int :limit
 
         _make_channel_props(num_A, num_B)
     end
@@ -35,5 +33,17 @@ class Strip < IChannel
     end
 end
 
-class PhysicalStrip < Strip; end
-class VirtualStrip < Strip; end
+class PhysicalStrip < Strip
+    def initialize(remote, index, num_A, num_B)
+        super
+        self.make_accessor_float :comp, :gate
+        self.make_accessor_int :limit
+    end
+end
+
+class VirtualStrip < Strip
+    def initialize(remote, index, num_A, num_B)
+        super
+        self.make_accessor_bool :mc, :k
+    end
+end

@@ -14,8 +14,8 @@ class IChannel
         self.make_accessor_float :gain
     end
 
-    def getter(param)
-        @remote.get_parameter("#{self.cmd}.#{param}")
+    def getter(param, is_string=false)
+        @remote.get_parameter("#{self.cmd}.#{param}", is_string)
     end
 
     def setter(param, value)
