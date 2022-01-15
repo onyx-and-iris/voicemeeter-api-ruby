@@ -45,11 +45,11 @@ class Vban < IVban
         end
 
         self.instream = 
-        (0...vban_streams[:instream]).map.each_with_index do |i|
+        (0...vban_streams[:instream]).map.each do |i|
             VbanInstream.new(remote, i)
         end
         self.outstream = 
-        (0...vban_streams[:outstream]).map.each_with_index do |i|
+        (0...vban_streams[:outstream]).map.each do |i|
             VbanOutstream.new(remote, i)
         end
 

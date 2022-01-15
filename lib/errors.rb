@@ -12,7 +12,8 @@ module Errors
         end
 
         def message
-            "C API returned value #{value}. See documentation for further info"
+            "When attempting to run function #{@func} the
+            C API returned value #{@value}. See documentation for further info"
         end
     end
 

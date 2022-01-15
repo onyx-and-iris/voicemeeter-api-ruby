@@ -1,8 +1,9 @@
 require 'minitest/autorun'
 require 'voicemeeter'
 
+
 class MiniTest::Test
-    @@vmr = Remote.new("banana")
+    @@vmr = get_remote("banana")
 
     def setup
     end

@@ -1,5 +1,6 @@
 require_relative '../minitest_helper'
 
+
 class SetAndGetStripBool < Minitest::Test
     def test_it_sets_and_gets_strip0_mute_on
         @@vmr.strip[0].mute = true
@@ -22,6 +23,7 @@ class SetAndGetStripBool < Minitest::Test
     end
 end
 
+
 class SetAndGetStripFloat < Minitest::Test
     def test_it_sets_and_gets_strip2_gain_37
         @@vmr.strip[2].gain = 3.7
@@ -34,6 +36,7 @@ class SetAndGetStripFloat < Minitest::Test
     end
 end
 
+
 class SetAndGetBusBool < Minitest::Test
     def test_it_sets_and_gets_bus4_eq_true
         @@vmr.bus[4].eq = true
@@ -45,6 +48,7 @@ class SetAndGetBusBool < Minitest::Test
         assert_equal(false, @@vmr.bus[4].eq)
     end
 end
+
 
 class SetAndGetVban < Minitest::Test
     def test_it_sets_and_gets_vban_instream0_on
@@ -78,6 +82,7 @@ class SetAndGetVban < Minitest::Test
     end
 end
 
+
 class SetAndGetRecorder < Minitest::Test
     def test_it_sets_and_gets_recorder_A2_on
         @@vmr.recorder.A2 = true
@@ -97,5 +102,28 @@ class SetAndGetRecorder < Minitest::Test
     def test_it_sets_and_gets_recorder_B1_off
         @@vmr.recorder.B1 = false
         assert_equal(false, @@vmr.recorder.B1)
+    end
+end
+
+
+class SetAndGetMacroButtons < Minitest::Test
+    def test_it_sets_and_gets_macrobutton5_stateonly_on
+        @@vmr.button[5].stateonly = true
+        assert_equal(true, @@vmr.button[5].stateonly)
+    end
+
+    def test_it_sets_and_gets_macrobutton5_stateonly_off
+        @@vmr.button[5].stateonly = false
+        assert_equal(false, @@vmr.button[5].stateonly)
+    end
+
+    def test_it_sets_and_gets_macrobutton32_stateonly_on
+        @@vmr.button[32].trigger = true
+        assert_equal(true, @@vmr.button[32].trigger)
+    end
+
+    def test_it_sets_and_gets_macrobutton32_stateonly_off
+        @@vmr.button[32].trigger = false
+        assert_equal(false, @@vmr.button[32].trigger)
     end
 end

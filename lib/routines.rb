@@ -1,8 +1,8 @@
 require_relative 'base'
-require_relative 'define'
-require_relative 'run'
+require_relative 'runvm'
 require_relative 'strip'
 require_relative 'bus'
+require_relative 'button'
 require_relative 'vban'
 require_relative 'command'
 require_relative 'recorder'
@@ -13,61 +13,43 @@ class Routines
     define basic behaviours of API functions
     mixin modules
     """
-    include Base
-    include Run
     include Define_Version
+    include RunVM
 
-    attr_accessor :properties, :layout, :strip, :bus, :vban, :command, :recorder,
-    :logged_in
+    attr_accessor :properties, :layout, :strip, :bus, :button, :vban, :command,
+    :recorder
 
     attr_reader :retval
 
     SIZE = 1
     BUFF = 512
 
-    def initialize(type)
-        define_version(type)
+    def initialize(kind)
+        define_version(kind)
 
         self.strip = Strip.make(self, @layout[:strip], @layout[:bus])
         self.bus = Bus.make(self, @layout[:bus])
+        self.button = MacroButton.make(self, @layout[:mb])
         self.vban = Vban.make(self, @layout[:vban])
         self.command = Command.new(self)
         self.recorder = Recorder.new(self, @layout[:bus])
     end
 
-    def retval=(values)
-        """ Writer validation for CAPI calls """
-        retval, func = *values
-        raise CAPIErrors.new(retval, func) if retval&.nonzero?
-
-        @retval = retval
-    end
-
-    def pdirty
-        return vmr_pdirty&.nonzero?
-    end
-
-    def mdirty
-        return vmr_mdirty&.nonzero?
-    end
-
     def login
         run_as("login")
-        self.logged_in = true
+        clear_polling
 
-        while self.pdirty || self.mdirty
-        end
     rescue CAPIErrors => error
         case
         when error.value == 1
             run_voicemeeter
         when error.value < 0
-            raise error
+            raise
         end
     end
 
     def logout
-        sleep(0.02)
+        clear_polling
         run_as("logout")
     end
 

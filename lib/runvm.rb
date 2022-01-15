@@ -2,7 +2,7 @@ require 'open3'
 require_relative 'errors'
 require_relative 'base'
 
-module Run
+module RunVM
     include Base
 
     def run_voicemeeter
@@ -13,7 +13,8 @@ module Run
         end
 
         Open3.popen3(exe_path, '')
-    rescue InstallErrors => error
-        raise error
+        sleep(1)
+
+        clear_polling
     end
 end

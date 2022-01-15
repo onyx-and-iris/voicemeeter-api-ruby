@@ -9,7 +9,7 @@ class ICommand
     def initialize(remote)
         self.remote = remote
 
-        self.make_writer_only :show, :restart, :reset
+        self.make_writer_only :show, :restart, :reset, :shutdown
     end
 
     def setter(param, value)

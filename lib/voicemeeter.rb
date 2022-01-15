@@ -2,24 +2,24 @@ require_relative 'routines'
 
 
 class Remote < Routines
-    """
-    Subclasses BaseRoutines.
-    Performs login/logout cleanly.
-    May yield a block argument otherwise simply login.
-    """
-    def initialize(type = nil)
-        super
+    def self.make
+        _remotes = ["basic", "banana", "potato"].to_h do |kind|
+            [kind, Remote.new(kind)]
+        end
     end
 
-    def connect
-        login unless @logged_in
-
+    def run
         if block_given?
             yield
             
             logout
-        else
-            return self
         end
     end
+end
+
+def get_remote(kind)
+    _remotes = Remote.make
+
+    _remotes[kind].login
+    return _remotes[kind]
 end

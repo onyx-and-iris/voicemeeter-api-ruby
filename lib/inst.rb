@@ -34,10 +34,7 @@ module InstallationFunctions
     end
 
     def vmr_dll=(value)
-        if value.file?
-            @vmr_dll = value
-        else
-            raise InstallErrors.new('Could not fetch the dll file')
-        end
+        raise InstallErrors.new('Could not fetch the dll file') unless value.file?
+        @vmr_dll = value
     end
 end

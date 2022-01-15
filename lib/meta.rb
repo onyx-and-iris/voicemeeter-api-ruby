@@ -1,5 +1,6 @@
 require_relative 'errors'
 
+
 module Meta_Functions
     def make_accessor_bool(*params)
         params.each do |param|
@@ -59,6 +60,7 @@ module Meta_Functions
     end
 end
 
+
 module Vban_Meta_Functions
     include Meta_Functions
 
@@ -110,6 +112,26 @@ module Vban_Meta_Functions
                     raise OutOfBoundsErrors.new(opts) unless opts.include? value
                     self.setter("#{param}", value)
                 end
+            end
+        end
+    end
+end
+
+
+module MacroButton_Meta_Functions
+    def make_accessor_macrobutton(*params)
+        params.each do |param|
+            mode = {
+                :state => 1,
+                :stateonly => 2,
+                :trigger => 3,
+            }
+
+            define_singleton_method("#{param}") do
+                return !(self.getter(mode[param])).zero?
+            end
+            define_singleton_method("#{param}=") do |value|
+                self.setter(value ? 1 : 0, mode[param])
             end
         end
     end

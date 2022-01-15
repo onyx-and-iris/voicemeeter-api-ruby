@@ -4,7 +4,7 @@ require_relative 'channel'
 class Strip < IChannel
     attr_reader :num_A, :num_B
 
-	def self.make(remote, layout_strip, out_channels)
+    def self.make(remote, layout_strip, out_channels)
         "
         Factory function for Strip classes.
         "
@@ -13,12 +13,12 @@ class Strip < IChannel
         num_A = out_channels[:p_out]
         num_B = out_channels[:v_out]
 
-        strip = (0...(p_in + v_in)).map.each_with_index do |i|
+        strip = (0...(p_in + v_in)).map.each do |i|
             i < p_in ? \
             PhysicalStrip.new(remote, i, num_A, num_B) : \
             VirtualStrip.new(remote, i, num_A, num_B) 
         end
-	end
+    end
 
     def initialize(remote, index, num_A, num_B)
         super(remote, index)
