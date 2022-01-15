@@ -46,7 +46,7 @@ module Base
     [:string], :long
 
     DELAY = 0.001
-    MAX_POLLS = 20
+    MAX_POLLS = 8
 
     def pdirty
         return vmr_pdirty&.nonzero?
@@ -79,7 +79,8 @@ module Base
 
     def run_as(func, *args)
         val = send('vmr_' + func, *args)
-        sleep(DELAY * 20) if func.include? 'set'
+        sleep(DELAY * 20) if func.include? 'set_param'
+        sleep(DELAY * 50) if func.include? 'macro_set'
 
         self.retval = [val, func]
     end

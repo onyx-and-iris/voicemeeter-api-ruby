@@ -41,7 +41,14 @@ class Vban < IVban
         Returns a mixin of instream/outstream subclasses
         "
         class << self
-            attr_accessor :instream, :outstream
+            attr_accessor :instream, :outstream, :remote
+
+            def enable
+                @remote.set_parameter("vban.enable", 1)
+            end
+            def disable
+                @remote.set_parameter("vban.enable", 0)
+            end
         end
 
         self.instream = 
@@ -53,6 +60,7 @@ class Vban < IVban
             VbanOutstream.new(remote, i)
         end
 
+        self.remote = remote
         return self
     end
 end

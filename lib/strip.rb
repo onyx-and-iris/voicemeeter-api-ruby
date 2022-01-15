@@ -13,7 +13,7 @@ class Strip < IChannel
         num_A = out_channels[:p_out]
         num_B = out_channels[:v_out]
 
-        strip = (0...(p_in + v_in)).map.each do |i|
+        (0...(p_in + v_in)).map.each do |i|
             i < p_in ? \
             PhysicalStrip.new(remote, i, num_A, num_B) : \
             VirtualStrip.new(remote, i, num_A, num_B) 
@@ -24,6 +24,8 @@ class Strip < IChannel
         super(remote, index)
 
         self.make_accessor_bool :solo
+        self.make_accessor_float :comp, :gate
+        self.make_accessor_int :limit
 
         _make_channel_props(num_A, num_B)
     end

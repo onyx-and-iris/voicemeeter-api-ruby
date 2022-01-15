@@ -7,8 +7,22 @@ module Meta_Functions
             define_singleton_method("#{param}") do
                 return !(self.getter("#{param}")).zero?
             end
+
+            opts = [false, true]
             define_singleton_method("#{param}=") do |value|
+                raise OutOfBoundsErrors.new(opts) unless opts.include? value
                 self.setter("#{param}", value ? 1 : 0)
+            end
+        end
+    end
+
+    def make_accessor_int(*params)
+        params.each do |param|
+            define_singleton_method("#{param}") do
+                return self.getter("#{param}").to_i
+            end
+            define_singleton_method("#{param}=") do |value|
+                self.setter("#{param}", value)
             end
         end
     end
@@ -18,8 +32,8 @@ module Meta_Functions
             define_singleton_method("#{param}") do
                 return self.getter("#{param}")
             end
-            define_singleton_method("#{param}=") do |arg|
-                self.setter("#{param}", arg)
+            define_singleton_method("#{param}=") do |value|
+                self.setter("#{param}", value)
             end
         end
     end
@@ -29,8 +43,8 @@ module Meta_Functions
             define_singleton_method("#{param}") do
                 return self.getter("#{param}", true)
             end
-            define_singleton_method("#{param}=") do |arg|
-                self.setter("#{param}", arg)
+            define_singleton_method("#{param}=") do |value|
+                self.setter("#{param}", value)
             end
         end
     end
@@ -45,18 +59,58 @@ module Meta_Functions
 
     def make_writer_only(*params)
         params.each do |param|
-            define_singleton_method("#{param}") do |arg=1|
-                self.setter("#{param}", arg)
+            define_singleton_method("#{param}") do |value=1|
+                self.setter("#{param}", value)
             end
         end
     end
 
     def _make_channel_props(num_A, num_B)
-        channels = (1..(num_A + num_B)).map.each_with_index do |i|
+        channels = (1..(num_A + num_B)).map.each do |i|
             i <= num_A ? "A#{i}" : "B#{i - num_A}"
         end
 
         self.make_accessor_bool *channels
+    end
+end
+
+
+module Channel_Meta_Functions
+    include Meta_Functions
+
+    def make_accessor_float(*params)
+        params.each do |param|
+            define_singleton_method("#{param}") do
+                return self.getter("#{param}")
+            end
+
+            opts = {
+                :gain => [-60,12],
+                :comp => [0,10],
+                :gate => [0,10],
+            }
+            define_singleton_method("#{param}=") do |value|
+                raise OutOfBoundsErrors.new(opts[param]) unless value.between? *opts[param]
+                self.setter("#{param}", value)
+            end
+        end
+    end
+
+    def make_accessor_int(*params)
+        params.each do |param|
+            define_singleton_method("#{param}") do
+                return self.getter("#{param}").to_i
+            end
+
+            opts = {
+                :limit => (-40..12).to_a,
+            }
+            define_singleton_method("#{param}=") do |value|
+                value = value.round(0)
+                raise OutOfBoundsErrors.new(opts[param]) unless opts[param].include? value
+                self.setter("#{param}", value)
+            end
+        end
     end
 end
 
@@ -87,29 +141,22 @@ module Vban_Meta_Functions
                     return self.getter("#{param}").to_i
                 end
             end
+
+            opts = {
+                :sr => [11025, 16000, 22050, 24000, 32000, 44100, 48000,
+                64000, 88200, 96000],
+                :channel => (1..8).to_a,
+                :bit => [16,24],
+                :quality => (0..4).to_a,
+                :route => (0..8).to_a,
+            }
+
             define_singleton_method("#{param}=") do |value|
+                raise OutOfBoundsErrors.new(opts[param]) unless opts[param].include? value
                 case param
-                when :sr
-                    opts = 
-                    [11025, 16000, 22050, 24000, 32000, 44100, 48000,
-                     64000, 88200, 96000]
-                    raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                    self.setter("#{param}", value)
-                when :channel
-                    opts = *(1..8)
-                    raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                    self.setter("#{param}", value)
                 when :bit
-                    opts = [16, 24]
-                    raise OutOfBoundsErrors.new(opts) unless opts.include? value
                     self.setter("#{param}", value == 16 ? 1 : 2)
-                when :quality
-                    opts = *(0..4)
-                    raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                    self.setter("#{param}", value)
-                when :route
-                    opts = *(0..8)
-                    raise OutOfBoundsErrors.new(opts) unless opts.include? value
+                else
                     self.setter("#{param}", value)
                 end
             end
@@ -130,7 +177,10 @@ module MacroButton_Meta_Functions
             define_singleton_method("#{param}") do
                 return !(self.getter(mode[param])).zero?
             end
+
+            opts = [false, true]
             define_singleton_method("#{param}=") do |value|
+                raise OutOfBoundsErrors.new(opts[param]) unless opts.include? value
                 self.setter(value ? 1 : 0, mode[param])
             end
         end

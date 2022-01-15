@@ -9,7 +9,7 @@ class Bus < IChannel
         p_out = layout_bus[:p_out]
         v_out = layout_bus[:v_out]
         
-        bus = (0...(p_out + v_out)).map.each do |i|
+        (0...(p_out + v_out)).map.each do |i|
             i < p_out ? \
             PhysicalBus.new(remote, i) : \
             VirtualBus.new(remote, i)

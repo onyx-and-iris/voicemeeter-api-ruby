@@ -25,7 +25,7 @@ end
 
 class MacroButton < IMacroButton
     def self.make(remote, num_buttons)
-        button = (0...num_buttons).map.each do |i|
+        (0...num_buttons).map.each do |i|
             MacroButton.new(remote, i)
         end
     end

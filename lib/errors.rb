@@ -26,7 +26,7 @@ module Errors
 
         def message
             if @range.kind_of?(Array)
-                "Value out of range, expected one of #{@range}"
+                "Value out of range, expected value in range #{range.first} .. #{range.last}"
             else
                 "Value out of range, expected #{@range}"
             end

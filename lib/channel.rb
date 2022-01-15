@@ -2,7 +2,7 @@ require_relative 'meta'
 
 
 class IChannel
-    include Meta_Functions
+    include Channel_Meta_Functions
 
     attr_accessor :remote, :index
 
