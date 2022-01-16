@@ -9,23 +9,21 @@ class Bus < IChannel
         p_out = layout_bus[:p_out]
         v_out = layout_bus[:v_out]
         
-        (0...(p_out + v_out)).map.each do |i|
+        (0...(p_out + v_out)).map do |i|
             i < p_out ? \
             PhysicalBus.new(remote, i) : \
             VirtualBus.new(remote, i)
         end
     end
 
+    def initialize(remote, i)
+        super
+        self.make_accessor_bool :mute, :mono, :eq
+        self.make_accessor_float :gain
+    end
+
     def cmd
         return "Bus[#{@index}]"
-    end
-
-    def eq
-        return !(self.getter("EQ.on")).zero?
-    end
-
-    def eq=(value)
-        self.setter("EQ.on", value ? 1 : 0)
     end
 end
 

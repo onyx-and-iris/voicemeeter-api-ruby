@@ -1,6 +1,5 @@
 require_relative 'errors'
 
-
 module Meta_Functions
     def make_accessor_bool(*params)
         params.each do |param|
@@ -59,7 +58,7 @@ module Meta_Functions
 
     def make_writer_only(*params)
         params.each do |param|
-            define_singleton_method("#{param}") do |value=1|
+            define_singleton_method("#{param}=") do |value=1|
                 self.setter("#{param}", value)
             end
         end
@@ -77,6 +76,25 @@ end
 
 module Channel_Meta_Functions
     include Meta_Functions
+
+    def make_accessor_bool(*params)
+        params.each do |param|
+            cmds = {
+                :eq => 'EQ.on',
+            }
+            if cmds[param] then val = cmds[param] else val = param end
+
+            define_singleton_method("#{param}") do
+                return !(self.getter("#{val}")).zero?
+            end
+
+            opts = [false, true]
+            define_singleton_method("#{param}=") do |value|
+                raise OutOfBoundsErrors.new(opts) unless opts.include? value
+                self.setter("#{val}", value ? 1 : 0)
+            end
+        end
+    end
 
     def make_accessor_float(*params)
         params.each do |param|
@@ -108,6 +126,25 @@ module Channel_Meta_Functions
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts[param]) unless opts[param].member? value
                 self.setter("#{param}", value)
+            end
+        end
+    end
+
+    def make_reader_only(*params)
+        params.each do |param|
+            cmds = {
+                :device => 'device.name',
+                :sr => 'device.sr',
+            }
+            if cmds[param] then val = cmds[param] else val = param end
+
+            define_singleton_method("#{param}") do
+                case param
+                when :device
+                    return self.getter("#{val}", true)
+                when :sr
+                    return self.getter("#{val}", true).to_i
+                end
             end
         end
     end
@@ -181,6 +218,24 @@ module MacroButton_Meta_Functions
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts[param]) unless opts.include? value
                 self.setter(value ? 1 : 0, mode[param])
+            end
+        end
+    end
+end
+
+module Commands_Meta_Functions
+    include Meta_Functions
+    def make_writer_bool(*params)
+        params.each do |param|
+            cmds = {
+                :showvbanchat => 'DialogShow.VBANCHAT',
+            }
+            if cmds[param] then val = cmds[param] else val = param end
+    
+            opts = [false, true]
+            define_singleton_method("#{param}=") do |value|
+                raise OutOfBoundsErrors.new(opts[param]) unless opts.include? value
+                self.setter("#{val}", value ? 1 : 0)
             end
         end
     end

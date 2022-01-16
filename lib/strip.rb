@@ -13,19 +13,18 @@ class Strip < IChannel
         num_A = out_channels[:p_out]
         num_B = out_channels[:v_out]
 
-        (0...(p_in + v_in)).map.each do |i|
+        (0...(p_in + v_in)).map do |i|
             i < p_in ? \
             PhysicalStrip.new(remote, i, num_A, num_B) : \
             VirtualStrip.new(remote, i, num_A, num_B) 
         end
     end
 
-    def initialize(remote, index, num_A, num_B)
-        super(remote, index)
-
-        self.make_accessor_bool :solo
-
-        _make_channel_props(num_A, num_B)
+    def initialize(remote, i, num_A, num_B)
+        super(remote, i)
+        self.make_accessor_bool :solo, :mute, :mono
+        self.make_accessor_float :gain
+        self._make_channel_props(num_A, num_B)
     end
 
     def cmd
@@ -34,15 +33,16 @@ class Strip < IChannel
 end
 
 class PhysicalStrip < Strip
-    def initialize(remote, index, num_A, num_B)
+    def initialize(remote, i, num_A, num_B)
         super
         self.make_accessor_float :comp, :gate
         self.make_accessor_int :limit
+        self.make_reader_only :device, :sr
     end
 end
 
 class VirtualStrip < Strip
-    def initialize(remote, index, num_A, num_B)
+    def initialize(remote, i, num_A, num_B)
         super
         self.make_accessor_bool :mc, :k
     end

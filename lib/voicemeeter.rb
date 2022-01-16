@@ -1,4 +1,5 @@
 require_relative 'routines'
+require_relative 'errors'
 
 module Voicemeeter
     class Remote < Routines
@@ -20,10 +21,9 @@ module Voicemeeter
     def remote(kind)
         _remotes = Remote.make
 
+        raise VMRemoteErrors.new("Unknown Voicemeeter Kind") unless _remotes[kind]
         _remotes[kind].login
         return _remotes[kind]
-    rescue NoMethodError => error
-        raise VMRemoteErrors.new("Unknown Voicemeeter kind")
     end
 
     module_function :remote

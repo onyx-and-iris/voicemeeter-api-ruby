@@ -1,4 +1,5 @@
 require_relative 'meta'
+require_relative 'errors'
 
 
 class IVban
@@ -9,10 +10,6 @@ class IVban
     def initialize(remote, index)
         self.remote = remote
         self.index = index
-
-        self.make_accessor_bool :on
-        self.make_accessor_string :name, :ip
-        self.make_accessor_int :quality, :route
     end
 
     def getter(param, is_string=false)
@@ -52,16 +49,23 @@ class Vban < IVban
         end
 
         self.instream = 
-        (0...vban_streams[:instream]).map.each do |i|
+        (0...vban_streams[:instream]).map do |i|
             VbanInstream.new(remote, i)
         end
         self.outstream = 
-        (0...vban_streams[:outstream]).map.each do |i|
+        (0...vban_streams[:outstream]).map do |i|
             VbanOutstream.new(remote, i)
         end
 
         self.remote = remote
         return self
+    end
+
+    def initialize(remote, i)
+        super
+        self.make_accessor_bool :on
+        self.make_accessor_string :name, :ip
+        self.make_accessor_int :quality, :route
     end
 end
 

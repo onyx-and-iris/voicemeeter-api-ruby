@@ -1,17 +1,14 @@
 require_relative 'meta'
-
+require_relative 'errors'
 
 class IChannel
     include Channel_Meta_Functions
 
     attr_accessor :remote, :index
 
-    def initialize(remote, index)
+    def initialize(remote, i)
         self.remote = remote
-        self.index = index
-
-        self.make_accessor_bool :mute, :mono
-        self.make_accessor_float :gain
+        self.index = i
     end
 
     def getter(param, is_string=false)

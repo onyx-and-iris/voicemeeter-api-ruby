@@ -9,8 +9,6 @@ class IMacroButton
     def initialize(remote, index)
         self.remote = remote
         self.index = index
-
-        self.make_accessor_macrobutton :state, :stateonly, :trigger 
     end
 
     def getter(mode)
@@ -25,8 +23,13 @@ end
 
 class MacroButton < IMacroButton
     def self.make(remote, num_buttons)
-        (0...num_buttons).map.each do |i|
+        (0...num_buttons).map do |i|
             MacroButton.new(remote, i)
         end
+    end
+
+    def initialize(remote, i)
+        super
+        self.make_accessor_macrobutton :state, :stateonly, :trigger 
     end
 end

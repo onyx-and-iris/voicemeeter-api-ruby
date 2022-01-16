@@ -194,3 +194,22 @@ class SetAndGetMacroButtons < Minitest::Test
         assert_equal(false, @@vmr.button[32].trigger)
     end
 end
+
+class SetCommands < Minitest::Test
+    # bool tests
+    def test_it_sets_showvbanchat_true
+        @@vmr.command.showvbanchat = true
+    end
+
+    def test_it_sets_showvbanchat_false
+        @@vmr.command.showvbanchat = false
+    end
+
+    def test_it_sets_lock_true
+        @@vmr.command.lock = true
+    end
+
+    def test_it_sets_lock_false
+        @@vmr.command.lock = false
+    end
+end
