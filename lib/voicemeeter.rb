@@ -22,4 +22,6 @@ def get_remote(kind)
 
     _remotes[kind].login
     return _remotes[kind]
+rescue NoMethodError => error
+    raise VMRemoteErrors.new("Unknown Voicemeeter kind")
 end

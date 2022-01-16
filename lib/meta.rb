@@ -103,11 +103,10 @@ module Channel_Meta_Functions
             end
 
             opts = {
-                :limit => (-40..12).to_a,
+                :limit => (-40..12),
             }
             define_singleton_method("#{param}=") do |value|
-                value = value.round(0)
-                raise OutOfBoundsErrors.new(opts[param]) unless opts[param].include? value
+                raise OutOfBoundsErrors.new(opts[param]) unless opts[param].member? value
                 self.setter("#{param}", value)
             end
         end
@@ -145,14 +144,14 @@ module Vban_Meta_Functions
             opts = {
                 :sr => [11025, 16000, 22050, 24000, 32000, 44100, 48000,
                 64000, 88200, 96000],
-                :channel => (1..8).to_a,
+                :channel => (1..8),
                 :bit => [16,24],
-                :quality => (0..4).to_a,
-                :route => (0..8).to_a,
+                :quality => (0..4),
+                :route => (0..8),
             }
 
             define_singleton_method("#{param}=") do |value|
-                raise OutOfBoundsErrors.new(opts[param]) unless opts[param].include? value
+                raise OutOfBoundsErrors.new(opts[param]) unless opts[param].member? value
                 case param
                 when :bit
                     self.setter("#{param}", value == 16 ? 1 : 2)

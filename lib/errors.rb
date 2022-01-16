@@ -25,10 +25,12 @@ module Errors
         end
 
         def message
-            if @range.kind_of?(Array)
-                "Value out of range, expected value in range #{range.first} .. #{range.last}"
+            if @range.kind_of?(Range)
+                "Value error, expected value in range (#{range.first}..#{range.last})"
+            elsif @range.kind_of?(Array)
+                "Value error, expected one of: #{@range}"
             else
-                "Value out of range, expected #{@range}"
+                "Value error, expected #{@range}"
             end
         end
     end

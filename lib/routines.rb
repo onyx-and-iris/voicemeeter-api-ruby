@@ -86,4 +86,32 @@ class Routines
     def macro_setstatus(id, state, mode)
         run_as("macro_setstatus", id, state, mode)
     end
+
+    def set_parameter_multi(param_hash)
+        param_hash.each do |(key,val)|
+            prop, m2, m3, *remaining = key.to_s.split('_')
+            if m2.to_i.to_s == m2 then m2 = m2.to_i end
+            if m3.to_i.to_s == m3 then m3 = m3.to_i end
+
+            param_hash[key].each do |(k,v)|
+                param = k
+                value = v
+
+                case prop
+                when "strip"
+                    self.strip[m2].send("#{param}=", value)
+                when "bus"
+                    self.bus[m2].send("#{param}=", value)
+                when "button"
+                    self.button[m2].send("#{param}=", value)
+                when "vban"
+                    if m2 == "instream"
+                        self.vban.instream[m3].send("#{param}=", value)
+                    else
+                        self.vban.outstream[m3].send("#{param}=", value)
+                    end
+                end
+            end
+        end
+    end
 end
