@@ -3,7 +3,7 @@ require 'voicemeeter'
 
 
 class MiniTest::Test
-    @@vmr = get_remote("banana")
+    @@vmr = Voicemeeter.remote("banana")
 
     def setup
     end
