@@ -114,4 +114,5 @@ class Routines
             end
         end
     end
+    alias_method "set_multi", :set_parameter_multi
 end

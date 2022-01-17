@@ -44,7 +44,7 @@ vmr.run do
 
     # disable eq for second from left bus
     vmr.bus[1].eq = false
-    puts vmr.strip[0].mute  '=> false'
+    puts vmr.bus[1].eq  '=> false'
 end
 ```
 When passing a block, login and logout are handled for you.
@@ -160,6 +160,26 @@ example:
 ```ruby
     vmr.command.restart
     vmr.command.showvbanchat = true
+```
+
+### Multiple parameters
+- `vmr.set_multi`
+Set many parameters at once using a hash, for example:
+```ruby
+    vmr.set_multi({
+        :strip_0 => {
+            :mute => true, :gain => 3.2, :A1 => true,
+        },
+        :bus_3 => {
+            :gain => -3.2, :eq => true,
+        },
+        :button_39 => {
+            :stateonly => true,
+        },
+        :vban_outstream_3 => {
+            :on => true, :bit => 24,
+        },
+    })
 ```
 
 ### Run tests
