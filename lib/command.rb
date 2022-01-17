@@ -27,15 +27,15 @@ class Command < ICommand
         self.make_writer_bool :showvbanchat, :lock
     end
 
-    def save(value)
-        raise VMRemoteErrros.new("Expected a string") unless value.is_a? String
-        self.setter("save", value)
-        sleep(0.2)
-    end
-
     def load(value)
         raise VMRemoteErrros.new("Expected a string") unless value.is_a? String
         self.setter("load", value)
+        sleep(0.2)
+    end
+
+    def save(value)
+        raise VMRemoteErrros.new("Expected a string") unless value.is_a? String
+        self.setter("save", value)
         sleep(0.2)
     end
 end
