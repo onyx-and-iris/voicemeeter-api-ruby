@@ -7,12 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Before any minor/major patch is released all test units will be run to verify they pass.
 
 ## [Unreleased]
-- [ ] Add loading/saving of EQ profiles.
-- [ ] Consider adding a multi_get function.
-- [ ] Add delay section to readme to explain all settables
-- [x] Add further error unit tests
-- [x] Organise error classes into subclasses and factories error logic
-- [x] Added metafunctions for generating setters and getters
+- [ ] Add error rake tests
+
+## [2.0.2] - 2022-01-22
+### IMPORTANT
+The code for this wrapper has been revised and reworked from the ground up. Earlier versions
+are still available for download on RubyGems.org but that version will not be updated further.
+Most of the updates documented here do not apply to version 2.0 onwards but will be kept for
+reference use only.
+
+All of the core features including strip, bus, macrobutton, recorder, vban and command classes
+work exactly the same. An effort has been made to include every property previously available,
+for each of those classes.
+
+README is up to date with version 2.0.2 onwards.
+
+### Added
+- Special command lock added
+- showvbanchat chat is now a boolean function.
+- Functions vmr.vban.enable and vmr.vban.disable for toggling VBAN now added.
+
+### Changed
+- Each class for each of the core features has been put into its own module. Classes such as
+strip, bus and vban are now subclassed into physical/virtual and instream/outstream respectively.
+- Error classes have been simplified into a smaller number of classes.
+- remote class is now callable through Voicemeeter module. It is also now a factory function that
+returns a Remote class for the kind of Voicemeeter specified by the user.
+- Rake tests now simplified and reduced. They are now organised into higher and lower tests.
+
+### Fixed
+- Writer validation logic has been moved into meta module. There is a base module for generic
+meta functions but where appropriate this is mixed in with a submodule.
+- set_multi function for setting many parameters at once now uses tokens for hash keys.
+- Polling dirty parameters works similarly but the cache is purged upon successful fetch.
+
+---
 
 ## [1.0.10] - 2021-05-12
 ### Added
