@@ -48,6 +48,10 @@ module Base
     DELAY = 0.001
     MAX_POLLS = 8
 
+    def cache=(value)
+        @cache = value
+    end
+
     def pdirty
         return vmr_pdirty&.nonzero?
     end
@@ -63,10 +67,11 @@ module Base
 
     def polling(func)
         MAX_POLLS.times do
-            break if func.include?('param') && !self.pdirty
-            break if func.include?('macro') && !self.mdirty
+            return true if func.include?('param') && self.pdirty
+            return true if func.include?('macro') && self.mdirty
             sleep(DELAY)
         end
+        false
     end
 
     def retval=(values)
@@ -79,10 +84,8 @@ module Base
 
     def run_as(func, *args)
         val = send('vmr_' + func, *args)
-        sleep(DELAY * 20) if func.include? 'set_param'
-        sleep(DELAY * 50) if func.include? 'macro_set'
-
         self.retval = [val, func]
+        sleep(DELAY)
     end
 end
 

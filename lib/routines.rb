@@ -19,7 +19,7 @@ class Routines
     attr_accessor :properties, :layout, :strip, :bus, :button, :vban, :command,
     :recorder
 
-    attr_reader :retval
+    attr_reader :retval, :cache
 
     SIZE = 1
     BUFF = 512
@@ -33,6 +33,8 @@ class Routines
         self.vban = Vban.make(self, @layout[:vban])
         self.command = Command.new(self)
         self.recorder = Recorder.new(self, @layout[:bus])
+
+        self.cache = Hash.new
     end
 
     def login
@@ -54,7 +56,10 @@ class Routines
     end
 
     def get_parameter(name, is_string=false)
-        self.polling(__method__.to_s)
+        if self.polling(__method__.to_s)
+            val = @cache.delete(name)
+            return val
+        end
 
         if is_string
             c_get = FFI::MemoryPointer.new(:string, BUFF, true)
@@ -73,10 +78,14 @@ class Routines
         else    
             run_as("set_parameter_float", name, value.to_f)
         end
+        self.cache.store(name, value)
     end
 
     def macro_getstatus(id, mode)
-        self.polling(__method__.to_s)
+        if self.polling(__method__.to_s)
+            val = @cache.delete("mb_#{id}_#{mode}")
+            return val
+        end
 
         c_get = FFI::MemoryPointer.new(:float, SIZE)
         run_as("macro_getstatus", id, c_get, mode)
@@ -85,6 +94,7 @@ class Routines
 
     def macro_setstatus(id, state, mode)
         run_as("macro_setstatus", id, state, mode)
+        self.cache.store("mb_#{id}_#{mode}", state)
     end
 
     def set_parameter_multi(param_hash)
