@@ -9,12 +9,21 @@ module Voicemeeter
             end
         end
 
+        def initialize(kind)
+            super
+            self.strip = Strip.make(self, @layout[:strip], @layout[:bus])
+            self.bus = Bus.make(self, @layout[:bus])
+            self.button = MacroButton.make(self, @layout[:mb])
+            self.vban = Vban.make(self, @layout[:vban])
+            self.command = Command.new(self)
+            self.recorder = Recorder.new(self, @layout[:bus])
+        end
+
         def run
-            if block_given?
-                yield
-                
-                logout
-            end
+            yield if block_given?
+            
+        ensure
+            logout
         end
     end
 
