@@ -27,6 +27,12 @@ class IVban
     def direction
         raise NotImplementedError
     end
+
+    def set_multi(param_hash)
+        param_hash.each do |(key,val)|
+            self.send("#{key}=", val)
+        end
+    end
 end
 
 
@@ -69,6 +75,7 @@ class Vban < IVban
     end
 end
 
+
 class VbanInstream < Vban
     def initialize(remote, i)
         super
@@ -79,6 +86,7 @@ class VbanInstream < Vban
         return "in"
     end
 end
+
 
 class VbanOutstream < Vban
     def initialize(remote, i)

@@ -19,7 +19,7 @@ class Routines
     attr_accessor :properties, :layout, :strip, :bus, :button, :vban, :command,
     :recorder
 
-    attr_reader :retval, :cache
+    attr_reader :retval, :cache, :wait
 
     SIZE = 1
     BUFF = 512
@@ -27,14 +27,8 @@ class Routines
     def initialize(kind)
         define_version(kind)
 
-        self.strip = Strip.make(self, @layout[:strip], @layout[:bus])
-        self.bus = Bus.make(self, @layout[:bus])
-        self.button = MacroButton.make(self, @layout[:mb])
-        self.vban = Vban.make(self, @layout[:vban])
-        self.command = Command.new(self)
-        self.recorder = Recorder.new(self, @layout[:bus])
-
         self.cache = Hash.new
+        @wait = true
     end
 
     def login
@@ -56,19 +50,16 @@ class Routines
     end
 
     def get_parameter(name, is_string=false)
-        if self.polling(__method__.to_s)
-            val = @cache.delete(name)
-            return val
-        end
-
-        if is_string
-            c_get = FFI::MemoryPointer.new(:string, BUFF, true)
-            run_as("get_parameter_string", name, c_get)
-            c_get.read_string
-        else
-            c_get = FFI::MemoryPointer.new(:float, SIZE)
-            run_as("get_parameter_float", name, c_get)
-            c_get.read_float.round(1)
+        self.polling("get_parameter", name) do
+            if is_string
+                c_get = FFI::MemoryPointer.new(:string, BUFF, true)
+                run_as("get_parameter_string", name, c_get)
+                c_get.read_string
+            else
+                c_get = FFI::MemoryPointer.new(:float, SIZE)
+                run_as("get_parameter_float", name, c_get)
+                c_get.read_float.round(1)
+            end
         end
     end
 
@@ -78,51 +69,47 @@ class Routines
         else    
             run_as("set_parameter_float", name, value.to_f)
         end
-        self.cache.store(name, value)
+        self.cache.store(name, [value, true])
     end
 
     def macro_getstatus(id, mode)
-        if self.polling(__method__.to_s)
-            val = @cache.delete("mb_#{id}_#{mode}")
-            return val
+        self.polling("macro_getstatus", name=nil, id, mode) do
+            c_get = FFI::MemoryPointer.new(:float, SIZE)
+            run_as("macro_getstatus", id, c_get, mode)
+            c_get.read_float.to_i
         end
-
-        c_get = FFI::MemoryPointer.new(:float, SIZE)
-        run_as("macro_getstatus", id, c_get, mode)
-        c_get.read_float.to_i
     end
 
     def macro_setstatus(id, state, mode)
         run_as("macro_setstatus", id, state, mode)
-        self.cache.store("mb_#{id}_#{mode}", state)
+        self.cache.store("mb_#{id}_#{mode}", [state, true])
     end
 
     def set_parameter_multi(param_hash)
+        @wait = false
         param_hash.each do |(key,val)|
-            prop, m2, m3, *remaining = key.to_s.split('_')
-            if m2.to_i.to_s == m2 then m2 = m2.to_i end
-            if m3.to_i.to_s == m3 then m3 = m3.to_i end
+            prop, m2, m3, *rem = key.to_s.split('_')
+            if m2.to_i.to_s == m2 then m2 = m2.to_i
+            elsif m3.to_i.to_s == m3 then m3 = m3.to_i end
 
-            param_hash[key].each do |(k,v)|
-                param = k
-                value = v
-
-                case prop
-                when "strip"
-                    self.strip[m2].send("#{param}=", value)
-                when "bus"
-                    self.bus[m2].send("#{param}=", value)
-                when "button"
-                    self.button[m2].send("#{param}=", value)
-                when "vban"
-                    if m2 == "instream"
-                        self.vban.instream[m3].send("#{param}=", value)
-                    else
-                        self.vban.outstream[m3].send("#{param}=", value)
-                    end
+            case prop
+            when "strip"
+                self.strip[m2].set_multi(val)
+            when "bus"
+                self.bus[m2].set_multi(val)
+            when "button", "mb"
+                self.button[m2].set_multi(val)
+            when "vban"
+                if ["instream", "in"].include? m2
+                    self.vban.instream[m3].set_multi(val)
+                elsif ["outstream", "out"].include? m2
+                    self.vban.outstream[m3].set_multi(val)
                 end
             end
         end
+        @wait = true
     end
     alias_method "set_multi", :set_parameter_multi
+    alias_method "set", :set_parameter
+    alias_method "get", :get_parameter
 end

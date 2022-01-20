@@ -18,6 +18,12 @@ class IMacroButton
     def setter(set, mode)
         @remote.macro_setstatus(@index, set, mode)
     end
+
+    def set_multi(param_hash)
+        param_hash.each do |(key,val)|
+            self.send("#{key}=", val)
+        end
+    end
 end
 
 

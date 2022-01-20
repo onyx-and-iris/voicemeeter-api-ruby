@@ -65,27 +65,38 @@ module Base
         end
     end
 
-    def polling(func)
-        MAX_POLLS.times do
-            return true if func.include?('param') && self.pdirty
-            return true if func.include?('macro') && self.mdirty
-            sleep(DELAY)
+    def polling(func, name=nil, id=nil, mode=nil)
+        params = {
+            "get_parameter" => name,
+            "macro_getstatus" => "mb_#{id}_#{mode}"
+        }
+        MAX_POLLS.times do |i|
+            if @cache.key? params[func]
+                if func.include?('param') && self.pdirty ||
+                func.include?('macro') && self.mdirty
+                    return @cache.delete(params[func])[0]
+                end
+                sleep(DELAY)
+                break if @cache[params[func]][1] == false && i == 1
+            end
         end
-        false
+
+        val = yield
+        self.cache.store(params[func], [val, false])
+        val
     end
 
     def retval=(values)
         """ Writer validation for CAPI calls """
         retval, func = *values
         raise CAPIErrors.new(retval, func) if retval&.nonzero?
-
         @retval = retval
     end
 
     def run_as(func, *args)
         val = send('vmr_' + func, *args)
         self.retval = [val, func]
-        sleep(DELAY)
+        sleep(DELAY) if func.include?('set') && @wait
     end
 end
 

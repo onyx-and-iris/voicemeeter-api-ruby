@@ -22,4 +22,10 @@ class IChannel
     def cmd
         raise NotImplementedError
     end
+
+    def set_multi(param_hash)
+        param_hash.each do |(key,val)|
+            self.send("#{key}=", val)
+        end
+    end
 end
