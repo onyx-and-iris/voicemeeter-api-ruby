@@ -23,7 +23,7 @@ end
 class Command < ICommand
     def initialize(remote)
         super
-        self.make_writer_only :show, :restart, :reset, :shutdown
+        self.make_action_prop :show, :restart, :reset, :shutdown
         self.make_writer_bool :showvbanchat, :lock
     end
 

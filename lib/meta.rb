@@ -225,17 +225,25 @@ end
 
 module Commands_Meta_Functions
     include Meta_Functions
+    def make_action_prop(*params)
+        params.each do |param|
+            define_singleton_method("#{param}") do
+                self.setter("#{param}", 1)
+            end
+        end
+    end
+
     def make_writer_bool(*params)
         params.each do |param|
             cmds = {
                 :showvbanchat => 'DialogShow.VBANCHAT',
             }
             if cmds[param] then val = cmds[param] else val = param end
-    
+
             opts = [false, true]
             define_singleton_method("#{param}=") do |value|
-                raise OutOfBoundsErrors.new(opts[param]) unless opts.include? value
-                self.setter("#{val}", value ? 1 : 0)
+                raise OutOfBoundsErrors.new(opts) unless opts.include? value
+                self.setter("#{param}", value ? 1 : 0)
             end
         end
     end
