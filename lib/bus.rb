@@ -2,6 +2,9 @@ require_relative 'channel'
 
 
 class Bus < IChannel
+    """
+    Concrete class for Bus objects
+    """
     def self.make(remote, layout_bus)
         "
         Factory function for Bus classes.
@@ -20,6 +23,7 @@ class Bus < IChannel
         super
         self.make_accessor_bool :mute, :mono, :eq
         self.make_accessor_float :gain
+        self.make_accessor_string :label
     end
 
     def cmd

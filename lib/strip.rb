@@ -2,30 +2,33 @@ require_relative 'channel'
 
 
 class Strip < IChannel
+    """
+    Concrete class for Strip objects
+    """
     attr_reader :num_A, :num_B
 
-    def self.make(remote, layout_strip, out_channels)
+    def self.make(remote, layout_strip)
         "
         Factory function for Strip classes.
         "
         p_in = layout_strip[:p_in]
         v_in = layout_strip[:v_in]
-        num_A = out_channels[:p_out]
-        num_B = out_channels[:v_out]
 
         (0...(p_in + v_in)).map do |i|
             i < p_in ? \
-            PhysicalStrip.new(remote, i, num_A, num_B) : \
-            VirtualStrip.new(remote, i, num_A, num_B) 
+            PhysicalStrip.new(remote, i) : \
+            VirtualStrip.new(remote, i) 
         end
     end
 
-    def initialize(remote, i, num_A, num_B)
-        super(remote, i)
+    def initialize(remote, i)
+        super
         self.make_accessor_bool :solo, :mute, :mono
         self.make_accessor_float :gain
         self.make_accessor_string :label
-        self._make_channel_props(num_A, num_B)
+
+        num_A, num_B = remote.layout[:bus].map { |k, v| v }
+        self.make_accessor_bool *make_channel_props(num_A, num_B)
     end
 
     def cmd
@@ -34,7 +37,7 @@ class Strip < IChannel
 end
 
 class PhysicalStrip < Strip
-    def initialize(remote, i, num_A, num_B)
+    def initialize(remote, i)
         super
         self.make_accessor_float :comp, :gate
         self.make_accessor_int :limit
@@ -43,7 +46,7 @@ class PhysicalStrip < Strip
 end
 
 class VirtualStrip < Strip
-    def initialize(remote, i, num_A, num_B)
+    def initialize(remote, i)
         super
         self.make_accessor_bool :mc, :k
     end

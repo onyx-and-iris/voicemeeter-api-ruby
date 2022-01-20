@@ -2,6 +2,9 @@ require_relative 'meta'
 
 
 class IRecorder
+    """
+    Base class for Recorder object
+    """
     include Meta_Functions
 
     attr_accessor :remote
@@ -25,13 +28,15 @@ end
 
 
 class Recorder < IRecorder
-    def initialize(remote, layout_bus)
+    """
+    Concrete class for recorder
+    """
+    def initialize(remote)
         super(remote)
         self.make_writer_only :play, :stop, :record, :ff, :rew
 
-        num_A = layout_bus[:p_out]
-        num_B = layout_bus[:v_out]
-        self._make_channel_props(num_A, num_B)
+        num_A, num_B = remote.layout[:bus].map { |k, v| v }
+        self.make_accessor_bool *make_channel_props(num_A, num_B)
     end
 
     def cmd

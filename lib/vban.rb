@@ -3,6 +3,9 @@ require_relative 'errors'
 
 
 class IVban
+    """
+    Base class for Vban objects
+    """
     include Vban_Meta_Functions
 
     attr_accessor :remote, :index
@@ -37,6 +40,9 @@ end
 
 
 class Vban < IVban
+    """
+    Concrete class for Vban objects
+    """
     def self.make(remote, vban_streams)
         "
         Factory function for Vban class.

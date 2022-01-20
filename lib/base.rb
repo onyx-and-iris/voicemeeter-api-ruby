@@ -4,6 +4,9 @@ require_relative 'inst'
 include InstallationFunctions
 
 module Base
+    """
+    Perform low level tasks.
+    """
     extend FFI::Library
 
     begin
@@ -48,10 +51,6 @@ module Base
     DELAY = 0.001
     MAX_POLLS = 8
 
-    def cache=(value)
-        @cache = value
-    end
-
     def pdirty
         return vmr_pdirty&.nonzero?
     end
@@ -65,10 +64,10 @@ module Base
         end
     end
 
-    def polling(func, name=nil, id=nil, mode=nil)
+    def polling(func, **kwargs)
         params = {
-            "get_parameter" => name,
-            "macro_getstatus" => "mb_#{id}_#{mode}"
+            "get_parameter" => kwargs[:name],
+            "macro_getstatus" => "mb_#{kwargs[:id]}_#{kwargs[:mode]}"
         }
         MAX_POLLS.times do |i|
             if @cache.key? params[func]
@@ -82,7 +81,7 @@ module Base
         end
 
         val = yield
-        self.cache.store(params[func], [val, false])
+        @cache.store(params[func], [val, false])
         val
     end
 
@@ -101,38 +100,41 @@ module Base
 end
 
 module Define_Version
+    """
+    Defines the console layout for a specific kind of Voicemeeter.
+    """
     include Base
 
     def define_version(kind)
         case kind
         when "basic"
-            self.properties = {
+            @properties = {
                 :name => kind,
-                :exe => "voicemeeter.exe"
+                :exe => "voicemeeter.exe",
             }
-            self.layout = {
+            @layout = {
                 :strip => {:p_in => 2, :v_in=> 1},
                 :bus => {:p_out => 1, :v_out=> 1},
                 :vban => {:instream => 4, :outstream => 4},
                 :mb => 70,
             }
         when "banana"
-            self.properties = {
+            @properties = {
                 :name => kind,
-                :exe => "voicemeeterpro.exe"
+                :exe => "voicemeeterpro.exe",
             }
-            self.layout = {
+            @layout = {
                 :strip => {:p_in => 3, :v_in=> 2},
                 :bus => {:p_out => 3, :v_out=> 2},
                 :vban => {:instream => 8, :outstream => 8},
                 :mb => 70,
             }
         when "potato"
-            self.properties = {
+            @properties = {
                 :name => kind,
-                :exe => "voicemeeter8#{OS_BITS == 64 ? "x64" : ""}.exe"
+                :exe => "voicemeeter8#{OS_BITS == 64 ? "x64" : ""}.exe",
             }
-            self.layout = {
+            @layout = {
                 :strip => {:p_in => 5, :v_in=> 3},
                 :bus => {:p_out => 5, :v_out=> 3},
                 :vban => {:instream => 8, :outstream => 8},

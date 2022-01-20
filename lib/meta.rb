@@ -64,12 +64,10 @@ module Meta_Functions
         end
     end
 
-    def _make_channel_props(num_A, num_B)
-        channels = (1..(num_A + num_B)).map.each do |i|
+    def make_channel_props(num_A, num_B)
+        (1..(num_A + num_B)).map do |i|
             i <= num_A ? "A#{i}" : "B#{i - num_A}"
         end
-
-        self.make_accessor_bool *channels
     end
 end
 

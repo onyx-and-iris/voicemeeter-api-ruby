@@ -2,6 +2,9 @@ require_relative 'meta'
 require_relative 'errors'
 
 class IChannel
+    """
+    Base class for audio channels
+    """
     include Channel_Meta_Functions
 
     attr_accessor :remote, :index

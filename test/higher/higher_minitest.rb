@@ -89,6 +89,17 @@ class SetAndGetBus < Minitest::Test
         @@vmr.bus[2].gain = 3.5
         assert_equal(3.5, @@vmr.bus[2].gain)
     end
+
+    # string tests
+    def test_it_sets_and_gets_bus3_label_test0
+        @@vmr.bus[3].label = 'test0'
+        assert_equal(-'test0', @@vmr.bus[3].label)
+    end
+
+    def test_it_sets_and_gets_bus3_label_test1
+        @@vmr.bus[3].label = 'test0'
+        assert_equal('test0', @@vmr.bus[3].label)
+    end
 end
 
 

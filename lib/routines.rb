@@ -10,16 +10,16 @@ require_relative 'recorder'
 
 class Routines
     """
-    define basic behaviours of API functions
-    mixin modules
+    Define basic behaviours of API functions
+
+    Mixin required modules
     """
     include Define_Version
     include RunVM
 
-    attr_accessor :properties, :layout, :strip, :bus, :button, :vban, :command,
-    :recorder
+    attr_accessor :strip, :bus, :button, :vban, :command, :recorder
 
-    attr_reader :retval, :cache, :wait
+    attr_reader :retval, :cache, :wait, :layout, :properties
 
     SIZE = 1
     BUFF = 512
@@ -27,7 +27,7 @@ class Routines
     def initialize(kind)
         define_version(kind)
 
-        self.cache = Hash.new
+        @cache = Hash.new
         @wait = true
     end
 
@@ -50,7 +50,7 @@ class Routines
     end
 
     def get_parameter(name, is_string=false)
-        self.polling("get_parameter", name) do
+        self.polling("get_parameter", name: name) do
             if is_string
                 c_get = FFI::MemoryPointer.new(:string, BUFF, true)
                 run_as("get_parameter_string", name, c_get)
@@ -69,11 +69,11 @@ class Routines
         else    
             run_as("set_parameter_float", name, value.to_f)
         end
-        self.cache.store(name, [value, true])
+        @cache.store(name, [value, true])
     end
 
     def macro_getstatus(id, mode)
-        self.polling("macro_getstatus", name=nil, id, mode) do
+        self.polling("macro_getstatus", id: id, mode: mode) do
             c_get = FFI::MemoryPointer.new(:float, SIZE)
             run_as("macro_getstatus", id, c_get, mode)
             c_get.read_float.to_i
@@ -82,7 +82,7 @@ class Routines
 
     def macro_setstatus(id, state, mode)
         run_as("macro_setstatus", id, state, mode)
-        self.cache.store("mb_#{id}_#{mode}", [state, true])
+        @cache.store("mb_#{id}_#{mode}", [state, true])
     end
 
     def set_parameter_multi(param_hash)
