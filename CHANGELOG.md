@@ -9,7 +9,24 @@ Before any minor/major patch is released all test units will be run to verify th
 ## [Unreleased]
 - [ ] Add error rake tests
 
-## [2.0.2] - 2022-01-22
+## [2.0.3] - 2022-01-20
+### Added
+- runmany.ps1 added. easy access to many test runs with logging and summary file.
+- link to official documentation in readme.
+- section regarding lower level functions, setters, getters and polling functions added to readme.
+
+### Changed
+- Adjustment to polling function, now accepts getter logic as a block. Param caching
+now done in polling function
+- Small delay added to setters, except for set_parameter_multi function.
+- Added initialize to Remote class, building of class objects done now done in Remote.
+- version 2.0.3 added to RubyGems.
+
+### Fixed
+- Fixed an issue with the action type property meta function in Command class.
+- Added ensure logout if block passed to run, will logout regardless of exception raised.
+
+## [2.0.2] - 2022-01-18
 ### IMPORTANT
 The code for this wrapper has been revised and reworked from the ground up. Earlier versions
 are still available for download on RubyGems.org but that version will not be updated further.

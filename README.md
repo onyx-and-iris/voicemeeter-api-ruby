@@ -182,6 +182,23 @@ Set many parameters at once using a hash, for example:
     })
 ```
 
+### Remote class
+Access to lower level Getters and Setters are provided with these functions:
+- `vmr.get(param, string=false)`: For getting the value of any parameter. Set string to true if getting a property value expected to return a string.
+- `vmr.set(param, value)`: For setting the value of any parameter.
+
+Access to lower level polling functions are provided with these functions:
+- `vmr.pdirty`: Returns true if a parameter has been updated.
+- `vmr.mdirty`: Returns true if a macrobutton has been updated.
+
+example:
+```ruby
+vmr.get('Strip[2].Mute')
+vmr.set('Strip[4].Label', 'stripname')
+vmr.set('Strip[0].Gain', -3.6)
+```
+
+
 ### Run tests
 To see a list of available tests run:
 ```
@@ -191,3 +208,6 @@ Then, for example, if you wish to run higher tests, type pass:
 ```
 Bundle exec rake higher:pass
 ```
+
+### Official Documentation
+- [Voicemeeter Remote C API](https://forum.vb-audio.com/viewtopic.php?f=8&t=346)
