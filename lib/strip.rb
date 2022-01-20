@@ -24,6 +24,7 @@ class Strip < IChannel
         super(remote, i)
         self.make_accessor_bool :solo, :mute, :mono
         self.make_accessor_float :gain
+        self.make_accessor_string :label
         self._make_channel_props(num_A, num_B)
     end
 
