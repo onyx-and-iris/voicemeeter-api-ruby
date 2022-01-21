@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Before any minor/major patch is released all test units will be run to verify they pass.
 
 ## [Unreleased]
+- [ ] Add more properties to classes
 - [ ] Add error rake tests
+- [x] Fix timing issue affecting macrobutton multi_set
+- [x] Add option to pass keyword arguments to Remote class.
 
 ## [2.0.3] - 2022-01-20
 ### Added

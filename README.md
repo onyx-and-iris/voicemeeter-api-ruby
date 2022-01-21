@@ -163,8 +163,8 @@ example:
 ```
 
 ### Multiple parameters
-- `vmr.set_multi`
-Set many parameters at once using a hash, for example:
+- `set_multi`
+Set many strip/bus/macrobutton/vban parameters at once, for example:
 ```ruby
     vmr.set_multi({
         :strip_0 => {
@@ -180,6 +180,11 @@ Set many parameters at once using a hash, for example:
             :on => true, :bit => 24,
         },
     })
+```
+Or for each class you may do:
+```ruby
+vmr.strip[0].set_multi(mute: true, gain: 3.2, A1: true)
+vmr.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
 ```
 
 ### Remote class
