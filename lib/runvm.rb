@@ -1,20 +1,15 @@
-require 'open3'
-require_relative 'errors'
 require_relative 'base'
 
+include Base
+
 module RunVM
-    include Base
-
-    def run_voicemeeter
-        if VM_PATH.join(@properties[:exe]).executable?
-            exe_path = String(VM_PATH.join(@properties[:exe]))
-        else
-            raise InstallErrors.new("Could not find Voicemeeter exe file")
+    def run_voicemeeter(kind)
+        enums = ["basic", "banana", "potato"].map.each_with_index do |val, i|
+            get_arch == 64 && val == "potato" ? [val, i+4] : [val, i+1]
         end
+        exes = enums.each.to_h { |k, v| [k, v.to_i] }
 
-        Open3.popen3(exe_path, '')
+        send('vmr_runvm', exes[kind])
         sleep(1)
-
-        clear_polling
     end
 end

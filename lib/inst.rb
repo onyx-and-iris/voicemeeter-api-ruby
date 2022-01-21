@@ -5,6 +5,7 @@ require_relative 'errors'
 include Errors
 
 module InstallationFunctions
+    private
     def get_arch
         key = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
         Win32::Registry::HKEY_LOCAL_MACHINE.open(key) do |reg|

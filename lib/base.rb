@@ -51,16 +51,17 @@ module Base
     DELAY = 0.001
     MAX_POLLS = 8
 
-    def pdirty
+    def pdirty?
         return vmr_pdirty&.nonzero?
     end
 
-    def mdirty
+    def mdirty?
         return vmr_mdirty&.nonzero?
     end
 
+    private
     def clear_polling
-        while self.pdirty || self.mdirty
+        while self.pdirty? || self.mdirty?
         end
     end
 
@@ -71,8 +72,8 @@ module Base
         }
         @max_polls.times do |i|
             if @cache.key? params[func]
-                if func.include?('param') && self.pdirty ||
-                func.include?('macro') && self.mdirty
+                if func.include?('param') && self.pdirty? ||
+                func.include?('macro') && self.mdirty?
                     return @cache.delete(params[func])[0]
                 end
                 sleep(DELAY)
@@ -104,7 +105,7 @@ module Define_Version
     Defines the console layout for a specific kind of Voicemeeter.
     """
     include Base
-
+    private
     def define_version(kind)
         case kind
         when "basic"

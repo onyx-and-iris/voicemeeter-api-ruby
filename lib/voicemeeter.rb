@@ -2,6 +2,9 @@ require_relative 'routines'
 require_relative 'errors'
 
 module Voicemeeter
+    include RunVM
+    
+    private
     class Remote < Routines
         """
         Remote class, subclasses Routines
@@ -39,6 +42,7 @@ module Voicemeeter
         end
     end
 
+    public
     def remote(kind, **kwargs)
         """
         Request a Remote for a specific kind and login to the API
@@ -51,5 +55,5 @@ module Voicemeeter
         return _remotes[kind]
     end
 
-    module_function :remote
+    module_function :remote, :run_voicemeeter
 end

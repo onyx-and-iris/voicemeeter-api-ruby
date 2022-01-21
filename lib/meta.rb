@@ -1,6 +1,7 @@
 require_relative 'errors'
 
 module Meta_Functions
+    private
     def make_accessor_bool(*params)
         params.each do |param|
             define_singleton_method("#{param}") do

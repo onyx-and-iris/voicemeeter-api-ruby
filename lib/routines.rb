@@ -41,7 +41,8 @@ class Routines
     rescue CAPIErrors => error
         case
         when error.value == 1
-            run_voicemeeter
+            run_voicemeeter(@properties[:name])
+            clear_polling
         when error.value < 0
             raise
         end
@@ -112,7 +113,10 @@ class Routines
         end
         @wait = true
     end
+
     alias_method "set_multi", :set_parameter_multi
-    alias_method "set", :set_parameter
     alias_method "get", :get_parameter
+    alias_method "set", :set_parameter
+    alias_method "pdirty", :pdirty?
+    alias_method "mdirty", :pdirty?
 end
