@@ -23,6 +23,7 @@ class IMacroButton
         param_hash.each do |(key,val)|
             self.send("#{key}=", val)
         end
+        sleep(remote.delay)
     end
 end
 

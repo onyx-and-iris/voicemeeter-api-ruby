@@ -19,16 +19,19 @@ class Routines
 
     attr_accessor :strip, :bus, :button, :vban, :command, :recorder
 
-    attr_reader :retval, :cache, :wait, :layout, :properties
+    attr_reader :retval, :cache, :wait, :layout, :properties,
+    :delay, :max_polls
 
     SIZE = 1
     BUFF = 512
 
-    def initialize(kind)
+    def initialize(kind, **kwargs)
         define_version(kind)
 
         @cache = Hash.new
         @wait = true
+        @delay = kwargs[:delay] || DELAY
+        @max_polls = kwargs[:max_polls] || MAX_POLLS
     end
 
     def login

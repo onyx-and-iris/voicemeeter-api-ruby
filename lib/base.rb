@@ -69,7 +69,7 @@ module Base
             "get_parameter" => kwargs[:name],
             "macro_getstatus" => "mb_#{kwargs[:id]}_#{kwargs[:mode]}"
         }
-        MAX_POLLS.times do |i|
+        @max_polls.times do |i|
             if @cache.key? params[func]
                 if func.include?('param') && self.pdirty ||
                 func.include?('macro') && self.mdirty

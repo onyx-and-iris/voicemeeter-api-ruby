@@ -4,10 +4,6 @@ require_relative 'errors'
 
 include Errors
 
-BASIC = 1
-BANANA = 2
-POTATO = 3
-
 module InstallationFunctions
     def get_arch
         key = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
@@ -23,7 +19,6 @@ module InstallationFunctions
     def get_vmpath(os_bits)
         vm_key = "VB:Voicemeeter {17359A74-1236-5467}"
         reg_key = "Software#{os_bits == 64 ? "\\WOW6432Node" : ""}\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\"
-
         Win32::Registry::HKEY_LOCAL_MACHINE.open(reg_key + vm_key) do |reg|           
             value = reg["UninstallString"]
 

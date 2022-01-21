@@ -11,9 +11,7 @@ class Strip < IChannel
         "
         Factory function for Strip classes.
         "
-        p_in = layout_strip[:p_in]
-        v_in = layout_strip[:v_in]
-
+        p_in, v_in = layout_strip.map { |k, v| v }
         (0...(p_in + v_in)).map do |i|
             i < p_in ? \
             PhysicalStrip.new(remote, i) : \

@@ -4,16 +4,20 @@ require_relative 'errors'
 module Voicemeeter
     class Remote < Routines
         """
-        Factory function that generates a remote class for each kind.
+        Remote class, subclasses Routines
+
         Console layout built according to version definition.
 
         Offers a run method for resource closure.
-
-        Returns a hash of Remote classes.
         """
-        def self.make
+        def self.make(**kwargs)
+            """
+            Factory function that generates a remote class for each kind.
+
+            Returns a hash of Remote classes.
+            """
             ["basic", "banana", "potato"].to_h do |kind|
-                [kind, Remote.new(kind)]
+                [kind, Remote.new(kind, **kwargs)]
             end
         end
 
@@ -35,14 +39,14 @@ module Voicemeeter
         end
     end
 
-    def remote(kind)
+    def remote(kind, **kwargs)
         """
         Request a Remote for a specific kind and login to the API
         """
-        _remotes = Remote.make
-        _kinds_all = _remotes.map { |k,v| k }
+        _remotes = Remote.make(**kwargs)
 
-        raise VMRemoteErrors.new("Unknown Voicemeeter Kind. Options: #{_kinds_all}") unless _remotes[kind]
+        raise VMRemoteErrors.new("Unknown Voicemeeter Kind.") unless _remotes.key? kind
+
         _remotes[kind].login
         return _remotes[kind]
     end
