@@ -2,6 +2,7 @@ param(
         [parameter(Mandatory=$false)]
         [Int] $num = 1,
         [switch]$cycle,
+        [switch]$log,
         [parameter(Mandatory=$false)]
         [switch]$h,[switch]$l
         )
@@ -20,13 +21,18 @@ Function RunTests {
 
         $_runtests = "rake ${type}:pass" 
         $logfile = "test/${type}.log"
-        Write-Host $logfile
 
-        1..$num | ForEach-Object `
-        { "Running test $_ of $num" | Tee-Object -FilePath $logfile -Append
-        Invoke-Expression $_runtests | Tee-Object -FilePath $logfile -Append }
+        if($log) {
+                1..$num | ForEach-Object `
+                { "Running test $_ of $num" | Tee-Object -FilePath $logfile -Append
+                Invoke-Expression $_runtests | Tee-Object -FilePath $logfile -Append }
 
-        ParseLogs -logfile $logfile
+                ParseLogs -logfile $logfile                
+        } else {
+                1..$num | ForEach-Object `
+                { Write-Host "Running test $_ of $num"
+                Invoke-Expression $_runtests }
+        }
 }
 
 Function ParseLogs {
