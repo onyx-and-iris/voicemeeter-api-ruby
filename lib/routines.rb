@@ -41,7 +41,7 @@ class Routines
     rescue CAPIErrors => error
         case
         when error.value == 1
-            run_voicemeeter(@properties[:name])
+            self.start(@properties[:name])
             clear_polling
         when error.value < 0
             raise

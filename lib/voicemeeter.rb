@@ -56,5 +56,5 @@ module Voicemeeter
         return _remotes[kind]
     end
 
-    module_function :remote, :run_voicemeeter
+    module_function :remote, :start
 end

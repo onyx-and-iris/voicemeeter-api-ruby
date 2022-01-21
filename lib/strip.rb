@@ -5,8 +5,6 @@ class Strip < IChannel
     """
     Concrete class for Strip objects
     """
-    attr_reader :num_A, :num_B
-
     def self.make(remote, layout_strip)
         "
         Factory function for Strip classes.

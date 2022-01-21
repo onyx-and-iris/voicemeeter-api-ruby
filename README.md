@@ -30,8 +30,8 @@ or use bundlers built in git functionality:
 `gem "voicemeeter_api_ruby", :git => "git://github.com/onyx-and-iris/voicemeeter-api-ruby"`
 
 
-## Use
-Simplest use case, pass a block, for example:
+## `Use`
+Simplest use case, request a Kind from remote, then pass a block to run:
 ```ruby
 require 'voicemeeter'
 vmr = Voicemeeter.remote("banana")
@@ -47,15 +47,15 @@ vmr.run do
     puts vmr.bus[1].eq  '=> false'
 end
 ```
-When passing a block, login and logout are handled for you.
+Login and logout are handled for you in this scenario.
 
-## Voicemeeter.remote(kind)
-Pass the kind of voicemeeter as an argument. Kind may be:
+## `Kind`
+Pass the kind of Voicemeeter as an argument. Kind may be:
 - `basic`
 - `banana`
 - `potato`
 
-## Available commands
+## `Available commands`
 ### Channels (strip/bus)
 The following properties exist for audio channels.
 - `mono`: boolean
@@ -187,6 +187,8 @@ vmr.strip[0].set_multi(mute: true, gain: 3.2, A1: true)
 vmr.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
 ```
 
+## `Voicemeeter Module`
+
 ### Remote class
 Access to lower level Getters and Setters are provided with these functions:
 - `vmr.get(param, string=false)`: For getting the value of any parameter. Set string to true if getting a property value expected to return a string.
@@ -201,6 +203,14 @@ example:
 vmr.get('Strip[2].Mute')
 vmr.set('Strip[4].Label', 'stripname')
 vmr.set('Strip[0].Gain', -3.6)
+```
+
+#### Voicemeeter.start
+Use this function to start Voicemeeter of a kind independently of Remote class.
+for example:
+```ruby
+require 'voicemeeter'
+Voicemeeter.start("banana")
 ```
 
 
