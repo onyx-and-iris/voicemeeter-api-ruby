@@ -3,11 +3,14 @@ require_relative 'inst'
 
 include InstallationFunctions
 
+
 module Base
     """
     Perform low level tasks.
     """
     extend FFI::Library
+
+    $kinds_all = ["basic", "banana", "potato"]
 
     begin
         OS_BITS = get_arch

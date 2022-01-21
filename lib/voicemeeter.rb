@@ -1,9 +1,10 @@
 require_relative 'routines'
 require_relative 'errors'
 
+
 module Voicemeeter
     include RunVM
-    
+
     private
     class Remote < Routines
         """
@@ -19,7 +20,7 @@ module Voicemeeter
 
             Returns a hash of Remote classes.
             """
-            ["basic", "banana", "potato"].to_h do |kind|
+            $kinds_all.to_h do |kind|
                 [kind, Remote.new(kind, **kwargs)]
             end
         end
