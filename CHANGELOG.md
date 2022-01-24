@@ -9,8 +9,20 @@ Before any minor/major patch is released all test units will be run to verify th
 ## [Unreleased]
 - [ ] Add more properties to classes
 - [ ] Add error rake tests
-- [x] Fix timing issue affecting macrobutton multi_set
-- [x] Add option to pass keyword arguments to Remote class.
+
+## [2.0.4] - 2022-01-24
+### Added
+- Ability to load config files in TOML format
+- Add option to pass keyword arguments to Remote class.
+- Voicemeeter.start added for starting voicemeeter independently of Remote class
+
+### Changed
+- Use of VBVMR_RunVoicemeeter instead of open3 when starting voicemeeter.
+- Functions in low level modules set to private.
+- version 2.0.4 added to RubyGems.
+
+### Fixed
+- Fix timing issue affecting macrobutton multi_set
 
 ## [2.0.3] - 2022-01-20
 ### Added
