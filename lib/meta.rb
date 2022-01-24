@@ -1,5 +1,8 @@
 require_relative 'errors'
 
+class FalseClass; def to_i; 0 end end
+class TrueClass; def to_i; 1 end end
+
 module Meta_Functions
     private
     def make_accessor_bool(*params)
@@ -8,10 +11,10 @@ module Meta_Functions
                 return !(self.getter("#{param}")).zero?
             end
 
-            opts = [false, true]
+            opts = [false, true, 0, 1]
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{param}", value ? 1 : 0)
+                self.setter("#{param}", value.to_i == 1 ? 1 : 0)
             end
         end
     end
@@ -87,10 +90,10 @@ module Channel_Meta_Functions
                 return !(self.getter("#{val}")).zero?
             end
 
-            opts = [false, true]
+            opts = [false, true, 0, 1]
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{val}", value ? 1 : 0)
+                self.setter("#{val}", value.to_i == 1 ? 1 : 0)
             end
         end
     end
@@ -213,10 +216,10 @@ module MacroButton_Meta_Functions
                 return !(self.getter(mode[param])).zero?
             end
 
-            opts = [false, true]
+            opts = [false, true, 0, 1]
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts[param]) unless opts.include? value
-                self.setter(value ? 1 : 0, mode[param])
+                self.setter(value.to_i == 1 ? 1 : 0, mode[param])
             end
         end
     end
@@ -242,7 +245,7 @@ module Commands_Meta_Functions
             opts = [false, true]
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{param}", value ? 1 : 0)
+                self.setter("#{param}", value.to_i == 1 ? 1 : 0)
             end
         end
     end
