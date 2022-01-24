@@ -166,5 +166,6 @@ module Profiles
     def set_profile(value)
         raise VMRemoteErrors.new("No profile with name #{value} was loaded") unless @profiles.key? value
         self.send("set_multi", @profiles[value])
+        sleep(DELAY)
     end 
 end
