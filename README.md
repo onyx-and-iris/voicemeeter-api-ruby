@@ -213,6 +213,23 @@ require 'voicemeeter'
 Voicemeeter.start("banana")
 ```
 
+## Config Files
+`vmr.set_profile('config')`
+
+You may load config files in TOML format.
+Three example profiles have been included with the package. Remember to save
+current settings before loading a profile. To test them simply rename _profiles
+directory to profiles. They will be loaded into memory but not set. To set one
+you may do:
+
+```ruby
+require 'voicemeeter'
+vmr = Voicemeeter.remote("banana")
+vmr.run do
+    vmr.set_profile('config')
+end
+```
+will load a config file at profiles/banana/config.toml for Voicemeeter Banana.
 
 ### Run tests
 To see a list of available tests run:

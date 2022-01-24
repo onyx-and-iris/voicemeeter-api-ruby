@@ -14,6 +14,7 @@ Gem::Specification.new do |spec|
       'https://rubygems.org/gems/voicemeeter_api_ruby'
     spec.license       = 'NGPL'
     spec.add_runtime_dependency 'ffi', '~> 1.9', '>= 1.9.10'
+    spec.add_runtime_dependency 'toml', '~> 0.3.0'
     spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.3'
     spec.add_development_dependency 'minitest', '~> 5.14', '>= 5.14.4'
     spec.required_ruby_version = '>= 2.7'

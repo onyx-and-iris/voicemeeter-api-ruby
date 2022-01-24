@@ -1,3 +1,4 @@
+require 'toml'
 require 'ffi'
 require_relative 'inst'
 
@@ -146,4 +147,24 @@ module Define_Version
             }
         end
     end
+end
+
+
+module Profiles
+    include Define_Version
+    private
+    def get_profiles
+        filepath = File.join(File.dirname(__dir__), "/profiles/#{@properties[:name]}/*.toml")
+
+        Dir.glob(filepath).to_h do |toml_file|
+            filename = File.basename(toml_file, ".toml")
+            puts "loading profile #{@properties[:name]}/#{filename}"
+            [filename, TOML::Parser.new(File.read(toml_file)).parsed]
+        end
+    end
+    public
+    def set_profile(value)
+        raise VMRemoteErrors.new("No profile with name #{value} was loaded") unless @profiles.key? value
+        self.send("set_multi", @profiles[value])
+    end 
 end

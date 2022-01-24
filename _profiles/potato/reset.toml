@@ -1,0 +1,166 @@
+[strip_0]
+A1 = 0
+A2 = 0
+A3 = 0
+A4 = 0
+A5 = 0
+B1 = 0
+B2 = 0
+B3 = 0
+mono = 0
+solo = 0
+mute = 0
+gain = 0.0
+comp = 0
+gate = 0
+limit = 12
+
+[strip_1]
+A1 = 0
+A2 = 0
+A3 = 0
+A4 = 0
+A5 = 0
+B1 = 0
+B2 = 0
+B3 = 0
+mono = 0
+solo = 0
+mute = 0
+gain = 0.0
+comp = 0
+gate = 0
+limit = 12
+
+[strip_2]
+A1 = 0
+A2 = 0
+A3 = 0
+A4 = 0
+A5 = 0
+B1 = 0
+B2 = 0
+B3 = 0
+mono = 0
+solo = 0
+mute = 0
+gain = 0.0
+comp = 0
+gate = 0
+limit = 12
+
+[strip_3]
+A1 = 0
+A2 = 0
+A3 = 0
+A4 = 0
+A5 = 0
+B1 = 0
+B2 = 0
+B3 = 0
+mono = 0
+solo = 0
+mute = 0
+gain = 0.0
+comp = 0
+gate = 0
+limit = 12
+
+[strip_4]
+A1 = 0
+A2 = 0
+A3 = 0
+A4 = 0
+A5 = 0
+B1 = 0
+B2 = 0
+B3 = 0
+mono = 0
+solo = 0
+mute = 0
+gain = 0.0
+comp = 0
+gate = 0
+limit = 12
+
+[strip_5]
+A1 = 0
+A2 = 0
+A3 = 0
+A4 = 0
+A5 = 0
+B1 = 0
+B2 = 0
+B3 = 0
+mono = 0
+solo = 0
+mute = 0
+gain = 0.0
+
+[strip_6]
+A1 = 0
+A2 = 0
+A3 = 0
+A4 = 0
+A5 = 0
+B1 = 0
+B2 = 0
+B3 = 0
+mono = 0
+solo = 0
+mute = 0
+gain = 0.0
+
+[strip_7]
+A1 = 0
+A2 = 0
+A3 = 0
+A4 = 0
+A5 = 0
+B1 = 0
+B2 = 0
+B3 = 0
+mono = 0
+solo = 0
+mute = 0
+gain = 0.0
+
+[bus_0]
+eq = 0
+mute = 0
+gain = 0.0
+
+[bus_1]
+eq = 0
+mute = 0
+gain = 0.0
+
+[bus_2]
+eq = 0
+mute = 0
+gain = 0.0
+
+[bus_3]
+eq = 0
+mute = 0
+gain = 0.0
+
+[bus_4]
+eq = 0
+mute = 0
+gain = 0.0
+
+[bus_5]
+eq = 0
+mute = 0
+gain = 0.0
+
+[bus_6]
+eq = 0
+mute = 0
+gain = 0.0
+
+[bus_7]
+eq = 0
+mute = 0
+gain = 0.0

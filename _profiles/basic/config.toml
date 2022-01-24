@@ -1,0 +1,29 @@
+[strip_0]
+A1 = 1
+B1 = 1
+mono = 1
+solo = 1
+mute = 1
+gain = 0.0
+
+[strip_1]
+A1 = 0
+B1 = 0
+mute = 0
+gain = 0.0
+
+[strip_2]
+A1 = 0
+B1 = 0
+mute = 0
+gain = 0.0
+
+[bus_0]
+eq = 0
+mute = 0
+gain = 0.0
+
+[bus_1]
+eq = 0
+mute = 0
+gain = 0.0

@@ -14,13 +14,13 @@ class Routines
 
     Mixin required modules
     """
-    include Define_Version
+    include Profiles
     include RunVM
 
     attr_accessor :strip, :bus, :button, :vban, :command, :recorder
 
     attr_reader :retval, :cache, :wait, :layout, :properties,
-    :delay, :max_polls
+    :delay, :max_polls, :profiles
 
     SIZE = 1
     BUFF = 512
@@ -32,6 +32,7 @@ class Routines
         @wait = true
         @delay = kwargs[:delay] || DELAY
         @max_polls = kwargs[:max_polls] || MAX_POLLS
+        @profiles = get_profiles
     end
 
     def login
