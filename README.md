@@ -232,14 +232,19 @@ end
 will load a config file at profiles/banana/config.toml for Voicemeeter Banana.
 
 ### Run tests
-To see a list of available tests run:
+To run all tests:
 ```
-Bundle exec rake --tasks
+Bundle exec rspec
 ```
-Then, for example, if you wish to run higher tests, type pass:
+You can use tags to run only certain tests, for example:
 ```
-Bundle exec rake higher:pass
+Bundle exec rspec --tag 'higher'
 ```
 
+Using ./runmany.ps1, to do 3 runs, higher tests only do:
+```
+.\runmany.ps1 -num 3 -h
+```
+flags -h, -l and -a currently available for higher, lower and all tests respectively.
 ### Official Documentation
 - [Voicemeeter Remote C API](https://forum.vb-audio.com/viewtopic.php?f=8&t=346)
