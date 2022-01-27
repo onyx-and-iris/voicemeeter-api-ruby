@@ -11,6 +11,7 @@ RSpec.configure do |config|
     end 
 
     config.after(:suite) do
+        @vmr = Voicemeeter::testing
         @vmr.logout
     end 
 end

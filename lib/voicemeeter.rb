@@ -57,6 +57,7 @@ module Voicemeeter
     end
 
     def self.testing
+        raise VMRemoteErrors.new("Not in developer mode") unless ENV['RACK_ENV'] == 'dev'
         return Remote.new("testing")
     end
 
