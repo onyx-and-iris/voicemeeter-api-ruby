@@ -51,7 +51,7 @@ module Base
 
     attach_function :vmr_set_parameter_multi, :VBVMR_SetParameters, \
     [:string], :long
-
+    
     DELAY = 0.001
     MAX_POLLS = 8
 
@@ -121,9 +121,9 @@ module Define_Version
                 :strip => {:p_in => 2, :v_in=> 1},
                 :bus => {:p_out => 1, :v_out=> 1},
                 :vban => {:instream => 4, :outstream => 4},
-                :mb => 70,
+                :mb => 80,
             }
-        when "banana"
+        when "banana", "testing"
             @properties = {
                 :name => kind,
                 :exe => "voicemeeterpro.exe",
@@ -132,7 +132,7 @@ module Define_Version
                 :strip => {:p_in => 3, :v_in=> 2},
                 :bus => {:p_out => 3, :v_out=> 2},
                 :vban => {:instream => 8, :outstream => 8},
-                :mb => 70,
+                :mb => 80,
             }
         when "potato"
             @properties = {
@@ -143,7 +143,7 @@ module Define_Version
                 :strip => {:p_in => 5, :v_in=> 3},
                 :bus => {:p_out => 5, :v_out=> 3},
                 :vban => {:instream => 8, :outstream => 8},
-                :mb => 70,
+                :mb => 80,
             }
         end
     end

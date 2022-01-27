@@ -44,7 +44,7 @@ module Voicemeeter
     end
 
     public
-    def remote(kind, **kwargs)
+    def self.remote(kind, **kwargs)
         """
         Request a Remote for a specific kind and login to the API
         """
@@ -56,5 +56,9 @@ module Voicemeeter
         return _remotes[kind]
     end
 
-    module_function :remote, :start
+    def self.testing
+        return Remote.new("testing")
+    end
+
+    module_function :start
 end

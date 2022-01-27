@@ -124,6 +124,7 @@ module Channel_Meta_Functions
 
             opts = {
                 :limit => (-40..12),
+                :k => (0..4),
             }
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts[param]) unless opts[param].member? value
