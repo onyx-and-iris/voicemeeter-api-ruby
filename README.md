@@ -34,7 +34,7 @@ or use bundlers built in git functionality:
 Simplest use case, request a Kind from remote, then pass a block to run:
 ```ruby
 require 'voicemeeter'
-vmr = Voicemeeter.remote("banana")
+vmr = Voicemeeter::remote("banana")
 
 # vmr.run accepts a block
 vmr.run do
@@ -210,7 +210,7 @@ Use this function to start Voicemeeter of a kind independently of Remote class.
 for example:
 ```ruby
 require 'voicemeeter'
-Voicemeeter.start("banana")
+Voicemeeter::start("banana")
 ```
 
 ## Config Files
@@ -224,7 +224,7 @@ you may do:
 
 ```ruby
 require 'voicemeeter'
-vmr = Voicemeeter.remote("banana")
+vmr = Voicemeeter::remote("banana")
 vmr.run do
     vmr.set_profile('config')
 end
