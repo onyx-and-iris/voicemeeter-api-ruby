@@ -4,7 +4,7 @@ param(
         [switch]$cycle,
         [switch]$log,
         [parameter(Mandatory=$false)]
-        [switch]$h,[switch]$l
+        [switch]$h,[switch]$l,[switch]$a
         )
 
 if ($h) { $type = "higher" }
@@ -19,7 +19,7 @@ Function RunTests {
                 $num = $cycle_num
         }
 
-        $_runtests = "rake ${type}:pass" 
+        if($a) {$_runtests = "bundle exec rspec"} else {$_runtests = "bundle exec rspec --tag ${type}"}
         $logfile = "test/${type}.log"
 
         if($log) {
