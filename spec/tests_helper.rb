@@ -1,8 +1,6 @@
 require 'voicemeeter'
 
 RSpec.configure do |config|
-    kind = "banana"
-
     config.before(:suite) do
         @vmr = Voicemeeter::testing
         @vmr.login
