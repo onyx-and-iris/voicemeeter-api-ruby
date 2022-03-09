@@ -1,3 +1,4 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/onyx-and-iris/voicemeeter-api-ruby/blob/dev/LICENSE)
 # Ruby Wrapper for Voicemeeter API
 The purpose of this wrapper is to provide an easy-to-use, flexible layer of
 abstraction over the C API provided with the Voicemeeter virtual mixing console.
