@@ -74,7 +74,7 @@ class Base
         else    
             run_as("set_parameter_float", name, value.to_f)
         end
-        @cache.store(name, [value, true])
+        @cache.store(name, value)
     end
 
     def macro_getstatus(id, mode)
@@ -87,7 +87,7 @@ class Base
 
     def macro_setstatus(id, state, mode)
         run_as("macro_setstatus", id, state, mode)
-        @cache.store("mb_#{id}_#{mode}", [state, true])
+        @cache.store("mb_#{id}_#{mode}", state)
     end
 
     def set_parameter_multi(param_hash)

@@ -74,7 +74,7 @@ module LibRuby
             "macro_getstatus" => "mb_#{kwargs[:id]}_#{kwargs[:mode]}"
         }
         if @cache.key? params[func]
-            return @cache.delete(params[func])[0]
+            return @cache.delete(params[func])
         end
 
         self.clear_polling if self.sync
