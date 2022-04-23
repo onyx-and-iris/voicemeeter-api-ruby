@@ -4,7 +4,7 @@ module Kinds
     """
     Kind = Struct.new(:properties, :layout)
     BASIC = Kind.new({
-        :name => "basic", :exe => "voicemeeter.exe",
+        :name => "basic",
     },
     {
         :strip => {:p_in => 2, :v_in=> 1}, 
@@ -14,7 +14,7 @@ module Kinds
     })
 
     BANANA = Kind.new({
-        :name => "banana", :exe => "voicemeeterpro.exe",
+        :name => "banana",
     },
     {
         :strip => {:p_in => 3, :v_in=> 2},
