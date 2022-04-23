@@ -24,12 +24,16 @@ class Strip < IChannel
         self.make_accessor_int :limit, :k
         self.make_accessor_string :label
 
-        num_A, num_B = remote.layout[:bus].map { |k, v| v }
+        num_A, num_B = remote.kind.layout[:bus].map { |k, v| v }
         self.make_accessor_bool *make_channel_props(num_A, num_B)
     end
 
+    def identifier
+        return :strip
+    end
+
     def cmd
-        return "Strip[#{@index}]"
+        return "#{self.identifier}[#{@index}]"
     end
 end
 

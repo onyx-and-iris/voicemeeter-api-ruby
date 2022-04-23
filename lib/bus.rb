@@ -24,8 +24,12 @@ class Bus < IChannel
         self.make_accessor_string :label
     end
 
+    def identifier
+        return :bus
+    end
+
     def cmd
-        return "Bus[#{@index}]"
+        return "#{self.identifier}[#{@index}]"
     end
 end
 

@@ -14,11 +14,11 @@ class IRecorder
     end
 
     def getter(param)
-        @remote.get_parameter("#{self.cmd}.#{param}")
+        @remote.get_parameter("#{self.identifier}.#{param}")
     end
 
     def setter(param, value)
-        @remote.set_parameter("#{self.cmd}.#{param}", value)
+        @remote.set_parameter("#{self.identifier}.#{param}", value)
     end
 
     def cmd
@@ -35,11 +35,11 @@ class Recorder < IRecorder
         super(remote)
         self.make_writer_only :play, :stop, :record, :ff, :rew
 
-        num_A, num_B = remote.layout[:bus].map { |k, v| v }
+        num_A, num_B = remote.kind.layout[:bus].map { |k, v| v }
         self.make_accessor_bool *make_channel_props(num_A, num_B)
     end
 
-    def cmd
-        return "recorder"
+    def identifier
+        return :recorder
     end
 end

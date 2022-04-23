@@ -11,8 +11,6 @@ module Base
     """
     extend FFI::Library
 
-    $kinds_all = ["basic", "banana", "potato"]
-
     begin
         OS_BITS = get_arch
         VM_PATH = get_vmpath(OS_BITS)
@@ -53,7 +51,7 @@ module Base
     [:string], :long
     
     DELAY = 0.001
-    MAX_POLLS = 8
+    SYNC = false
 
     def pdirty?
         return vmr_pdirty&.nonzero?
@@ -74,20 +72,13 @@ module Base
             "get_parameter" => kwargs[:name],
             "macro_getstatus" => "mb_#{kwargs[:id]}_#{kwargs[:mode]}"
         }
-        @max_polls.times do |i|
-            if @cache.key? params[func]
-                if func.include?('param') && self.pdirty? ||
-                func.include?('macro') && self.mdirty?
-                    return @cache.delete(params[func])[0]
-                end
-                sleep(DELAY)
-                break if @cache[params[func]][1] == false && i == 1
-            end
+        if @cache.key? params[func]
+            return @cache.delete(params[func])[0]
         end
 
+        self.clear_polling if self.sync
+
         val = yield
-        @cache.store(params[func], [val, false])
-        val
     end
 
     def retval=(values)
@@ -100,72 +91,7 @@ module Base
     def run_as(func, *args)
         val = send('vmr_' + func, *args)
         self.retval = [val, func]
-        sleep(DELAY) if func.include?('set') && @wait
+        sleep(DELAY) if @wait
     end
 end
 
-module Define_Version
-    """
-    Defines the console layout for a specific kind of Voicemeeter.
-    """
-    include Base
-    private
-    def define_version(kind)
-        case kind
-        when "basic"
-            @properties = {
-                :name => kind,
-                :exe => "voicemeeter.exe",
-            }
-            @layout = {
-                :strip => {:p_in => 2, :v_in=> 1},
-                :bus => {:p_out => 1, :v_out=> 1},
-                :vban => {:instream => 4, :outstream => 4},
-                :mb => 80,
-            }
-        when "banana", "testing"
-            @properties = {
-                :name => kind,
-                :exe => "voicemeeterpro.exe",
-            }
-            @layout = {
-                :strip => {:p_in => 3, :v_in=> 2},
-                :bus => {:p_out => 3, :v_out=> 2},
-                :vban => {:instream => 8, :outstream => 8},
-                :mb => 80,
-            }
-        when "potato"
-            @properties = {
-                :name => kind,
-                :exe => "voicemeeter8#{OS_BITS == 64 ? "x64" : ""}.exe",
-            }
-            @layout = {
-                :strip => {:p_in => 5, :v_in=> 3},
-                :bus => {:p_out => 5, :v_out=> 3},
-                :vban => {:instream => 8, :outstream => 8},
-                :mb => 80,
-            }
-        end
-    end
-end
-
-
-module Profiles
-    include Define_Version
-    private
-    def get_profiles
-        filepath = File.join(File.dirname(__dir__), "/profiles/#{@properties[:name]}/*.toml")
-
-        Dir.glob(filepath).to_h do |toml_file|
-            filename = File.basename(toml_file, ".toml")
-            puts "loading profile #{@properties[:name]}/#{filename}"
-            [filename, TOML::Parser.new(File.read(toml_file)).parsed]
-        end
-    end
-    public
-    def set_profile(value)
-        raise VMRemoteErrors.new("No profile with name #{value} was loaded") unless @profiles.key? value
-        self.send("set_multi", @profiles[value])
-        sleep(DELAY)
-    end 
-end

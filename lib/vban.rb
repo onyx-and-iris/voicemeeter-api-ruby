@@ -23,8 +23,12 @@ class IVban
         @remote.set_parameter("#{self.cmd}.#{param}", value)
     end
 
+    def identifier
+        return :vban
+    end
+
     def cmd
-        return "vban.#{self.direction}stream[#{@index}]"
+        return "#{self.identifier}.#{self.direction}stream[#{@index}]"
     end
 
     def direction
@@ -89,7 +93,7 @@ class VbanInstream < Vban
     end
 
     def direction
-        return "in"
+        return :in
     end
 end
 
@@ -101,6 +105,6 @@ class VbanOutstream < Vban
     end
 
     def direction
-        return "out"
+        return :out
     end
 end

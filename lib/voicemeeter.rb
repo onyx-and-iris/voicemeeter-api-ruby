@@ -1,8 +1,10 @@
+require_relative 'kinds'
 require_relative 'routines'
 require_relative 'errors'
 
 
 module Voicemeeter
+    include Kinds
     include RunVM
 
     private
@@ -14,23 +16,21 @@ module Voicemeeter
 
         Offers a run method for resource closure.
         """
-        def self.make(**kwargs)
+        def self.make(kind, **kwargs)
             """
             Factory function that generates a remote class for each kind.
 
-            Returns a hash of Remote classes.
+            Returns a Remote class of a kind.
             """
-            $kinds_all.to_h do |kind|
-                [kind, Remote.new(kind, **kwargs)]
-            end
+            Remote.new(kind, **kwargs)
         end
 
         def initialize(kind)
             super
-            self.strip = Strip.make(self, @layout[:strip])
-            self.bus = Bus.make(self, @layout[:bus])
-            self.button = MacroButton.make(self, @layout[:mb])
-            self.vban = Vban.make(self, @layout[:vban])
+            self.strip = Strip.make(self, kind.layout[:strip])
+            self.bus = Bus.make(self, kind.layout[:bus])
+            self.button = MacroButton.make(self, kind.layout[:mb])
+            self.vban = Vban.make(self, kind.layout[:vban])
             self.command = Command.new(self)
             self.recorder = Recorder.new(self)
         end
@@ -44,21 +44,23 @@ module Voicemeeter
     end
 
     public
-    def self.remote(kind, **kwargs)
+    def self.remote(kind_id, **kwargs)
         """
-        Request a Remote for a specific kind and login to the API
+        Request a Remote of a kind and login to the API
         """
-        _remotes = Remote.make(**kwargs)
+        _remotes = $kinds_all.to_h do |kind|
+            [kind.properties[:name], Remote.make(kind, **kwargs)]
+        end
 
-        raise VMRemoteErrors.new("Unknown Voicemeeter Kind.") unless _remotes.key? kind
+        raise VMRemoteErrors.new("Unknown Voicemeeter Kind.") unless _remotes.key? kind_id
 
-        _remotes[kind].login
-        return _remotes[kind]
+        _remotes[kind_id].login
+        return _remotes[kind_id]
     end
 
     def self.testing
         raise VMRemoteErrors.new("Not in developer mode") unless ENV['RACK_ENV'] == 'dev'
-        return Remote.new("testing")
+        return Remote.new(Kinds.get_kind("banana"))
     end
 
     module_function :start

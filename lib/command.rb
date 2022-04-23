@@ -11,11 +11,11 @@ class ICommand
     end
 
     def setter(param, value)
-        @remote.set_parameter("#{self.cmd}.#{param}", value)
+        @remote.set_parameter("#{self.identifier}.#{param}", value)
     end
 
-    def cmd
-        return "command"
+    def identifier
+        return :command
     end
 end
 

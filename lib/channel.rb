@@ -22,6 +22,10 @@ class IChannel
         @remote.set_parameter("#{self.cmd}.#{param}", value)
     end
 
+    def identifier
+        raise NotImplementedError
+    end
+
     def cmd
         raise NotImplementedError
     end

@@ -1,4 +1,5 @@
 require_relative 'base'
+require_relative 'profiles'
 require_relative 'runvm'
 require_relative 'strip'
 require_relative 'bus'
@@ -17,7 +18,7 @@ class Routines
     include Profiles
     include RunVM
 
-    attr_accessor :strip, :bus, :button, :vban, :command, :recorder
+    attr_accessor :kind, :strip, :bus, :button, :vban, :command, :recorder
 
     attr_reader :retval, :cache, :wait, :layout, :properties,
     :delay, :max_polls, :profiles
@@ -26,13 +27,12 @@ class Routines
     BUFF = 512
 
     def initialize(kind, **kwargs)
-        define_version(kind)
-
+        @kind = kind
         @cache = Hash.new
-        @wait = true
+        @wait = false
         @delay = kwargs[:delay] || DELAY
-        @max_polls = kwargs[:max_polls] || MAX_POLLS
-        @profiles = get_profiles
+        @sync = kwargs[:sync] || SYNC
+        @profiles = get_profiles(@kind)
     end
 
     def login
@@ -91,7 +91,6 @@ class Routines
     end
 
     def set_parameter_multi(param_hash)
-        @wait = false
         param_hash.each do |(key,val)|
             prop, m2, m3, *rem = key.to_s.split('_')
             if m2.to_i.to_s == m2 then m2 = m2.to_i
@@ -111,8 +110,9 @@ class Routines
                     self.vban.outstream[m3].set_multi(val)
                 end
             end
+
+            sleep(DELAY)
         end
-        @wait = true
     end
 
     alias_method "set_multi", :set_parameter_multi
