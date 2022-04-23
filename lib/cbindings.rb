@@ -4,9 +4,9 @@ require_relative 'inst'
 include InstallationFunctions
 
 
-module LibRuby
+module CBindings
     """
-    Creates Ruby function hooks to the C DLL
+    Creates Ruby bindings to the C DLL
 
     Performs other low level tasks
     """

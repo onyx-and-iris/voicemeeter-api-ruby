@@ -12,7 +12,7 @@ module Voicemeeter
         """
         Remote class, subclasses Routines
 
-        Console layout built according to version definition.
+        Console layout built according to a kind
 
         Offers a run method for resource closure.
         """
@@ -48,7 +48,7 @@ module Voicemeeter
     public
     def self.remote(kind_id, **kwargs)
         """
-        Request a Remote of a kind and login to the API
+        Request a Remote class of a kind and login to the API
         """
         _remotes = Remote.make
 

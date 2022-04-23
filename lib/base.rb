@@ -1,4 +1,4 @@
-require_relative 'libruby'
+require_relative 'cbindings'
 require_relative 'profiles'
 require_relative 'runvm'
 require_relative 'strip'
