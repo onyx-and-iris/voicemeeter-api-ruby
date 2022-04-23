@@ -44,7 +44,7 @@ Simplest use case, request a Kind from remote, then pass a block to run:
 
 ```ruby
 require 'voicemeeter'
-vmr = Voicemeeter.remote('banana')
+vmr = Voicemeeter::remote('banana')
 
 # vmr.run accepts a block
 vmr.run do
@@ -251,14 +251,14 @@ vmr.set('Strip[4].Label', 'stripname')
 vmr.set('Strip[0].Gain', -3.6)
 ```
 
-#### Voicemeeter.start
+#### Voicemeeter::start
 
 Use this function to start Voicemeeter of a kind independently of Remote class.
 for example:
 
 ```ruby
 require 'voicemeeter'
-Voicemeeter.start('banana')
+Voicemeeter::start('banana')
 ```
 
 ## Config Files
@@ -273,7 +273,7 @@ you may do:
 
 ```ruby
 require 'voicemeeter'
-vmr = Voicemeeter.remote('banana')
+vmr = Voicemeeter::remote('banana')
 vmr.run { vmr.set_profile('config') }
 ```
 
