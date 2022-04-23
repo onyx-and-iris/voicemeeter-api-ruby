@@ -11,7 +11,7 @@ module InstallationFunctions
         key = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
         Win32::Registry::HKEY_LOCAL_MACHINE.open(key) do |reg|
             os_bits = reg['PROCESSOR_ARCHITECTURE']
-            return 64 if os_bits.include? 64.to_s
+            return 64 if os_bits.include? '64'
             return 32
         end
     end
