@@ -11,6 +11,7 @@ module Profiles
             [filename, TOML::Parser.new(File.read(toml_file)).parsed]
         end
     end
+    
     public
     def set_profile(value)
         raise VMRemoteErrors.new("No profile with name #{value} was loaded") unless @profiles.key? value

@@ -18,9 +18,9 @@ class Base
     include Profiles
     include RunVM
 
-    attr_accessor :kind, :strip, :bus, :button, :vban, :command, :recorder
+    attr_accessor :strip, :bus, :button, :vban, :command, :recorder
 
-    attr_reader :retval, :cache, :wait, :layout, :properties,
+    attr_reader :kind, :retval, :cache, :wait, :layout, :properties,
     :delay, :max_polls, :profiles
 
     SIZE = 1
