@@ -9,12 +9,13 @@ Before any minor/major patch is released all test units will be run to verify th
 
 ## [Unreleased] - These changes have not been added to RubyGems yet
 
--   [ ] Add fetch level arrays for strips/buses
+-   [x] Add fetch level arrays for strips/buses
 -   [ ] Add fadeto, fadeby methods for strips/buses
--   [ ] Remove bounds checking for certain class properties.
+-   [x] Remove bounds checking for certain class properties.
 -   [x] Move kinds, profiles into their own modules.
 -   [x] Rework kind maps as structs
 -   [x] Rework polling (speed up, add sync toggle)
+-   [x] Renamed macrobutton getter/setter functions
 
 ## [2.0.4] - 2022-01-24
 
