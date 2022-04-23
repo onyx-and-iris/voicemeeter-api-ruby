@@ -88,20 +88,20 @@ module Channel_Meta_Functions
     def make_accessor_bool(*params)
         params.each do |param|
             cmds = { eq: 'EQ.on' }
-            if cmds[param]
-                val = cmds[param]
+            if cmds.key? param
+                cmd = cmds[param]
             else
-                val = param
+                cmd = param
             end
 
             define_singleton_method("#{param}") do
-                return !(self.getter("#{val}")).zero?
+                return !(self.getter("#{cmd}")).zero?
             end
 
             opts = [false, true, 0, 1]
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{val}", value.to_i == 1 ? 1 : 0)
+                self.setter("#{cmd}", value.to_i == 1 ? 1 : 0)
             end
         end
     end
@@ -112,11 +112,7 @@ module Channel_Meta_Functions
                 return self.getter("#{param}")
             end
 
-            opts = { gain: [-60, 12], comp: [0, 10], gate: [0, 10] }
             define_singleton_method("#{param}=") do |value|
-                unless value.between? *opts[param]
-                    raise OutOfBoundsErrors.new(opts[param])
-                end
                 self.setter("#{param}", value)
             end
         end
@@ -128,11 +124,7 @@ module Channel_Meta_Functions
                 return self.getter("#{param}").to_i
             end
 
-            opts = { limit: (-40..12), k: (0..4) }
             define_singleton_method("#{param}=") do |value|
-                unless opts[param].member? value
-                    raise OutOfBoundsErrors.new(opts[param])
-                end
                 self.setter("#{param}", value)
             end
         end
@@ -141,18 +133,18 @@ module Channel_Meta_Functions
     def make_reader_only(*params)
         params.each do |param|
             cmds = { device: 'device.name', sr: 'device.sr' }
-            if cmds[param]
-                val = cmds[param]
+            if cmds.key? param
+                cmd = cmds[param]
             else
-                val = param
+                cmd = param
             end
 
             define_singleton_method("#{param}") do
                 case param
                 when :device
-                    return self.getter("#{val}", true)
+                    return self.getter("#{cmd}", true)
                 when :sr
-                    return self.getter("#{val}", true).to_i
+                    return self.getter("#{cmd}", true).to_i
                 end
             end
         end
@@ -251,16 +243,16 @@ module Commands_Meta_Functions
     def make_writer_bool(*params)
         params.each do |param|
             cmds = { showvbanchat: 'DialogShow.VBANCHAT' }
-            if cmds[param]
-                val = cmds[param]
+            if cmds.key? param
+                cmd = cmds[param]
             else
-                val = param
+                cmd = param
             end
 
             opts = [false, true]
             define_singleton_method("#{param}=") do |value|
                 raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{param}", value.to_i == 1 ? 1 : 0)
+                self.setter("#{cmd}", value.to_i == 1 ? 1 : 0)
             end
         end
     end
