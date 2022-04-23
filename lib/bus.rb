@@ -1,19 +1,16 @@
 require_relative 'channel'
 
-
 class Bus < IChannel
-    """
+    '
     Concrete class for Bus objects
-    """
+    '
     def self.make(remote, layout_bus)
-        "
+        '
         Factory function for Bus classes.
-        "
+        '
         p_out, v_out = layout_bus.map { |k, v| v }
         (0...(p_out + v_out)).map do |i|
-            i < p_out ? \
-            PhysicalBus.new(remote, i) : \
-            VirtualBus.new(remote, i)
+            i < p_out ? PhysicalBus.new(remote, i) : VirtualBus.new(remote, i)
         end
     end
 
@@ -33,5 +30,7 @@ class Bus < IChannel
     end
 end
 
-class PhysicalBus < Bus; end
-class VirtualBus < Bus; end
+class PhysicalBus < Bus
+end
+class VirtualBus < Bus
+end

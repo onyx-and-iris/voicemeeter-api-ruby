@@ -2,26 +2,26 @@ require_relative 'kinds'
 require_relative 'base'
 require_relative 'errors'
 
-
 module Voicemeeter
     include Kinds
     include RunVM
 
     private
+
     class Remote < Base
-        """
+        '
         Remote class, subclasses Routines
 
         Console layout built according to a kind
 
         Offers a run method for resource closure.
-        """
+        '
         def self.make(**kwargs)
-            """
+            '
             Factory function that generates a remote class for each kind.
 
             Returns a hash of Remote classes.
-            """
+            '
             $kinds_all.to_h do |kind|
                 [kind.properties[:name], Remote.new(kind, **kwargs)]
             end
@@ -39,28 +39,32 @@ module Voicemeeter
 
         def run
             yield if block_given?
-            
         ensure
             logout
         end
     end
 
     public
+
     def self.remote(kind_id, **kwargs)
-        """
+        '
         Request a Remote class of a kind and login to the API
-        """
+        '
         _remotes = Remote.make
 
-        raise VMRemoteErrors.new("Unknown Voicemeeter Kind.") unless _remotes.key? kind_id
+        unless _remotes.key? kind_id
+            raise VMRemoteErrors.new('Unknown Voicemeeter Kind.')
+        end
 
         _remotes[kind_id].login
         return _remotes[kind_id]
     end
 
     def self.testing
-        raise VMRemoteErrors.new("Not in developer mode") unless ENV['RACK_ENV'] == 'dev'
-        return Remote.new(Kinds.get_kind("banana"))
+        unless ENV['RACK_ENV'] == 'dev'
+            raise VMRemoteErrors.new('Not in developer mode')
+        end
+        return Remote.new(Kinds.get_kind('banana'))
     end
 
     module_function :start

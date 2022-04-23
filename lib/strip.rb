@@ -1,19 +1,20 @@
 require_relative 'channel'
 
-
 class Strip < IChannel
-    """
+    '
     Concrete class for Strip objects
-    """
+    '
     def self.make(remote, layout_strip)
-        "
+        '
         Factory function for Strip classes.
-        "
+        '
         p_in, v_in = layout_strip.map { |k, v| v }
         (0...(p_in + v_in)).map do |i|
-            i < p_in ? \
-            PhysicalStrip.new(remote, i) : \
-            VirtualStrip.new(remote, i) 
+            if i < p_in
+                PhysicalStrip.new(remote, i)
+            else
+                VirtualStrip.new(remote, i)
+            end
         end
     end
 

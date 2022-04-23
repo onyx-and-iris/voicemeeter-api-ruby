@@ -1,6 +1,5 @@
 require_relative 'meta'
 
-
 class ICommand
     include Commands_Meta_Functions
 
@@ -19,7 +18,6 @@ class ICommand
     end
 end
 
-
 class Command < ICommand
     def initialize(remote)
         super
@@ -28,14 +26,14 @@ class Command < ICommand
     end
 
     def load(value)
-        raise VMRemoteErrors.new("Expected a string") unless value.is_a? String
-        self.setter("load", value)
+        raise VMRemoteErrors.new('Expected a string') unless value.is_a? String
+        self.setter('load', value)
         sleep(0.2)
     end
 
     def save(value)
-        raise VMRemoteErrors.new("Expected a string") unless value.is_a? String
-        self.setter("save", value)
+        raise VMRemoteErrors.new('Expected a string') unless value.is_a? String
+        self.setter('save', value)
         sleep(0.2)
     end
 end

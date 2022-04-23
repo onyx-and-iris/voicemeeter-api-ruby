@@ -2,9 +2,9 @@ require_relative 'meta'
 require_relative 'errors'
 
 class IChannel
-    """
+    '
     Base class for audio channels
-    """
+    '
     include Channel_Meta_Functions
 
     attr_accessor :remote, :index
@@ -14,7 +14,7 @@ class IChannel
         self.index = i
     end
 
-    def getter(param, is_string=false)
+    def getter(param, is_string = false)
         @remote.get_parameter("#{self.cmd}.#{param}", is_string)
     end
 
@@ -31,8 +31,6 @@ class IChannel
     end
 
     def set_multi(param_hash)
-        param_hash.each do |(key,val)|
-            self.send("#{key}=", val)
-        end
+        param_hash.each { |(key, val)| self.send("#{key}=", val) }
     end
 end

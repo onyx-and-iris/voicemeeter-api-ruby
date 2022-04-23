@@ -1,6 +1,5 @@
 require_relative 'meta'
 
-
 class IMacroButton
     include MacroButton_Meta_Functions
 
@@ -20,23 +19,18 @@ class IMacroButton
     end
 
     def set_multi(param_hash)
-        param_hash.each do |(key,val)|
-            self.send("#{key}=", val)
-        end
+        param_hash.each { |(key, val)| self.send("#{key}=", val) }
         sleep(remote.delay)
     end
 end
 
-
 class MacroButton < IMacroButton
     def self.make(remote, num_buttons)
-        (0...num_buttons).map do |i|
-            MacroButton.new(remote, i)
-        end
+        (0...num_buttons).map { |i| MacroButton.new(remote, i) }
     end
 
     def initialize(remote, i)
         super
-        self.make_accessor_macrobutton :state, :stateonly, :trigger 
+        self.make_accessor_macrobutton :state, :stateonly, :trigger
     end
 end

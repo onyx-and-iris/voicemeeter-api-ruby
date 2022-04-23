@@ -1,10 +1,9 @@
 require_relative 'meta'
 
-
 class IRecorder
-    """
+    '
     Base class for Recorder object
-    """
+    '
     include Meta_Functions
 
     attr_accessor :remote
@@ -26,11 +25,12 @@ class IRecorder
     end
 end
 
-
 class Recorder < IRecorder
-    """
+    '' \
+        '
     Concrete class for recorder
-    """
+    ' \
+        ''
     def initialize(remote)
         super(remote)
         self.make_writer_only :play, :stop, :record, :ff, :rew

@@ -1,11 +1,10 @@
 require_relative 'meta'
 require_relative 'errors'
 
-
 class IVban
-    """
+    '
     Base class for Vban objects
-    """
+    '
     include Vban_Meta_Functions
 
     attr_accessor :remote, :index
@@ -15,7 +14,7 @@ class IVban
         self.index = index
     end
 
-    def getter(param, is_string=false)
+    def getter(param, is_string = false)
         @remote.get_parameter("#{self.cmd}.#{param}", is_string)
     end
 
@@ -36,42 +35,39 @@ class IVban
     end
 
     def set_multi(param_hash)
-        param_hash.each do |(key,val)|
-            self.send("#{key}=", val)
-        end
+        param_hash.each { |(key, val)| self.send("#{key}=", val) }
     end
 end
 
-
 class Vban < IVban
-    """
+    '
     Concrete class for Vban objects
-    """
+    '
     def self.make(remote, vban_streams)
-        "
+        '
         Factory function for Vban class.
 
         Returns a mixin of instream/outstream subclasses
-        "
+        '
         class << self
             attr_accessor :instream, :outstream, :remote
 
             def enable
-                @remote.set_parameter("vban.enable", 1)
+                @remote.set_parameter('vban.enable', 1)
             end
             def disable
-                @remote.set_parameter("vban.enable", 0)
+                @remote.set_parameter('vban.enable', 0)
             end
         end
 
-        self.instream = 
-        (0...vban_streams[:instream]).map do |i|
-            VbanInstream.new(remote, i)
-        end
-        self.outstream = 
-        (0...vban_streams[:outstream]).map do |i|
-            VbanOutstream.new(remote, i)
-        end
+        self.instream =
+            (0...vban_streams[:instream]).map do |i|
+                VbanInstream.new(remote, i)
+            end
+        self.outstream =
+            (0...vban_streams[:outstream]).map do |i|
+                VbanOutstream.new(remote, i)
+            end
 
         self.remote = remote
         return self
@@ -85,7 +81,6 @@ class Vban < IVban
     end
 end
 
-
 class VbanInstream < Vban
     def initialize(remote, i)
         super
@@ -96,7 +91,6 @@ class VbanInstream < Vban
         return :in
     end
 end
-
 
 class VbanOutstream < Vban
     def initialize(remote, i)
