@@ -21,11 +21,11 @@ end
 RSpec.shared_context 'macrobutton, set and get lower',
                      shared_context: :metadata do
     def does_set(val, mode)
-        @vmr.macro_setstatus(index, val, mode)
+        @vmr.set_buttonstatus(index, val, mode)
     end
 
     def when_get(mode)
-        @vmr.macro_getstatus(index, mode)
+        @vmr.get_buttonstatus(index, mode)
     end
 end
 

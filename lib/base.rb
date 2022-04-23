@@ -19,21 +19,15 @@ class Base
 
     attr_accessor :strip, :bus, :button, :vban, :command, :recorder
 
-    attr_reader :kind,
-                :retval,
-                :cache,
-                :wait,
-                :layout,
-                :properties,
-                :delay,
-                :max_polls,
-                :profiles
+    attr_reader :kind, :retval, :cache, :wait, :delay, :profiles
 
     SIZE = 1
     BUFF = 512
 
     def initialize(kind, **kwargs)
         @kind = kind
+        @p_in, @v_in = kind.layout[:strip].map { |k, v| v }
+        @p_out, @v_out = kind.layout[:bus].map { |k, v| v }
         @cache = Hash.new
         @wait = false
         @delay = kwargs[:delay] || DELAY
@@ -82,16 +76,16 @@ class Base
         @cache.store(name, value)
     end
 
-    def macro_getstatus(id, mode)
-        self.polling('macro_getstatus', id: id, mode: mode) do
+    def get_buttonstatus(id, mode)
+        self.polling('get_buttonstatus', id: id, mode: mode) do
             c_get = FFI::MemoryPointer.new(:float, SIZE)
-            run_as('macro_getstatus', id, c_get, mode)
+            run_as('get_buttonstatus', id, c_get, mode)
             c_get.read_float.to_i
         end
     end
 
-    def macro_setstatus(id, state, mode)
-        run_as('macro_setstatus', id, state, mode)
+    def set_buttonstatus(id, state, mode)
+        run_as('set_buttonstatus', id, state, mode)
         @cache.store("mb_#{id}_#{mode}", state)
     end
 
@@ -118,9 +112,28 @@ class Base
                     self.vban.outstream[m3].set_multi(val)
                 end
             end
-
             sleep(DELAY)
         end
+    end
+
+    def get_level(type, index)
+        c_get = FFI::MemoryPointer.new(:float, SIZE)
+        run_as('get_level', type, index, c_get)
+        c_get.read_float
+    end
+
+    def strip_levels
+        '
+        Returns the full level array for strips, PREFADER mode, before math conversion
+        '
+        (0...(2 * @p_in + 8 * @v_in)).map { |i| get_level(0, i) }
+    end
+
+    def bus_levels
+        '
+        Returns the full level array for buses, before math conversion
+        '
+        (0...(8 * (@p_out + @v_out))).map { |i| get_level(3, i) }
     end
 
     alias_method 'set_multi', :set_parameter_multi

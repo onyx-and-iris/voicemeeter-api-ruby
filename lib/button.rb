@@ -11,11 +11,11 @@ class IMacroButton
     end
 
     def getter(mode)
-        return @remote.macro_getstatus(@index, mode)
+        return @remote.get_buttonstatus(@index, mode)
     end
 
     def setter(set, mode)
-        @remote.macro_setstatus(@index, set, mode)
+        @remote.set_buttonstatus(@index, set, mode)
     end
 
     def set_multi(param_hash)

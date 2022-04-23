@@ -5,10 +5,7 @@ module Profiles
 
     def get_profiles(kind)
         filepath =
-            File.join(
-                File.dirname(__dir__),
-                "/profiles/#{kind.name}/*.toml"
-            )
+            File.join(File.dirname(__dir__), "/profiles/#{kind.name}/*.toml")
 
         Dir
             .glob(filepath)

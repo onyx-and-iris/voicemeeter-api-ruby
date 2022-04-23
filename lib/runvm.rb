@@ -13,7 +13,11 @@ module RunVM
 
         enums =
             $kinds_all.map.with_index do |kind, i|
-                OS_BITS == 64 && kind.name == 'potato' ? [kind.name, i + 4] : [kind.name, i + 1]
+                if OS_BITS == 64 && kind.name == 'potato'
+                    [kind.name, i + 4]
+                else
+                    [kind.name, i + 1]
+                end
             end
         exes = enums.to_h { |k, v| [k, v.to_i] }
 

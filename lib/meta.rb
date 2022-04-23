@@ -80,6 +80,12 @@ module Meta_Functions
     def make_channel_props(num_A, num_B)
         (1..(num_A + num_B)).map { |i| i <= num_A ? "A#{i}" : "B#{i - num_A}" }
     end
+
+    def make_action_prop(*params)
+        params.each do |param|
+            define_singleton_method("#{param}") { self.setter("#{param}", 1) }
+        end
+    end
 end
 
 module Channel_Meta_Functions
@@ -234,12 +240,6 @@ end
 
 module Commands_Meta_Functions
     include Meta_Functions
-    def make_action_prop(*params)
-        params.each do |param|
-            define_singleton_method("#{param}") { self.setter("#{param}", 1) }
-        end
-    end
-
     def make_writer_bool(*params)
         params.each do |param|
             cmds = { showvbanchat: 'DialogShow.VBANCHAT' }

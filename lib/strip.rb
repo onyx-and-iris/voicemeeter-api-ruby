@@ -22,7 +22,7 @@ class Strip < IChannel
         super
         self.make_accessor_bool :solo, :mute, :mono
         self.make_accessor_float :gain
-        self.make_accessor_int :limit, :k
+        self.make_accessor_int :limit
         self.make_accessor_string :label
 
         num_A, num_B = remote.kind.layout[:bus].map { |k, v| v }
@@ -50,5 +50,6 @@ class VirtualStrip < Strip
     def initialize(remote, i)
         super
         self.make_accessor_bool :mc
+        self.make_accessor_int :k
     end
 end

@@ -63,8 +63,7 @@ module Kinds
             }
         )
 
-    $kind_map =
-        [BASIC, BANANA, POTATO].to_h { |kind| [kind.name, kind] }
+    $kind_map = [BASIC, BANANA, POTATO].to_h { |kind| [kind.name, kind] }
 
     def get_kind(kind_id)
         return $kind_map[kind_id]
