@@ -1,4 +1,4 @@
-RSpec.shared_context "strip, set and get higher", :shared_context => :metadata do
+RSpec.shared_context 'strip, set and get higher', shared_context: :metadata do
     def does_set(param, val)
         @vmr.strip[index].send("#{param}=", val)
     end
@@ -8,7 +8,7 @@ RSpec.shared_context "strip, set and get higher", :shared_context => :metadata d
     end
 end
 
-RSpec.shared_context "bus, set and get higher", :shared_context => :metadata do
+RSpec.shared_context 'bus, set and get higher', shared_context: :metadata do
     def does_set(param, val)
         @vmr.bus[index].send("#{param}=", val)
     end
@@ -18,7 +18,8 @@ RSpec.shared_context "bus, set and get higher", :shared_context => :metadata do
     end
 end
 
-RSpec.shared_context "macrobutton, set and get higher", :shared_context => :metadata do
+RSpec.shared_context 'macrobutton, set and get higher',
+                     shared_context: :metadata do
     def does_set(param, val)
         @vmr.button[index].send("#{param}=", val)
     end
@@ -28,7 +29,7 @@ RSpec.shared_context "macrobutton, set and get higher", :shared_context => :meta
     end
 end
 
-RSpec.shared_context "command, set and get higher", :shared_context => :metadata do
+RSpec.shared_context 'command, set and get higher', shared_context: :metadata do
     def does_set(param, val)
         @vmr.command.send("#{param}=", val)
     end
@@ -38,7 +39,8 @@ RSpec.shared_context "command, set and get higher", :shared_context => :metadata
     end
 end
 
-RSpec.shared_context "vban.instream, set and get higher", :shared_context => :metadata do
+RSpec.shared_context 'vban.instream, set and get higher',
+                     shared_context: :metadata do
     def does_set(param, val)
         @vmr.vban.instream[index].send("#{param}=", val)
     end
@@ -48,7 +50,8 @@ RSpec.shared_context "vban.instream, set and get higher", :shared_context => :me
     end
 end
 
-RSpec.shared_context "vban.outstream, set and get higher", :shared_context => :metadata do
+RSpec.shared_context 'vban.outstream, set and get higher',
+                     shared_context: :metadata do
     def does_set(param, val)
         @vmr.vban.outstream[index].send("#{param}=", val)
     end
@@ -58,7 +61,8 @@ RSpec.shared_context "vban.outstream, set and get higher", :shared_context => :m
     end
 end
 
-RSpec.shared_context "recorder, set and get higher", :shared_context => :metadata do
+RSpec.shared_context 'recorder, set and get higher',
+                     shared_context: :metadata do
     def does_set(param, val)
         @vmr.recorder.send("#{param}=", val)
     end
@@ -68,13 +72,15 @@ RSpec.shared_context "recorder, set and get higher", :shared_context => :metadat
     end
 end
 
-
 RSpec.configure do |rspec|
-    rspec.include_context "strip, set and get higher", :include_shared => true
-    rspec.include_context "bus, set and get higher", :include_shared => true
-    rspec.include_context "macrobutton, set and get higher", :include_shared => true
-    rspec.include_context "command, set and get higher", :include_shared => true
-    rspec.include_context "vban.instream, set and get higher", :include_shared => true
-    rspec.include_context "vban.outstream, set and get higher", :include_shared => true
-    rspec.include_context "recorder, set and get higher", :include_shared => true
+    rspec.include_context 'strip, set and get higher', include_shared: true
+    rspec.include_context 'bus, set and get higher', include_shared: true
+    rspec.include_context 'macrobutton, set and get higher',
+                          include_shared: true
+    rspec.include_context 'command, set and get higher', include_shared: true
+    rspec.include_context 'vban.instream, set and get higher',
+                          include_shared: true
+    rspec.include_context 'vban.outstream, set and get higher',
+                          include_shared: true
+    rspec.include_context 'recorder, set and get higher', include_shared: true
 end

@@ -6,12 +6,10 @@ RSpec.configure do |config|
         @vmr.login
     end
 
-    config.before(:all) do
-        @vmr = Voicemeeter::testing
-    end 
+    config.before(:all) { @vmr = Voicemeeter::testing }
 
     config.after(:suite) do
         @vmr = Voicemeeter::testing
         @vmr.logout
-    end 
+    end
 end
