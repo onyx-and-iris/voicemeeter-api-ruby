@@ -6,9 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Before any minor/major patch is released all test units will be run to verify they pass.
 
-## [Unreleased]
-- [ ] Add more properties to classes
-- [ ] Add error rake tests
+## [Unreleased] - These changes have not been added to RubyGems yet
+- [ ] Add fetch level arrays for strips/buses
+- [ ] Add fadeto, fadeby methods for strips/buses
+- [ ] Remove bounds checking for certain class properties.
+- [x] Move kinds, profiles into their own modules.
+- [x] Rework kind maps as structs
+- [x] Rework polling (speed up, add sync toggle)
 
 ## [2.0.4] - 2022-01-24
 ### Added
