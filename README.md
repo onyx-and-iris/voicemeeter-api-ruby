@@ -39,11 +39,17 @@ or use bundlers built in git functionality:
 
 ## `Use`
 
-Simplest use case, request a Kind from remote, then pass a block to run:
+Simplest use case, request a Remote class of a kind, then pass a block to run:
 
 ```ruby
 require 'voicemeeter'
-vmr = Voicemeeter::remote('banana')
+
+kind_id = 'banana'
+
+# start Voicemeeter GUI
+Voicemeeter::start(kind_id)
+
+vmr = Voicemeeter::remote(kind_id)
 
 # vmr.run accepts a block
 vmr.run do
@@ -59,9 +65,9 @@ end
 
 Login and logout are handled for you in this scenario.
 
-## `Kind`
+## `kind_id`
 
-Pass the kind of Voicemeeter as an argument. Kind may be:
+Pass the kind of Voicemeeter as an argument. kind_id may be:
 
 -   `basic`
 -   `banana`
