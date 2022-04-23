@@ -1,6 +1,6 @@
-require_relative 'base'
+require_relative 'libruby'
 
-include Base
+include LibRuby
 
 module RunVM
     """

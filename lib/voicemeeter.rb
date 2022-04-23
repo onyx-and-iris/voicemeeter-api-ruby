@@ -1,5 +1,5 @@
 require_relative 'kinds'
-require_relative 'routines'
+require_relative 'base'
 require_relative 'errors'
 
 
@@ -8,7 +8,7 @@ module Voicemeeter
     include RunVM
 
     private
-    class Remote < Routines
+    class Remote < Base
         """
         Remote class, subclasses Routines
 
