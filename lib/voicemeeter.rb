@@ -23,7 +23,7 @@ module Voicemeeter
             Returns a hash of Remote classes.
             '
             $kinds_all.to_h do |kind|
-                [kind.properties[:name], Remote.new(kind, **kwargs)]
+                [kind.name, Remote.new(kind, **kwargs)]
             end
         end
 
@@ -50,7 +50,7 @@ module Voicemeeter
         '
         Request a Remote class of a kind and login to the API
         '
-        _remotes = Remote.make
+        _remotes = Remote.make(**kwargs)
 
         unless _remotes.key? kind_id
             raise VMRemoteErrors.new('Unknown Voicemeeter Kind.')

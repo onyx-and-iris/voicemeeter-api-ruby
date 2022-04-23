@@ -2,10 +2,10 @@ module Kinds
     '
     A Kind struct for each version of Voicemeeter
     '
-    Kind = Struct.new(:properties, :layout)
+    Kind = Struct.new(:name, :layout)
     BASIC =
         Kind.new(
-            { name: 'basic' },
+            'basic',
             {
                 strip: {
                     p_in: 2,
@@ -25,7 +25,7 @@ module Kinds
 
     BANANA =
         Kind.new(
-            { name: 'banana' },
+            'banana',
             {
                 strip: {
                     p_in: 3,
@@ -45,7 +45,7 @@ module Kinds
 
     POTATO =
         Kind.new(
-            { name: 'potato' },
+            'potato',
             {
                 strip: {
                     p_in: 5,
@@ -64,7 +64,7 @@ module Kinds
         )
 
     $kind_map =
-        [BASIC, BANANA, POTATO].to_h { |kind| [kind.properties[:name], kind] }
+        [BASIC, BANANA, POTATO].to_h { |kind| [kind.name, kind] }
 
     def get_kind(kind_id)
         return $kind_map[kind_id]

@@ -6,8 +6,8 @@ module RunVM
     '
     Starts Voicemeeter of the Kind requested.
     '
-    def start(kind)
-        unless $kind_map.keys.include? kind
+    def start(kind_id)
+        unless $kind_map.keys.include? kind_id
             raise VMRemoteErrors.new('Unknown Voicemeeter Kind.')
         end
 
@@ -17,7 +17,7 @@ module RunVM
             end
         exes = enums.to_h { |k, v| [k, v.to_i] }
 
-        run_as('runvm', exes[kind])
+        run_as('runvm', exes[kind_id])
         sleep(1)
     end
 end

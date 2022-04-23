@@ -7,14 +7,14 @@ module Profiles
         filepath =
             File.join(
                 File.dirname(__dir__),
-                "/profiles/#{kind.properties[:name]}/*.toml"
+                "/profiles/#{kind.name}/*.toml"
             )
 
         Dir
             .glob(filepath)
             .to_h do |toml_file|
                 filename = File.basename(toml_file, '.toml')
-                puts "loading profile #{kind.properties[:name]}/#{filename}"
+                puts "loading profile #{kind.name}/#{filename}"
                 [filename, TOML::Parser.new(File.read(toml_file)).parsed]
             end
     end
