@@ -1,4 +1,3 @@
-require 'toml'
 require 'ffi'
 require_relative 'inst'
 

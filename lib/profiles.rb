@@ -1,3 +1,5 @@
+require 'toml'
+
 module Profiles
     private
     def get_profiles(kind)
