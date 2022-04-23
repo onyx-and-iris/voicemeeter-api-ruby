@@ -16,13 +16,15 @@ module Voicemeeter
 
         Offers a run method for resource closure.
         """
-        def self.make(kind, **kwargs)
+        def self.make(**kwargs)
             """
             Factory function that generates a remote class for each kind.
 
-            Returns a Remote class of a kind.
+            Returns a hash of Remote classes.
             """
-            Remote.new(kind, **kwargs)
+            $kinds_all.to_h do |kind|
+                [kind.properties[:name], Remote.new(kind, **kwargs)]
+            end
         end
 
         def initialize(kind)
@@ -48,9 +50,7 @@ module Voicemeeter
         """
         Request a Remote of a kind and login to the API
         """
-        _remotes = $kinds_all.to_h do |kind|
-            [kind.properties[:name], Remote.make(kind, **kwargs)]
-        end
+        _remotes = Remote.make
 
         raise VMRemoteErrors.new("Unknown Voicemeeter Kind.") unless _remotes.key? kind_id
 
