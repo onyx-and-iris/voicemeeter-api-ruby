@@ -95,9 +95,7 @@ module CBindings
     end
 
     def retval=(values)
-        '' \
-            ' Writer validation for CAPI calls ' \
-            ''
+        ' Writer validation for CAPI calls '
         retval, func = *values
         raise CAPIErrors.new(retval, func) if retval&.nonzero?
         @retval = retval

@@ -26,11 +26,9 @@ class IRecorder
 end
 
 class Recorder < IRecorder
-    '' \
-        '
+    '
     Concrete class for recorder
-    ' \
-        ''
+    '
     def initialize(remote)
         super(remote)
         self.make_writer_only :play, :stop, :record, :ff, :rew
