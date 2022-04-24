@@ -7,12 +7,12 @@ module RunVM
     Starts Voicemeeter of the Kind requested.
     '
     def start(kind_id)
-        unless @@kind_map.key? kind_id
+        unless $kind_map.key? kind_id
             raise VMRemoteErrors.new('Unknown Voicemeeter Kind.')
         end
 
         enums =
-            @@kinds_all.map.with_index do |kind, i|
+            $kinds_all.map.with_index do |kind, i|
                 if OS_BITS == 64 && kind.name == 'potato'
                     [kind.name, i + 4]
                 else

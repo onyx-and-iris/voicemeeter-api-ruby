@@ -63,13 +63,13 @@ module Kinds
             },
         )
 
-    @@kind_map = [basic, banana, potato].to_h { |kind| [kind.name, kind] }
+    $kind_map = [basic, banana, potato].to_h { |kind| [kind.name, kind] }
 
     def get_kind(kind_id)
-        return @@kind_map[kind_id]
+        return $kind_map[kind_id]
     end
 
-    @@kinds_all = @@kind_map.values
+    $kinds_all = $kind_map.values
 
     module_function :get_kind
 end

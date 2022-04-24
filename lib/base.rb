@@ -41,7 +41,7 @@ class Base
     rescue CAPIErrors => error
         case
         when error.value == 1
-            self.start(@properties[:name])
+            self.start(@kind.name)
             clear_polling
         when error.value < 0
             raise
