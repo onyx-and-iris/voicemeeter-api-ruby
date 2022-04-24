@@ -26,8 +26,8 @@ class Base
 
     def initialize(kind, **kwargs)
         @kind = kind
-        @p_in, @v_in = kind.layout[:strip].map { |k, v| v }
-        @p_out, @v_out = kind.layout[:bus].map { |k, v| v }
+        @p_in, @v_in = kind.layout[:strip].values
+        @p_out, @v_out = kind.layout[:bus].values
         @cache = Hash.new
         @wait = false
         @delay = kwargs[:delay] || DELAY

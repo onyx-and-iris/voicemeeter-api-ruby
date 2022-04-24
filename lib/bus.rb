@@ -8,7 +8,7 @@ class Bus < IChannel
         '
         Factory function for Bus classes.
         '
-        p_out, v_out = layout_bus.map { |k, v| v }
+        p_out, v_out = layout_bus.values
         (0...(p_out + v_out)).map do |i|
             i < p_out ? PhysicalBus.new(remote, i) : VirtualBus.new(remote, i)
         end

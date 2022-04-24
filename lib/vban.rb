@@ -60,14 +60,9 @@ class Vban < IVban
             end
         end
 
-        self.instream =
-            (0...vban_streams[:instream]).map do |i|
-                VbanInstream.new(remote, i)
-            end
-        self.outstream =
-            (0...vban_streams[:outstream]).map do |i|
-                VbanOutstream.new(remote, i)
-            end
+        vban_in, vban_out = vban_streams.values
+        self.instream = (0...vban_in).map { |i| VbanInstream.new(remote, i) }
+        self.outstream = (0...vban_out).map { |i| VbanOutstream.new(remote, i) }
 
         self.remote = remote
         return self

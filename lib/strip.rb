@@ -8,7 +8,7 @@ class Strip < IChannel
         '
         Factory function for Strip classes.
         '
-        p_in, v_in = layout_strip.map { |k, v| v }
+        p_in, v_in = layout_strip.values
         (0...(p_in + v_in)).map do |i|
             if i < p_in
                 PhysicalStrip.new(remote, i)
@@ -25,7 +25,7 @@ class Strip < IChannel
         self.make_accessor_int :limit
         self.make_accessor_string :label
 
-        num_A, num_B = remote.kind.layout[:bus].map { |k, v| v }
+        num_A, num_B = remote.kind.layout[:bus].values
         self.make_accessor_bool *make_channel_props(num_A, num_B)
     end
 

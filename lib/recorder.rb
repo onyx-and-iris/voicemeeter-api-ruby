@@ -33,7 +33,7 @@ class Recorder < IRecorder
         super
         self.make_action_prop :play, :stop, :record, :ff, :rew
 
-        num_A, num_B = remote.kind.layout[:bus].map { |k, v| v }
+        num_A, num_B = remote.kind.layout[:bus].values
         self.make_accessor_bool *make_channel_props(num_A, num_B)
     end
 
