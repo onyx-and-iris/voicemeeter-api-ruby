@@ -195,12 +195,12 @@ module Vban_Meta_Functions
                     48_000,
                     64_000,
                     88_200,
-                    96_000
+                    96_000,
                 ],
                 channel: (1..8),
                 bit: [16, 24],
                 quality: (0..4),
-                route: (0..8)
+                route: (0..8),
             }
 
             define_singleton_method("#{param}=") do |value|

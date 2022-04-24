@@ -90,7 +90,7 @@ module CBindings
     def polling(func, **kwargs)
         params = {
             'get_parameter' => kwargs[:name],
-            'get_buttonstatus' => "mb_#{kwargs[:id]}_#{kwargs[:mode]}"
+            'get_buttonstatus' => "mb_#{kwargs[:id]}_#{kwargs[:mode]}",
         }
         return @cache.delete(params[func]) if @cache.key? params[func]
 

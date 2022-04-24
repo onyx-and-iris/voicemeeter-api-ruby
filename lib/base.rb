@@ -124,7 +124,8 @@ class Base
 
     def strip_levels
         '
-        Returns the full level array for strips, PREFADER mode, before math conversion
+        Returns the full level array for strips, PREFADER mode, 
+        before math conversion
         '
         (0...(2 * @p_in + 8 * @v_in)).map { |i| get_level(0, i) }
     end
