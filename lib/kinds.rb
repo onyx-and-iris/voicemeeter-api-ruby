@@ -3,7 +3,7 @@ module Kinds
     A Kind struct for each version of Voicemeeter
     '
     Kind = Struct.new(:name, :layout)
-    BASIC =
+    basic =
         Kind.new(
             'basic',
             {
@@ -23,7 +23,7 @@ module Kinds
             },
         )
 
-    BANANA =
+    banana =
         Kind.new(
             'banana',
             {
@@ -43,7 +43,7 @@ module Kinds
             },
         )
 
-    POTATO =
+    potato =
         Kind.new(
             'potato',
             {
@@ -63,13 +63,13 @@ module Kinds
             },
         )
 
-    $kind_map = [BASIC, BANANA, POTATO].to_h { |kind| [kind.name, kind] }
+    @@kind_map = [basic, banana, potato].to_h { |kind| [kind.name, kind] }
 
     def get_kind(kind_id)
-        return $kind_map[kind_id]
+        return @@kind_map[kind_id]
     end
 
-    $kinds_all = $kind_map.values
+    @@kinds_all = @@kind_map.values
 
     module_function :get_kind
 end
