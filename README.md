@@ -5,8 +5,7 @@
 
 This gem offers a Ruby interface for the Voicemeeter Remote C API.
 
-This wrapper is still being worked on, for an outline of future changes refer to:
-[CHANGELOG](CHANGELOG.md)
+For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
 
 ## Tested against
 
@@ -16,7 +15,7 @@ This wrapper is still being worked on, for an outline of future changes refer to
 
 ## Requirements
 
--   Voicemeeter: https://voicemeeter.com/
+-   [Voicemeeter](https://voicemeeter.com/)
 -   Ruby 2.7 or greater
 
 ## Installation
@@ -47,9 +46,9 @@ require 'voicemeeter'
 kind_id = 'banana'
 
 # start Voicemeeter GUI
-Voicemeeter::start(kind_id)
+Voicemeeter.start(kind_id)
 
-vmr = Voicemeeter::remote(kind_id)
+vmr = Voicemeeter.remote(kind_id)
 
 # vmr.run accepts a block
 vmr.run do
@@ -263,7 +262,7 @@ for example:
 
 ```ruby
 require 'voicemeeter'
-Voicemeeter::start('banana')
+Voicemeeter.start('banana')
 ```
 
 ## Config Files
@@ -278,7 +277,7 @@ you may do:
 
 ```ruby
 require 'voicemeeter'
-vmr = Voicemeeter::remote('banana')
+vmr = Voicemeeter.remote('banana')
 vmr.run { vmr.set_profile('config') }
 ```
 
