@@ -1,6 +1,6 @@
 Function RunTests {
     $coverage = "./spec/pytest_coverage.log"
-    $run_tests = "bundle exec rspec --format documentation"
+    $run_tests = "bundle exec rspec --format documentation --format json --out ./spec/rspec.json"
 
     if ( Test-Path $coverage ) { Clear-Content $coverage }
 
