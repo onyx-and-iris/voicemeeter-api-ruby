@@ -1,18 +1,20 @@
 require_relative 'cbindings'
+require_relative 'kinds'
 
 include CBindings
+include Kinds
 
 module RunVM
     '
     Starts Voicemeeter of the Kind requested.
     '
     def start(kind_id)
-        unless $kind_map.key? kind_id
+        unless Kinds.kind_map.key? kind_id
             raise VMRemoteErrors.new('Unknown Voicemeeter Kind.')
         end
 
         enums =
-            $kinds_all.map.with_index do |kind, i|
+            Kinds.kinds_all.map.with_index do |kind, i|
                 if OS_BITS == 64 && kind.name == 'potato'
                     [kind.name, i + 4]
                 else

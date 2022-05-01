@@ -3,12 +3,12 @@ require_relative 'base'
 require_relative 'errors'
 
 module Voicemeeter
-    include Kinds
     include RunVM
 
     private
 
     class Remote < Base
+        include Kinds
         '
         Remote class, subclasses Routines
 
@@ -22,7 +22,7 @@ module Voicemeeter
 
             Returns a hash of Remote classes.
             '
-            $kinds_all.to_h { |kind| [kind.name, Remote.new(kind, **kwargs)] }
+            @kinds_all.to_h { |kind| [kind.name, Remote.new(kind, **kwargs)] }
         end
 
         def initialize(kind)

@@ -15,10 +15,9 @@ Gem::Specification.new do |spec|
     spec.add_runtime_dependency 'ffi', '~> 1.9', '>= 1.9.10'
     spec.add_runtime_dependency 'toml', '~> 0.3.0'
     spec.add_development_dependency 'rspec', '~> 3.4'
-    spec.add_development_dependency 'prettier'
     spec.required_ruby_version = '>= 2.7'
     spec.metadata = {
         'source_code_uri' =>
-            'https://github.com/onyx-and-iris/voicemeeter-api-ruby.git'
+            'https://github.com/onyx-and-iris/voicemeeter-api-ruby.git',
     }
 end

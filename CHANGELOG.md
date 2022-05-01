@@ -16,6 +16,8 @@ Before any major/minor/patch is released all test units will be run to verify th
 -   [x] Rework kind maps as structs
 -   [x] Rework polling (speed up, add sync toggle)
 -   [x] Renamed macrobutton getter/setter functions
+-   [ ] Randomise the tests on each run. Have them grow/shrink according to a kind.
+-   [x] Added pre-commit.ps1 for git hook
 
 ## [2.0.4] - 2022-01-24
 

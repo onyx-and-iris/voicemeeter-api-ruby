@@ -1,22 +1,37 @@
 PATH
   remote: .
   specs:
-    voicemeeter_api_ruby (1.0.10)
+    voicemeeter_api_ruby (2.0.4)
       ffi (~> 1.9, >= 1.9.10)
+      toml (~> 0.3.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    ffi (1.15.0-x64-mingw32)
-    minitest (5.14.4)
-    rake (13.0.3)
+    diff-lcs (1.5.0)
+    ffi (1.15.5-x64-mingw32)
+    parslet (2.0.0)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
+    rspec-core (3.10.1)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.10.0)
+    rspec-mocks (3.10.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.10.0)
+    rspec-support (3.10.3)
+    toml (0.3.0)
+      parslet (>= 1.8.0, < 3.0.0)
 
 PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  minitest (~> 5.14, >= 5.14.4)
-  rake (~> 13.0, >= 13.0.3)
+  rspec (~> 3.4)
   voicemeeter_api_ruby!
 
 BUNDLED WITH
