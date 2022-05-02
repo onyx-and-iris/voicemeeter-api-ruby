@@ -11,6 +11,7 @@ Before any major/minor/patch is released all test units will be run to verify th
 
 -   [x] Add fetch level arrays for strips/buses
 -   [ ] Add fadeto, fadeby methods for strips/buses
+-   [ ] Add bus modes attributes to bus class
 -   [x] Remove bounds checking for certain class properties.
 -   [x] Move kinds, profiles into their own modules.
 -   [x] Rework kind maps as structs
