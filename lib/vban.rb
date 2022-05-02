@@ -3,15 +3,13 @@ require_relative 'errors'
 
 class IVban
     '
-    Base class for Vban objects
+    Base Vban class
     '
     include Vban_Meta_Functions
 
-    attr_accessor :remote, :index
-
     def initialize(remote, index)
-        self.remote = remote
-        self.index = index
+        @remote = remote
+        @index = index
     end
 
     def getter(param, is_string = false)
@@ -22,16 +20,12 @@ class IVban
         @remote.set_parameter("#{self.cmd}.#{param}", value)
     end
 
-    def identifier
-        return :vban
-    end
-
     def cmd
-        return "#{self.identifier}.#{self.direction}stream[#{@index}]"
+        "#{self.identifier}.#{self.direction}stream[#{@index}]"
     end
 
     def direction
-        raise NotImplementedError
+        raise 'Called abstract mehod: direction'
     end
 
     def set_multi(param_hash)
@@ -41,7 +35,7 @@ end
 
 class Vban < IVban
     '
-    Concrete class for Vban objects
+    Concrete Vban class
     '
     def self.make(remote, vban_streams)
         '
@@ -74,26 +68,36 @@ class Vban < IVban
         self.make_accessor_string :name, :ip
         self.make_accessor_int :quality, :route
     end
+
+    def identifier
+        :vban
+    end
 end
 
 class VbanInstream < Vban
+    '
+    A subclass representing a VBAN Instream
+    '
     def initialize(remote, i)
         super
         self.make_reader_int :sr, :channel, :bit
     end
 
     def direction
-        return :in
+        :in
     end
 end
 
 class VbanOutstream < Vban
+    '
+    A subclass representing a VBAN Outstream
+    '
     def initialize(remote, i)
         super
         self.make_accessor_int :sr, :channel, :bit
     end
 
     def direction
-        return :out
+        :out
     end
 end

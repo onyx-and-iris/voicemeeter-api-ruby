@@ -11,7 +11,7 @@ class IMacroButton
     end
 
     def getter(mode)
-        return @remote.get_buttonstatus(@index, mode)
+        @remote.get_buttonstatus(@index, mode)
     end
 
     def setter(set, mode)

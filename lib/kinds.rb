@@ -68,7 +68,7 @@ module Kinds
     @kind_map = [basic, banana, potato].to_h { |kind| [kind.name, kind] }
 
     def get_kind(kind_id)
-        return @kind_map[kind_id]
+        @kind_map[kind_id]
     end
 
     @kinds_all = @kind_map.values

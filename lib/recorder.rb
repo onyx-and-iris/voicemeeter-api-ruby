@@ -2,14 +2,12 @@ require_relative 'meta'
 
 class IRecorder
     '
-    Base class for Recorder object
+    Base Recorder class
     '
     include Meta_Functions
 
-    attr_accessor :remote
-
     def initialize(remote)
-        self.remote = remote
+        @remote = remote
     end
 
     def getter(param)
@@ -19,15 +17,11 @@ class IRecorder
     def setter(param, value)
         @remote.set_parameter("#{self.identifier}.#{param}", value)
     end
-
-    def cmd
-        raise NotImplementedError
-    end
 end
 
 class Recorder < IRecorder
     '
-    Concrete class for recorder
+    Concrete Recorder class
     '
     def initialize(remote)
         super
@@ -38,6 +32,6 @@ class Recorder < IRecorder
     end
 
     def identifier
-        return :recorder
+        :recorder
     end
 end

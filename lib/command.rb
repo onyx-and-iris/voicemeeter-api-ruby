@@ -3,10 +3,8 @@ require_relative 'meta'
 class ICommand
     include Commands_Meta_Functions
 
-    attr_accessor :remote
-
     def initialize(remote)
-        self.remote = remote
+        @remote = remote
     end
 
     def setter(param, value)
@@ -14,7 +12,7 @@ class ICommand
     end
 
     def identifier
-        return :command
+        :command
     end
 end
 

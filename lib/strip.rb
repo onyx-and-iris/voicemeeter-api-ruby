@@ -2,7 +2,7 @@ require_relative 'channel'
 
 class Strip < IChannel
     '
-    Concrete class for Strip objects
+    Concrete Strip class
     '
     def self.make(remote, layout_strip)
         '
@@ -30,11 +30,7 @@ class Strip < IChannel
     end
 
     def identifier
-        return :strip
-    end
-
-    def cmd
-        return "#{self.identifier}[#{@index}]"
+        :strip
     end
 end
 

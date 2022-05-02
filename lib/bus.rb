@@ -2,7 +2,7 @@ require_relative 'channel'
 
 class Bus < IChannel
     '
-    Concrete class for Bus objects
+    Concrete Bus class
     '
     def self.make(remote, layout_bus)
         '
@@ -22,11 +22,7 @@ class Bus < IChannel
     end
 
     def identifier
-        return :bus
-    end
-
-    def cmd
-        return "#{self.identifier}[#{@index}]"
+        :bus
     end
 end
 
