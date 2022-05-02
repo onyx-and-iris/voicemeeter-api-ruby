@@ -1,6 +1,4 @@
-require_relative 'kinds'
 require_relative 'base'
-require_relative 'errors'
 
 module Voicemeeter
     include RunVM
