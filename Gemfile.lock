@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    voicemeeter_api_ruby (2.0.4)
+    voicemeeter_api_ruby (3.0.0)
       ffi (~> 1.9, >= 1.9.10)
       toml (~> 0.3.0)
 
@@ -10,7 +10,6 @@ GEM
   specs:
     diff-lcs (1.5.0)
     ffi (1.15.5-x64-mingw-ucrt)
-    ffi (1.15.5-x64-mingw32)
     parslet (2.0.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)

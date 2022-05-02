@@ -17,7 +17,7 @@ For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
 ## Requirements
 
 -   [Voicemeeter](https://voicemeeter.com/)
--   Ruby 2.7 or greater
+-   Ruby 3.0 or greater
 
 ## Installation
 

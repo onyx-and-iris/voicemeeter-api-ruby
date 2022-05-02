@@ -18,6 +18,8 @@ Before any major/minor/patch is released all test units will be run to verify th
 -   [x] Renamed macrobutton getter/setter functions
 -   [ ] Randomise the tests on each run. Have them grow/shrink according to a kind.
 -   [x] Added pre-commit.ps1 for git hook
+-   [x] Polling paramters now defined as single line endless functions
+-   [x] Major version bump due to backwards incompatible changes
 
 ## [2.0.4] - 2022-01-24
 
