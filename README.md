@@ -10,9 +10,9 @@ For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
 
 ## Tested against
 
--   Basic 1.0.8.1
--   Banana 2.0.6.1
--   Potato 3.0.2.1
+-   Basic 1.0.8.2
+-   Banana 2.0.6.2
+-   Potato 3.0.2.2
 
 ## Requirements
 
@@ -245,8 +245,8 @@ Access to lower level Getters and Setters are provided with these functions:
 
 Access to lower level polling functions are provided with these functions:
 
--   `vmr.pdirty`: Returns true if a parameter has been updated.
--   `vmr.mdirty`: Returns true if a macrobutton has been updated.
+-   `vmr.pdirty?`: Returns true if a parameter has been updated.
+-   `vmr.mdirty?`: Returns true if a macrobutton has been updated.
 
 example:
 
@@ -297,14 +297,6 @@ You can use tags to run only certain tests, for example:
 ```
 Bundle exec rspec --tag 'higher'
 ```
-
-Using ./runmany.ps1, to do 3 runs, higher tests only do:
-
-```
-.\runmany.ps1 -num 3 -h
-```
-
-flags -h, -l and -a currently available for higher, lower and all tests respectively.
 
 ### Official Documentation
 

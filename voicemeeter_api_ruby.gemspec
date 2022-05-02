@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
     spec.email = 'code@onyxandiris.online'
     spec.files = [*Dir.glob('{lib}/**')]
     spec.homepage = 'https://rubygems.org/gems/voicemeeter_api_ruby'
-    spec.license = 'NGPL'
+    spec.license = 'MIT'
     spec.add_runtime_dependency 'ffi', '~> 1.9', '>= 1.9.10'
     spec.add_runtime_dependency 'toml', '~> 0.3.0'
     spec.add_development_dependency 'rspec', '~> 3.4'

@@ -10,7 +10,7 @@ module Voicemeeter
     class Remote < Base
         include Kinds
         '
-        Remote class, subclasses Routines
+        Remote class, subclasses Base
 
         Console layout built according to a kind
 
@@ -18,7 +18,7 @@ module Voicemeeter
         '
         def self.make(**kwargs)
             '
-            Factory function that generates a remote class for each kind.
+            Factory function that generates a Remote class for each kind.
 
             Returns a hash of Remote classes.
             '
