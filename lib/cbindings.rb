@@ -11,6 +11,8 @@ module CBindings
     '
     extend FFI::Library
 
+    private
+
     begin
         OS_BITS = get_arch
         VM_PATH = get_vmpath(OS_BITS)
@@ -72,16 +74,6 @@ module CBindings
     DELAY = 0.001
     SYNC = false
 
-    def pdirty?
-        return vmr_pdirty&.nonzero?
-    end
-
-    def mdirty?
-        return vmr_mdirty&.nonzero?
-    end
-
-    private
-
     def clear_polling
         while self.pdirty? || self.mdirty?
         end
@@ -96,7 +88,7 @@ module CBindings
 
         self.clear_polling if @sync
 
-        val = yield
+        yield
     end
 
     def retval=(values)
@@ -106,9 +98,9 @@ module CBindings
         @retval = retval
     end
 
-    def run_as(func, *args)
-        val = send('vmr_' + func, *args)
-        self.retval = [val, func]
-        sleep(DELAY) if @wait
-    end
+    public
+
+    def pdirty?() =  vmr_pdirty&.nonzero?
+
+    def mdirty?() =  vmr_mdirty&.nonzero?
 end
