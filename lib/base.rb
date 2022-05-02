@@ -1,6 +1,6 @@
-require_relative 'cbindings'
-require_relative 'profiles'
 require_relative 'runvm'
+require_relative 'profiles'
+require_relative 'errors'
 require_relative 'strip'
 require_relative 'bus'
 require_relative 'button'
@@ -19,7 +19,7 @@ class Base
 
     attr_accessor :strip, :bus, :button, :vban, :command, :recorder
 
-    attr_reader :kind, :retval, :cache, :wait, :delay, :profiles
+    attr_reader :kind, :retval, :cache, :profiles
 
     SIZE = 1
     BUFF = 512
@@ -29,14 +29,17 @@ class Base
         @p_in, @v_in = kind.layout[:strip].values
         @p_out, @v_out = kind.layout[:bus].values
         @cache = Hash.new
-        @wait = false
         @delay = kwargs[:delay] || DELAY
         @sync = kwargs[:sync] || SYNC
         @profiles = get_profiles(@kind)
+        @cdll =
+            lambda do |func, *args|
+                self.retval = [send("vmr_#{func}", *args), func]
+            end
     end
 
     def login
-        run_as('login')
+        @cdll.call('login')
         clear_polling
     rescue CAPIErrors => error
         case
@@ -50,18 +53,18 @@ class Base
 
     def logout
         clear_polling
-        run_as('logout')
+        @cdll.call('logout')
     end
 
     def get_parameter(name, is_string = false)
         self.polling('get_parameter', name: name) do
             if is_string
                 c_get = FFI::MemoryPointer.new(:string, BUFF, true)
-                run_as('get_parameter_string', name, c_get)
+                @cdll.call('get_parameter_string', name, c_get)
                 c_get.read_string
             else
                 c_get = FFI::MemoryPointer.new(:float, SIZE)
-                run_as('get_parameter_float', name, c_get)
+                @cdll.call('get_parameter_float', name, c_get)
                 c_get.read_float.round(1)
             end
         end
@@ -69,9 +72,9 @@ class Base
 
     def set_parameter(name, value)
         if value.is_a? String
-            run_as('set_parameter_string', name, value)
+            @cdll.call('set_parameter_string', name, value)
         else
-            run_as('set_parameter_float', name, value.to_f)
+            @cdll.call('set_parameter_float', name, value.to_f)
         end
         @cache.store(name, value)
     end
@@ -79,13 +82,13 @@ class Base
     def get_buttonstatus(id, mode)
         self.polling('get_buttonstatus', id: id, mode: mode) do
             c_get = FFI::MemoryPointer.new(:float, SIZE)
-            run_as('get_buttonstatus', id, c_get, mode)
+            @cdll.call('get_buttonstatus', id, c_get, mode)
             c_get.read_float.to_i
         end
     end
 
     def set_buttonstatus(id, state, mode)
-        run_as('set_buttonstatus', id, state, mode)
+        @cdll.call('set_buttonstatus', id, state, mode)
         @cache.store("mb_#{id}_#{mode}", state)
     end
 
@@ -118,7 +121,7 @@ class Base
 
     def get_level(type, index)
         c_get = FFI::MemoryPointer.new(:float, SIZE)
-        run_as('get_level', type, index, c_get)
+        @cdll.call('get_level', type, index, c_get)
         c_get.read_float
     end
 
