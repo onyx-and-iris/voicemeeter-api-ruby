@@ -55,6 +55,7 @@ class Base
 
     def logout
         clear_polling
+        sleep(0.1)
         @cdll.call('logout')
     end
 

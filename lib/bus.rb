@@ -6,6 +6,8 @@ class Bus < IChannel
     '
     include Fades
 
+    attr_accessor :mode
+
     def self.make(remote, layout_bus)
         '
         Factory function for Bus classes.
@@ -21,6 +23,8 @@ class Bus < IChannel
         self.make_accessor_bool :mute, :mono, :eq
         self.make_accessor_float :gain
         self.make_accessor_string :label
+
+        @mode = BusModes.new(remote, i)
     end
 
     def identifier
@@ -31,4 +35,30 @@ end
 class PhysicalBus < Bus
 end
 class VirtualBus < Bus
+end
+
+class BusModes < IChannel
+    def initialize(remote, i)
+        super
+        self.make_bus_modes :normal,
+                            :amix,
+                            :bmix,
+                            :repeat,
+                            :composite,
+                            :tvmix,
+                            :upmix21,
+                            :upmix41,
+                            :upmix61,
+                            :centeronly,
+                            :lfeonly,
+                            :rearonly
+    end
+
+    def identifier
+        :bus
+    end
+
+    def cmd
+        "#{super}.mode"
+    end
 end

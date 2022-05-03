@@ -71,11 +71,6 @@ module CBindings
                     %i[long long pointer],
                     :long
 
-    def clear_polling
-        while self.pdirty? || self.mdirty?
-        end
-    end
-
     def polling(func, **kwargs)
         params = {
             'get_parameter' => kwargs[:name],
@@ -96,6 +91,11 @@ module CBindings
     end
 
     public
+
+    def clear_polling
+        while self.pdirty? || self.mdirty?
+        end
+    end
 
     def pdirty?() =  vmr_pdirty&.nonzero?
 

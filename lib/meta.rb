@@ -155,6 +155,21 @@ module Channel_Meta_Functions
             end
         end
     end
+
+    def make_bus_modes(*params)
+        params.each do |param|
+            define_singleton_method("#{param}") do
+                @remote.clear_polling
+                return !(self.getter("#{param}")).zero?
+            end
+
+            opts = [false, true, 0, 1]
+            define_singleton_method("#{param}=") do |value|
+                raise OutOfBoundsErrors.new(opts) unless opts.include? value
+                self.setter("#{param}", value.to_i == 1 ? 1 : 0)
+            end
+        end
+    end
 end
 
 module Vban_Meta_Functions

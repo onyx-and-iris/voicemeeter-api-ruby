@@ -23,6 +23,10 @@ class Command < ICommand
         self.make_writer_bool :showvbanchat, :lock
     end
 
+    def hide
+        self.setter('show', 0)
+    end
+
     def load(value)
         raise VMRemoteErrors.new('Expected a string') unless value.is_a? String
         self.setter('load', value)
