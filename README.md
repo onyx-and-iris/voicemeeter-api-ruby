@@ -41,6 +41,11 @@ or use bundlers built in git functionality:
 
 Simplest use case, request a Remote class of a kind, then pass a block to run:
 
+as gem:
+`ruby .\main.rb`
+with bundler:
+`bundle exec ruby .\main.rb`
+
 ```ruby
 require 'voicemeeter'
 
@@ -55,11 +60,11 @@ vmr = Voicemeeter.remote(kind_id)
 vmr.run do
     # mute the leftmost strip
     vmr.strip[0].mute = true
-    puts vmr.strip[0].mute '=> true'
+    puts vmr.strip[0].mute
 
     # disable eq for second from left bus
     vmr.bus[1].eq = false
-    puts vmr.bus[1].eq '=> false'
+    puts vmr.bus[1].eq
 end
 ```
 
