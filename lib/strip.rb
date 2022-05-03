@@ -4,6 +4,8 @@ class Strip < IChannel
     '
     Concrete Strip class
     '
+    include Fades
+
     def self.make(remote, layout_strip)
         '
         Factory function for Strip classes.

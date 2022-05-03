@@ -4,6 +4,8 @@ class Bus < IChannel
     '
     Concrete Bus class
     '
+    include Fades
+
     def self.make(remote, layout_bus)
         '
         Factory function for Bus classes.

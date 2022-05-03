@@ -19,8 +19,10 @@ class Base
 
     attr_accessor :strip, :bus, :button, :vban, :command, :recorder
 
-    attr_reader :kind, :retval, :cache, :profiles
+    attr_reader :kind, :retval, :cache, :profiles, :delay
 
+    DELAY = 0.001
+    SYNC = false
     SIZE = 1
     BUFF = 512
 
@@ -29,8 +31,8 @@ class Base
         @p_in, @v_in = kind.layout[:strip].values
         @p_out, @v_out = kind.layout[:bus].values
         @cache = Hash.new
-        @delay = kwargs[:delay] || DELAY
         @sync = kwargs[:sync] || SYNC
+        @delay = DELAY
         @profiles = get_profiles(@kind)
         @cdll =
             lambda do |func, *args|
