@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
     spec.description = 'A wrapper for Voicemeeter virtual mixer API in Ruby'
     spec.authors = ['onyx_online']
     spec.email = 'code@onyxandiris.online'
-    spec.files = [*Dir.glob('{lib}/**')]
+    spec.files = Dir['lib/*.rb']
+    spec.extra_rdoc_files = Dir['README.md', 'CHANGELOG.md', 'LICENSE']
     spec.homepage = 'https://rubygems.org/gems/voicemeeter_api_ruby'
     spec.license = 'MIT'
     spec.add_runtime_dependency 'ffi', '~> 1.9', '>= 1.9.10'
