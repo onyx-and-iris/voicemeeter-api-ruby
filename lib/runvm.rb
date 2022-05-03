@@ -23,7 +23,7 @@ module RunVM
             end
         exes = enums.to_h { |k, v| [k, v.to_i] }
 
-        run_as('runvm', exes[kind_id])
+        send('vmr_runvm', exes[kind_id])
         sleep(1)
     end
 end

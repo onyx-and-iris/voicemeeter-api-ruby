@@ -71,9 +71,6 @@ module CBindings
                     %i[long long pointer],
                     :long
 
-    DELAY = 0.001
-    SYNC = false
-
     def clear_polling
         while self.pdirty? || self.mdirty?
         end

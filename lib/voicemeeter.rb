@@ -20,7 +20,9 @@ module Voicemeeter
 
             Returns a hash of Remote classes.
             '
-            @kinds_all.to_h { |kind| [kind.name, Remote.new(kind, **kwargs)] }
+            Kinds.kinds_all.to_h do |kind|
+                [kind.name, Remote.new(kind, **kwargs)]
+            end
         end
 
         def initialize(kind)
