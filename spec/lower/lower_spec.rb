@@ -4,7 +4,7 @@ require_relative 'lower_shared'
 RSpec.describe 'All Lower Tests', :lower do
     describe 'VBVMR_SetParameterFloat, VBVMR_GetParameterFloat' do
         describe 'Strip physical' do
-            let(:index) { 0 }
+            let(:index) { VMUnit.phys_in }
             include_context 'strip, set and get lower'
 
             it do
@@ -18,7 +18,7 @@ RSpec.describe 'All Lower Tests', :lower do
         end
 
         describe 'Bus virtual' do
-            let(:index) { 4 }
+            let(:index) { VMUnit.virt_out }
             include_context 'bus, set and get lower'
 
             it do
@@ -34,7 +34,7 @@ RSpec.describe 'All Lower Tests', :lower do
 
     describe 'VBVMR_SetParameterStringA, VBVMR_GetParameterStringA' do
         describe 'Strip physical' do
-            let(:index) { 1 }
+            let(:index) { VMUnit.phys_in }
             include_context 'strip, set and get lower'
 
             it do

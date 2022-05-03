@@ -6,8 +6,8 @@ RSpec.describe 'All Higher Tests', :higher do
         describe 'strip, physical and virtual' do
             include_context 'strip, set and get higher'
             describe 'strip, physical' do
-                let(:index) { 1 }
-                %w[solo mono A1].each do |param|
+                let(:index) { VMUnit.phys_in }
+                ['solo', 'mono', "A#{VMUnit.num_A}"].each do |param|
                     let(:param) { param }
 
                     it do
@@ -22,8 +22,8 @@ RSpec.describe 'All Higher Tests', :higher do
             end
 
             describe 'strip, virtual' do
-                let(:index) { 3 }
-                %w[mc B2].each do |param|
+                let(:index) { VMUnit.virt_in }
+                ['solo', "B#{VMUnit.num_B}"].each do |param|
                     let(:param) { param }
 
                     it do
@@ -41,7 +41,7 @@ RSpec.describe 'All Higher Tests', :higher do
         describe 'bus, physical and virtual' do
             include_context 'bus, set and get higher'
             describe 'bus, physical' do
-                let(:index) { 0 }
+                let(:index) { VMUnit.phys_out }
                 ['eq'].each do |param|
                     let(:param) { param }
 
@@ -57,7 +57,7 @@ RSpec.describe 'All Higher Tests', :higher do
             end
 
             describe 'bus, virtual' do
-                let(:index) { 4 }
+                let(:index) { VMUnit.virt_out }
                 ['mute'].each do |param|
                     let(:param) { param }
 
@@ -117,7 +117,7 @@ RSpec.describe 'All Higher Tests', :higher do
         end
 
         describe 'vban' do
-            let(:index) { 0 }
+            let(:index) { VMUnit.vban_in }
             describe 'vban.instream' do
                 include_context 'vban.instream, set and get higher'
                 ['on'].each do |param|
@@ -149,7 +149,7 @@ RSpec.describe 'All Higher Tests', :higher do
 
         describe 'recorder' do
             include_context 'recorder, set and get higher'
-            %w[A3 B2].each do |param|
+            %w[A1 B1].each do |param|
                 it do
                     does_set(param, true)
                     expect(when_get(param)).to eq true
@@ -166,7 +166,7 @@ RSpec.describe 'All Higher Tests', :higher do
         describe 'strip, physical and virtual' do
             include_context 'strip, set and get higher'
             describe 'strip, physical' do
-                let(:index) { 0 }
+                let(:index) { VMUnit.phys_in }
                 ['gain'].each do |param|
                     let(:param) { param }
 
@@ -182,7 +182,7 @@ RSpec.describe 'All Higher Tests', :higher do
             end
 
             describe 'strip, virtual' do
-                let(:index) { 3 }
+                let(:index) { VMUnit.virt_in }
                 ['gain'].each do |param|
                     let(:param) { param }
 
@@ -201,7 +201,7 @@ RSpec.describe 'All Higher Tests', :higher do
         describe 'bus, physical and virtual' do
             include_context 'bus, set and get higher'
             describe 'bus, physical' do
-                let(:index) { 0 }
+                let(:index) { VMUnit.phys_out }
                 ['gain'].each do |param|
                     let(:param) { param }
 
@@ -217,7 +217,7 @@ RSpec.describe 'All Higher Tests', :higher do
             end
 
             describe 'bus, virtual' do
-                let(:index) { 4 }
+                let(:index) { VMUnit.virt_out }
                 ['gain'].each do |param|
                     let(:param) { param }
 
@@ -238,7 +238,7 @@ RSpec.describe 'All Higher Tests', :higher do
         describe 'strip, physical and virtual' do
             include_context 'strip, set and get higher'
             describe 'strip, physical' do
-                let(:index) { 0 }
+                let(:index) { VMUnit.phys_in }
                 ['label'].each do |param|
                     let(:param) { param }
 
@@ -254,7 +254,7 @@ RSpec.describe 'All Higher Tests', :higher do
             end
 
             describe 'strip, virtual' do
-                let(:index) { 3 }
+                let(:index) { VMUnit.virt_in }
                 ['label'].each do |param|
                     let(:param) { param }
 
@@ -273,7 +273,7 @@ RSpec.describe 'All Higher Tests', :higher do
         describe 'bus, physical and virtual' do
             include_context 'bus, set and get higher'
             describe 'bus, physical' do
-                let(:index) { 0 }
+                let(:index) { VMUnit.phys_out }
                 ['label'].each do |param|
                     let(:param) { param }
 
@@ -289,7 +289,7 @@ RSpec.describe 'All Higher Tests', :higher do
             end
 
             describe 'bus, virtual' do
-                let(:index) { 4 }
+                let(:index) { VMUnit.virt_out }
                 ['label'].each do |param|
                     let(:param) { param }
 
@@ -306,7 +306,7 @@ RSpec.describe 'All Higher Tests', :higher do
         end
 
         describe 'vban' do
-            let(:index) { 0 }
+            let(:index) { VMUnit.vban_in }
             describe 'vban.instream' do
                 include_context 'vban.instream, set and get higher'
                 ['name'].each do |param|
@@ -341,7 +341,7 @@ RSpec.describe 'All Higher Tests', :higher do
         describe 'strip, physical and virtual' do
             include_context 'strip, set and get higher'
             describe 'strip, physical' do
-                let(:index) { 0 }
+                let(:index) { VMUnit.phys_in }
                 ['limit'].each do |param|
                     let(:param) { param }
 
@@ -357,7 +357,7 @@ RSpec.describe 'All Higher Tests', :higher do
             end
 
             describe 'strip, virtual' do
-                let(:index) { 3 }
+                let(:index) { VMUnit.virt_in }
                 ['limit'].each do |param|
                     let(:param) { param }
 
@@ -368,19 +368,6 @@ RSpec.describe 'All Higher Tests', :higher do
                     it do
                         does_set(param, 3)
                         expect(when_get(param)).to eq 3
-                    end
-                end
-                let(:index) { 4 }
-                ['k'].each do |param|
-                    let(:param) { param }
-
-                    it do
-                        does_set(param, 1)
-                        expect(when_get(param)).to eq 1
-                    end
-                    it do
-                        does_set(param, 4)
-                        expect(when_get(param)).to eq 4
                     end
                 end
             end

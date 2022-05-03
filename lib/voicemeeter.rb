@@ -59,10 +59,14 @@ module Voicemeeter
     end
 
     def self.testing
+        '
+        Returns a random Remote class
+        '
         unless ENV['RACK_ENV'] == 'dev'
             raise VMRemoteErrors.new('Not in developer mode')
         end
-        return Remote.new(Kinds.get_kind('banana'))
+
+        return Remote.new(Kinds.kinds_all.sample)
     end
 
     module_function :start
