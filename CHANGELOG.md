@@ -9,18 +9,37 @@ Before any major/minor/patch is released all test units will be run to verify th
 
 ## [Unreleased] - These changes have not been added to RubyGems yet
 
--   [x] Add fetch level arrays for strips/buses
--   [x] Add fadeto, fadeby methods for strips/buses
--   [ ] Add bus modes attributes to bus class
--   [x] Remove bounds checking for certain class properties.
--   [x] Move kinds, profiles into their own modules.
--   [x] Rework kind maps as structs
--   [x] Rework polling (speed up, add sync toggle)
--   [x] Renamed macrobutton getter/setter functions
--   [ ] Randomise the tests on each run. Have them grow/shrink according to a kind.
--   [x] Added pre-commit.ps1 for git hook
--   [x] Polling paramters now defined as single line endless functions
--   [x] Major version bump due to backwards incompatible changes
+-   [ ] Update Readme for version 3 changes.
+
+## [3.0.0] - 2022-01-24
+
+### Added
+
+-   Added strip_levels, bus_levels to base class. They return the entire level array (before math conversion).
+-   Added fadeto, fadeby methods for strips/buses.
+-   Added appgain, appmute methods to Virtualstrip class
+-   Bus modes added to bus class.
+-   Gainlayers added to strip class.
+-   Added pre-commit.ps1 for git hook
+-   cdll proc object added to base class. This is now used to call a c dll function.
+-   hide method added to command class
+
+### Changed
+
+-   Kinds, Profiles moved into their own modules.
+-   Kind maps now defined as structs.
+-   Randomised unit tests. A single run may test any kind.
+-   Polling paramters now defined as single line endless functions
+-   Major version bump due to backwards incompatible changes. Ruby required version changed.
+
+### Fixed
+
+-   Minor delay added before logout, allow a final operation to complete.
+-   Polling function sped up, sync kwarg added.
+
+### Removed
+
+-   Removed bounds checking for certain strip/bus properties.
 
 ## [2.0.4] - 2022-01-24
 
