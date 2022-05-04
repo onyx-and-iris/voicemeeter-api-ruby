@@ -27,6 +27,7 @@ class Base
     BUFF = 512
 
     def initialize(kind, **kwargs)
+        super()
         @kind = kind
         @p_in, @v_in = kind.layout[:strip].values
         @p_out, @v_out = kind.layout[:bus].values
@@ -34,10 +35,6 @@ class Base
         @sync = kwargs[:sync] || SYNC
         @delay = DELAY
         @profiles = get_profiles(@kind)
-        @cdll =
-            lambda do |func, *args|
-                self.retval = [send("vmr_#{func}", *args), func]
-            end
     end
 
     def login

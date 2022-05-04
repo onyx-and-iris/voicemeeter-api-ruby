@@ -55,9 +55,13 @@ class VirtualStrip < Strip
         self.make_accessor_int :k
     end
 
-    def appgain(name, gain) = self.setter("AppGain", "(\"#{name}\", #{gain})")
+    def appgain(name, gain)
+        self.setter('AppGain', "(\"#{name}\", #{gain})")
+    end
 
-    def appmute(name, mute) = self.setter("AppMute", "(\"#{name}\", #{mute ? 1 : 0})")
+    def appmute(name, mute)
+        self.setter('AppMute', "(\"#{name}\", #{mute ? 1 : 0})")
+    end
 end
 
 class GainLayer < IChannel

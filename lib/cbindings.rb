@@ -71,6 +71,15 @@ module CBindings
                     %i[long long pointer],
                     :long
 
+    def initialize
+        @cdll =
+        lambda do |func, *args|
+            self.retval = [send("vmr_#{func}", *args), func]
+        end
+    end
+
+    def clear_polling() = while pdirty? || mdirty?; end
+
     def polling(func, **kwargs)
         params = {
             'get_parameter' => kwargs[:name],
@@ -78,7 +87,7 @@ module CBindings
         }
         return @cache.delete(params[func]) if @cache.key? params[func]
 
-        self.clear_polling if @sync
+        clear_polling if @sync
 
         yield
     end
@@ -91,11 +100,6 @@ module CBindings
     end
 
     public
-
-    def clear_polling
-        while self.pdirty? || self.mdirty?
-        end
-    end
 
     def pdirty?() =  vmr_pdirty&.nonzero?
 
