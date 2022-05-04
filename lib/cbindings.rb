@@ -73,9 +73,9 @@ module CBindings
 
     def initialize
         @cdll =
-        lambda do |func, *args|
-            self.retval = [send("vmr_#{func}", *args), func]
-        end
+            lambda do |func, *args|
+                self.retval = [send("vmr_#{func}", *args), func]
+            end
     end
 
     def clear_polling() = while pdirty? || mdirty?; end
