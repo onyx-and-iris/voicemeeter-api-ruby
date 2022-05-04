@@ -48,7 +48,6 @@ if you installed with bundler then:
 otherwise:
 `ruby .\main.rb`
 
-
 #### `main.rb`
 
 ```ruby
@@ -73,7 +72,7 @@ vmr.run do
 end
 ```
 
-Otherwise you must remember to call `vmr.logout` and the end of your code.
+Otherwise you must remember to call `vmr.logout` at the end of your code.
 
 ## `kind_id`
 
