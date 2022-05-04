@@ -25,13 +25,13 @@ For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
 
 Install voicemeeter_api_ruby gem from your console
 
-`gem install voicemeeter_api_ruby`
+`gem 'voicemeeter_api_ruby'`
 
 ### Bundler
 
 Put this in your Gemfile:
 
-`gem 'voicemeeter_api_ruby', require: false`
+`gem 'voicemeeter_api_ruby'`
 
 or use bundlers built in git functionality:
 
@@ -39,12 +39,17 @@ or use bundlers built in git functionality:
 
 ## `Use`
 
-Simplest use case, request a Remote class of a kind, then pass a block to run:
+Simplest use case, request a Remote class of a kind, then pass a block to run.
 
-as gem:
-`ruby .\main.rb`
-with bundler:
+Login and logout are handled for you in this scenario.
+
+if you installed with bundler then:
 `bundle exec ruby .\main.rb`
+otherwise:
+`ruby .\main.rb`
+
+
+#### `main.rb`
 
 ```ruby
 require 'voicemeeter'
@@ -68,7 +73,7 @@ vmr.run do
 end
 ```
 
-Login and logout are handled for you in this scenario.
+Otherwise you must remember to call `vmr.logout` and the end of your code.
 
 ## `kind_id`
 
