@@ -147,7 +147,7 @@ RSpec.describe 'All Higher Tests', :higher do
             end
         end
 
-        describe 'recorder' do
+        describe 'recorder', :if => %w[banana potato].include?(VMUnit.kind_name) do
             include_context 'recorder, set and get higher'
             %w[A1 B1].each do |param|
                 it do
@@ -197,6 +197,26 @@ RSpec.describe 'All Higher Tests', :higher do
                 end
             end
         end
+
+        describe 'strip.gainlayer, physical and virtual', :if => %w[potato].include?(VMUnit.kind_name) do
+            include_context 'strip.gainlayer, set and get higher'
+            describe 'strip, physical' do
+                let(:index) { VMUnit.phys_in }
+                let(:j) { (0...8).to_a.sample }
+                ['gain'].each do |param|
+                    let(:param) { param }
+
+                    it do
+                        does_set(param, -4.7)
+                        expect(when_get(param)).to eq -4.7
+                    end
+                    it do
+                        does_set(param, -30.8)
+                        expect(when_get(param)).to eq -30.8
+                    end
+                end
+            end
+        end        
 
         describe 'bus, physical and virtual' do
             include_context 'bus, set and get higher'

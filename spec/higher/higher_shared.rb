@@ -12,6 +12,16 @@ RSpec.shared_context 'strip, set and get higher', shared_context: :metadata do
     end
 end
 
+RSpec.shared_context 'strip.gainlayer, set and get higher', shared_context: :metadata do
+    def does_set(param, val)
+        VMUnit.testing.strip[index].gainlayer[j].send("#{param}=", val)
+    end
+
+    def when_get(param)
+        VMUnit.testing.strip[index].gainlayer[j].send("#{param}")
+    end
+end
+
 RSpec.shared_context 'bus, set and get higher', shared_context: :metadata do
     def does_set(param, val)
         VMUnit.testing.bus[index].send("#{param}=", val)
@@ -78,6 +88,7 @@ end
 
 RSpec.configure do |rspec|
     rspec.include_context 'strip, set and get higher', include_shared: true
+    rspec.include_context 'strip.gainlayer, set and get higher', include_shared: true
     rspec.include_context 'bus, set and get higher', include_shared: true
     rspec.include_context 'macrobutton, set and get higher',
                           include_shared: true

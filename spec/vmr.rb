@@ -4,6 +4,7 @@ ENV['RACK_ENV'] = 'dev'
 
 module VMUnit
     attr_reader :testing,
+                :kind_name,
                 :num_A,
                 :num_B,
                 :phys_in,
@@ -15,7 +16,8 @@ module VMUnit
 
     @testing = Voicemeeter.testing
 
-    puts "Running #{@testing.kind.name} tests"
+    @kind_name = @testing.kind.name
+    puts "Running #{@kind_name} tests"
 
     p_in, v_in = @testing.kind.layout[:strip].values
     p_out, v_out = @testing.kind.layout[:bus].values
