@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Before any major/minor/patch is released all test units will be run to verify they pass.
+Before any major/minor/patch is released all unit tests will be run to verify they pass.
 
 ## [Unreleased] - These changes have not been added to RubyGems yet
 
@@ -171,7 +171,7 @@ README is up to date with version 2.0.2 onwards.
 
 ### Added
 
--   Added base0 test units for alias functions. This includes:
+-   Added base0 unit tests for alias functions. This includes:
     SetParamMultiBase0
     MacroButtonStatusWithAliasBase0
     SetParamMultiWithAliasBase0
@@ -185,7 +185,7 @@ README is up to date with version 2.0.2 onwards.
 
 ### Added
 
--   Base0 test units for each type.
+-   Base0 unit tests for each type.
 -   README updated to demonstrate set_multi, Macrobutton commands,
     Special commands and a brief description on how to run tests.
 
@@ -215,7 +215,7 @@ README is up to date with version 2.0.2 onwards.
 
 ### Added
 
--   test/<vbtype>/errors/errors_minitest.rb test unit files added to test
+-   test/<vbtype>/errors/errors_minitest.rb unit test files added to test
     custom error classes for each type of voicemeeter. Errors tests:
     APIError
     LoginError
@@ -267,5 +267,5 @@ README is up to date with version 2.0.2 onwards.
 
 -   Initial Commit
 -   Core of API
--   Test units
+-   Unit tests
 -   README.md
