@@ -11,7 +11,7 @@ Before any major/minor/patch is released all test units will be run to verify th
 
 -   [ ] Update Readme for version 3 changes.
 
-## [3.0.0] - 2022-01-24
+## [3.0.0] - 2022-05-03
 
 ### Added
 
