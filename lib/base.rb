@@ -38,7 +38,7 @@ class Base
     end
 
     def login
-        @cdll.call('login')
+        @cdll.call(:login)
         clear_polling
     rescue CAPIErrors => error
         case
@@ -53,18 +53,18 @@ class Base
     def logout
         clear_polling
         sleep(0.1)
-        @cdll.call('logout')
+        @cdll.call(:logout)
     end
 
     def get_parameter(name, is_string = false)
         self.polling('get_parameter', name: name) do
             if is_string
                 c_get = FFI::MemoryPointer.new(:string, BUFF, true)
-                @cdll.call('get_parameter_string', name, c_get)
+                @cdll.call(:get_parameter_string, name, c_get)
                 c_get.read_string
             else
                 c_get = FFI::MemoryPointer.new(:float, SIZE)
-                @cdll.call('get_parameter_float', name, c_get)
+                @cdll.call(:get_parameter_float, name, c_get)
                 c_get.read_float.round(1)
             end
         end
@@ -72,9 +72,9 @@ class Base
 
     def set_parameter(name, value)
         if value.is_a? String
-            @cdll.call('set_parameter_string', name, value)
+            @cdll.call(:set_parameter_string, name, value)
         else
-            @cdll.call('set_parameter_float', name, value.to_f)
+            @cdll.call(:set_parameter_float, name, value.to_f)
         end
         @cache.store(name, value)
     end
@@ -82,13 +82,13 @@ class Base
     def get_buttonstatus(id, mode)
         self.polling('get_buttonstatus', id: id, mode: mode) do
             c_get = FFI::MemoryPointer.new(:float, SIZE)
-            @cdll.call('get_buttonstatus', id, c_get, mode)
+            @cdll.call(:get_buttonstatus, id, c_get, mode)
             c_get.read_float.to_i
         end
     end
 
     def set_buttonstatus(id, state, mode)
-        @cdll.call('set_buttonstatus', id, state, mode)
+        @cdll.call(:set_buttonstatus, id, state, mode)
         @cache.store("mb_#{id}_#{mode}", state)
     end
 
@@ -121,7 +121,7 @@ class Base
 
     def get_level(type, index)
         c_get = FFI::MemoryPointer.new(:float, SIZE)
-        @cdll.call('get_level', type, index, c_get)
+        @cdll.call(:get_level, type, index, c_get)
         c_get.read_float
     end
 
