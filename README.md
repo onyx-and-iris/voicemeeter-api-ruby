@@ -1,6 +1,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/onyx-and-iris/voicemeeter-api-ruby/blob/dev/LICENSE)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/plugin-ruby)
 ![tests: failed count](https://img.shields.io/badge/dynamic/json?color=blue&label=tests&query=summary.failure_count&suffix=%20failed&url=https%3A%2F%2Fraw.githubusercontent.com%2Fonyx-and-iris%2Fvoicemeeter-api-ruby%2Fdev%2Fspec%2Frspec.json)
+[![Gem Version](https://badge.fury.io/rb/voicemeeter_api_ruby.svg)](https://badge.fury.io/rb/voicemeeter_api_ruby)
+![](https://ruby-gem-downloads-badge.herokuapp.com/voicemeeter_api_ruby?type=total&color=red)
 
 # Ruby Wrapper for Voicemeeter API
 
