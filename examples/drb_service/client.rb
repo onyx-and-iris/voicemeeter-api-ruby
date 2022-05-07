@@ -1,8 +1,11 @@
 require 'drb/drb'
 
+hostname = 'ws.local'
+port = 3030
+
 # Change the hostname from ws.local to ip of drb server.
 DRb.start_service
-vmr_service = DRbObject.new_with_uri('druby://ws.local:3030')
+vmr_service = DRbObject.new_with_uri("druby://#{hostname}:#{port}")
 
 # run any Voicemeeter commands supported by the wrapper.
 (0...4).each do |i|
