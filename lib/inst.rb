@@ -6,16 +6,6 @@ include Errors
 
 module InstallationFunctions
     private
-
-    def get_arch
-        key = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
-        Win32::Registry::HKEY_LOCAL_MACHINE.open(key) do |reg|
-            os_bits = reg['PROCESSOR_ARCHITECTURE']
-            return 64 if os_bits.include? '64'
-            return 32
-        end
-    end
-
     def get_vmpath(os_bits)
         vm_key = 'VB:Voicemeeter {17359A74-1236-5467}'
         reg_key =

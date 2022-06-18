@@ -14,7 +14,7 @@ module CBindings
     private
 
     begin
-        OS_BITS = get_arch
+        OS_BITS = FFI::Platform::CPU.downcase == 'x64' ? 64 : 32
         VM_PATH = get_vmpath(OS_BITS)
         DLL_NAME = "VoicemeeterRemote#{OS_BITS == 64 ? '64' : ''}.dll"
 
@@ -71,12 +71,10 @@ module CBindings
                     %i[long long pointer],
                     :long
 
-    def initialize
-        @cdll =
-            lambda do |func, *args|
-                self.retval = [send("vmr_#{func}", *args), func]
-            end
-    end
+    @@cdll =
+        lambda do |func, *args|
+            self.retval = [send("vmr_#{func}", *args), func]
+        end
 
     def clear_polling() = while pdirty? || mdirty?; end
 
