@@ -45,11 +45,6 @@ Simplest use case, request a Remote class of a kind, then pass a block to run.
 
 Login and logout are handled for you in this scenario.
 
-if you installed with bundler then:
-`bundle exec ruby .\main.rb`
-otherwise:
-`ruby .\main.rb`
-
 #### `main.rb`
 
 ```ruby
@@ -311,4 +306,4 @@ Bundle exec rspec --tag 'higher'
 
 ### Official Documentation
 
--   [Voicemeeter Remote C API](https://forum.vb-audio.com/viewtopic.php?f=8&t=346)
+-   [Voicemeeter Remote C API](https://github.com/onyx-and-iris/Voicemeeter-SDK/blob/main/VoicemeeterRemoteAPI.pdf)

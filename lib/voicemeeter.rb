@@ -30,7 +30,7 @@ module Voicemeeter
             self.strip = Strip.make(self, kind.layout[:strip])
             self.bus = Bus.make(self, kind.layout[:bus])
             self.button = MacroButton.make(self, kind.layout[:mb])
-            self.vban = Vban.make(self, kind.layout[:vban])
+            self.vban = Vban.new(self, kind.layout[:vban])
             self.command = Command.new(self)
             self.recorder = Recorder.new(self)
         end
