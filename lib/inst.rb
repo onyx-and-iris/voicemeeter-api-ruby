@@ -6,6 +6,7 @@ include Errors
 
 module InstallationFunctions
     private
+
     def get_vmpath(os_bits)
         vm_key = 'VB:Voicemeeter {17359A74-1236-5467}'
         reg_key =
@@ -19,10 +20,10 @@ module InstallationFunctions
         raise InstallErrors.new('Could not get the Voicemeeter path')
     end
 
-    def vmr_dll=(value)
+    def vm_dll=(value)
         unless value.file?
             raise InstallErrors.new('Could not fetch the dll file')
         end
-        @vmr_dll = value
+        @vm_dll = value
     end
 end

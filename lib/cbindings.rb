@@ -18,62 +18,77 @@ module CBindings
         VM_PATH = get_vmpath(OS_BITS)
         DLL_NAME = "VoicemeeterRemote#{OS_BITS == 64 ? '64' : ''}.dll"
 
-        self.vmr_dll = VM_PATH.join(DLL_NAME)
+        self.vm_dll = VM_PATH.join(DLL_NAME)
     rescue InstallErrors => error
         puts "ERROR: #{error.message}"
         raise
     end
 
-    ffi_lib @vmr_dll
+    ffi_lib @vm_dll
     ffi_convention :stdcall
 
-    attach_function :vmr_login, :VBVMR_Login, [], :long
-    attach_function :vmr_logout, :VBVMR_Logout, [], :long
-    attach_function :vmr_runvm, :VBVMR_RunVoicemeeter, [:long], :long
-    attach_function :vmr_vmtype, :VBVMR_GetVoicemeeterType, [:pointer], :long
+    attach_function :vm_login, :VBVMR_Login, [], :long
+    attach_function :vm_logout, :VBVMR_Logout, [], :long
+    attach_function :vm_runvm, :VBVMR_RunVoicemeeter, [:long], :long
+    attach_function :vm_vmtype, :VBVMR_GetVoicemeeterType, [:pointer], :long
+    attach_function :vm_vmversion, :VBVMR_GetVoicemeeterVersion, [:pointer], :long
 
-    attach_function :vmr_mdirty, :VBVMR_MacroButton_IsDirty, [], :long
-    attach_function :vmr_get_buttonstatus,
+    attach_function :vm_mdirty, :VBVMR_MacroButton_IsDirty, [], :long
+    attach_function :vm_get_buttonstatus,
                     :VBVMR_MacroButton_GetStatus,
                     %i[long pointer long],
                     :long
-    attach_function :vmr_set_buttonstatus,
+    attach_function :vm_set_buttonstatus,
                     :VBVMR_MacroButton_SetStatus,
                     %i[long float long],
                     :long
 
-    attach_function :vmr_pdirty, :VBVMR_IsParametersDirty, [], :long
-    attach_function :vmr_get_parameter_float,
+    attach_function :vm_pdirty, :VBVMR_IsParametersDirty, [], :long
+    attach_function :vm_get_parameter_float,
                     :VBVMR_GetParameterFloat,
                     %i[string pointer],
                     :long
-    attach_function :vmr_set_parameter_float,
+    attach_function :vm_set_parameter_float,
                     :VBVMR_SetParameterFloat,
                     %i[string float],
                     :long
 
-    attach_function :vmr_get_parameter_string,
+    attach_function :vm_get_parameter_string,
                     :VBVMR_GetParameterStringA,
                     %i[string pointer],
                     :long
-    attach_function :vmr_set_parameter_string,
+    attach_function :vm_set_parameter_string,
                     :VBVMR_SetParameterStringA,
                     %i[string string],
                     :long
 
-    attach_function :vmr_set_parameter_multi,
+    attach_function :vm_set_parameter_multi,
                     :VBVMR_SetParameters,
                     [:string],
                     :long
 
-    attach_function :vmr_get_level,
+    attach_function :vm_get_level,
                     :VBVMR_GetLevel,
                     %i[long long pointer],
                     :long
 
+    attach_function :vm_get_num_indevices,
+                    :VBVMR_Input_GetDeviceNumber, [], :long
+    attach_function :vm_get_desc_indevices,
+                    :VBVMR_Input_GetDeviceDescA, %i[long pointer pointer pointer],
+                    :long
+
+    attach_function :vm_get_num_outdevices,
+                    :VBVMR_Output_GetDeviceNumber, [], :long
+    attach_function :vm_get_desc_outdevices,
+                    :VBVMR_Output_GetDeviceDescA, %i[long pointer pointer pointer],
+                    :long
+
+
+
     @@cdll =
         lambda do |func, *args|
-            self.retval = [send("vmr_#{func}", *args), func]
+            self.retval = [send("vm_#{func}", *args), func]
         end
 
     def clear_polling() = while pdirty? || mdirty?; end
@@ -93,13 +108,15 @@ module CBindings
     def retval=(values)
         ' Writer validation for CAPI calls '
         retval, func = *values
-        raise CAPIErrors.new(retval, func) if retval&.nonzero?
+        unless [:get_num_indevices, :get_num_outdevices].include? func
+            raise CAPIErrors.new(retval, func) if retval&.nonzero?
+        end
         @retval = retval
     end
 
     public
 
-    def pdirty?() =  vmr_pdirty&.nonzero?
+    def pdirty?() =  vm_pdirty&.nonzero?
 
-    def mdirty?() =  vmr_mdirty&.nonzero?
+    def mdirty?() =  vm_mdirty&.nonzero?
 end

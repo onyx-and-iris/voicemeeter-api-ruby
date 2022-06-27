@@ -15,15 +15,15 @@ module RunVM
 
         enums =
             Kinds.kinds_all.map.with_index do |kind, i|
-                if OS_BITS == 64 && kind.name == 'potato'
-                    [kind.name, i + 4]
+                if OS_BITS == 64 && kind.name.to_s == 'potato'
+                    [kind.name.to_s, i + 4]
                 else
-                    [kind.name, i + 1]
+                    [kind.name.to_s, i + 1]
                 end
             end
         exes = enums.to_h { |k, v| [k, v.to_i] }
 
-        send(:vmr_runvm, exes[kind_id])
+        send(:vm_runvm, exes[kind_id])
         sleep(1)
     end
 end
