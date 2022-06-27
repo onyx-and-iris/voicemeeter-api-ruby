@@ -55,21 +55,21 @@ kind_id = 'banana'
 # start Voicemeeter GUI
 Voicemeeter.start(kind_id)
 
-vmr = Voicemeeter.remote(kind_id)
+vm = Voicemeeter.remote(kind_id)
 
-# vmr.run accepts a block
-vmr.run do
+# vm.run accepts a block
+vm.run do
     # mute the leftmost strip
-    vmr.strip[0].mute = true
-    puts vmr.strip[0].mute
+    vm.strip[0].mute = true
+    puts vm.strip[0].mute
 
     # disable eq for second from left bus
-    vmr.bus[1].eq = false
-    puts vmr.bus[1].eq
+    vm.bus[1].eq = false
+    puts vm.bus[1].eq
 end
 ```
 
-Otherwise you must remember to call `vmr.login` `vmr.logout` at the start/end of your code.
+Otherwise you must remember to call `vm.login` `vm.logout` at the start/end of your code.
 
 ## `kind_id`
 
@@ -81,20 +81,74 @@ Pass the kind of Voicemeeter as an argument. kind_id may be:
 
 ## `Available commands`
 
-### Channels (strip/bus)
+### Strip
 
-The following properties exist for audio channels.
+The following properties are available.
+
+-   `mono`: boolean
+-   `solo`: boolean
+-   `mute`: boolean
+-   `gain`: float, from -60.0 to 12.0
+-   `comp`: float, from 0.0 to 10.0
+-   `gate`: float, from 0.0 to 10.0
+-   `audibility`: float, from 0.0 to 10.0
+-   `limit`: int, from -40 to 12
+-   `A1 - A5`, `B1 - B3`: boolean
+-   `label`: string
+-   `device`: string
+-   `sr`: int
+-   `mc`: boolean
+-   `k`: int, from 0 to 4
+-   `bass`: float, from -12.0 to 12.0
+-   `mid`: float, from -12.0 to 12.0
+-   `treble`: float, from -12.0 to 12.0
+
+example:
+
+```ruby
+vm.strip[3].gain = 3.7
+puts vm.strip[0].label
+```
+
+The following methods are Available.
+
+-   `appgain(name, value)`: string, float, from 0.0 to 1.0
+
+Set the gain in db by value for the app matching name.
+
+-   `appmute(name, value)`: string, bool
+
+Set mute state as value for the app matching name.
+
+example:
+
+```ruby
+vm.strip[5].appmute('Spotify', true)
+vm.strip[5].appgain('Spotify', 0.5)
+```
+
+##### Gainlayers
+
+-   `gain`: float, from -60.0 to 12.0
+
+example:
+
+```ruby
+vm.strip[3].gainlayer[3].gain = 3.7
+```
+
+Gainlayers are defined for potato version only.
+
+### Bus
+
+The following properties are available.
 
 -   `mono`: boolean
 -   `mute`: boolean
--   `gain`: float, from -60 to 12
--   `mc`: boolean
--   `k`: boolean
--   `comp`: float, from 0 to 10
--   `gate`: float, from 0 to 10
--   `limit`: int, from -40 to 12
--   `A1 - A5`, `B1 - B3`: boolean
 -   `eq`: boolean
+-   `eq_ab`: boolean
+-   `sel`: boolean
+-   `gain`: float, from -60.0 to 12.0
 -   `label`: string
 -   `device`: string
 -   `sr`: int
@@ -102,11 +156,33 @@ The following properties exist for audio channels.
 example:
 
 ```ruby
-vmr.strip[3].gain = 3.7
-puts strip[0].label
+vm.bus[3].gain = 3.7
+puts vm.bus[0].label
 
-vmr.bus[4].mono = true
+vm.bus[4].mono = true
 ```
+
+##### Modes
+
+-   `normal`: boolean
+-   `amix`: boolean
+-   `bmix`: boolean
+-   `composite`: boolean
+-   `tvmix`: boolean
+-   `upmix21`: boolean
+-   `upmix41`: boolean
+-   `upmix61`: boolean
+-   `centeronly`: boolean
+-   `lfeonly`: boolean
+-   `rearonly`: boolean
+
+example:
+
+```ruby
+vm.bus[4].mode.amix = true
+```
+
+### Strip | Bus
 
 The following methods are Available
 
@@ -118,8 +194,8 @@ Modify gain to or by the selected amount in db over a time interval in ms.
 example:
 
 ```ruby
-vmr.strip[0].fadeto(-10.3, 1000)
-vmr.bus[3].fadeby(-5.6, 500)
+vm.strip[0].fadeto(-10.3, 1000)
+vm.bus[3].fadeby(-5.6, 500)
 ```
 
 ### Macrobuttons
@@ -133,8 +209,8 @@ Three modes defined: state, stateonly and trigger.
 example:
 
 ```ruby
-vmr.button[37].state = true
-vmr.button[55].trigger = false
+vm.button[37].state = true
+vm.button[55].trigger = false
 ```
 
 ### Recorder
@@ -158,24 +234,26 @@ The following methods are Available
 example:
 
 ```ruby
-vmr.recorder.play
-vmr.recorder.stop
+vm.recorder.play
+vm.recorder.stop
 
 # Enable loop play
-vmr.recorder.loop = True
+vm.recorder.loop = True
 
 # Disable recorder out channel B2
-vmr.recorder.B2 = False
+vm.recorder.B2 = False
 
 # filepath as string
-vmr.recorder.load('C:\music\mytune.mp3')
+vm.recorder.load('C:\music\mytune.mp3')
 ```
 
 ### VBAN
 
--   `vmr.vban.enable` `vmr.vban.disable` Turn VBAN on or off
+-   `vm.vban.enable` `vm.vban.disable` Turn VBAN on or off
 
-For each vban in/out stream the following properties are defined:
+##### Instream | Outstream
+
+The following properties are available.
 
 -   `on`: boolean
 -   `name`: string
@@ -193,13 +271,13 @@ example:
 
 ```ruby
 # turn VBAN on
-vmr.vban.enable
+vm.vban.enable
 
 # turn on vban instream 0
-vmr.vban.instream[0].on = True
+vm.vban.instream[0].on = True
 
 # set bit property for outstream 3 to 24
-vmr.vban.outstream[3].bit = 24
+vm.vban.outstream[3].bit = 24
 ```
 
 ### Command
@@ -218,8 +296,8 @@ The following properties are write only and accept boolean values.
 example:
 
 ```ruby
-vmr.command.restart
-vmr.command.showvbanchat = true
+vm.command.restart
+vm.command.showvbanchat = true
 ```
 
 ### Device
@@ -230,7 +308,7 @@ vmr.command.showvbanchat = true
 example:
 
 ```ruby
-vmr.run { (0...vmr.device.ins).each { |i| puts vmr.device.input(i) } }
+vm.run { (0...vm.device.ins).each { |i| puts vm.device.input(i) } }
 ```
 
 ### Multiple parameters
@@ -239,7 +317,7 @@ vmr.run { (0...vmr.device.ins).each { |i| puts vmr.device.input(i) } }
     Set many strip/bus/macrobutton/vban parameters at once, for example:
 
 ```ruby
-vmr.set_multi(
+vm.set_multi(
     {
         strip_0: {
             mute: true,
@@ -264,13 +342,13 @@ vmr.set_multi(
 Or for each class you may do:
 
 ```ruby
-vmr.strip[0].set_multi(mute: true, gain: 3.2, A1: true)
-vmr.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
+vm.strip[0].set_multi(mute: true, gain: 3.2, A1: true)
+vm.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
 ```
 
 ## Config Files
 
-`vmr.set_config(<configname>)`
+`vm.set_config(<configname>)`
 
 You may load config files in TOML format.
 Three example configs have been included with the package. Remember to save
@@ -278,8 +356,8 @@ current settings before loading a config. To set one you may do:
 
 ```ruby
 require 'voicemeeter'
-vmr = Voicemeeter.remote('banana')
-vmr.run { vmr.set_profile('example') }
+vm = Voicemeeter.remote('banana')
+vm.run { vm.set_profile('example') }
 ```
 
 will load a config file at configs/banana/example.toml for Voicemeeter Banana.
@@ -290,20 +368,20 @@ will load a config file at configs/banana/example.toml for Voicemeeter Banana.
 
 Access to lower level Getters and Setters are provided with these functions:
 
--   `vmr.get(param, string=false)`: For getting the value of any parameter. Set string to true if getting a property value expected to return a string.
--   `vmr.set(param, value)`: For setting the value of any parameter.
+-   `vm.get(param, string=false)`: For getting the value of any parameter. Set string to true if getting a property value expected to return a string.
+-   `vm.set(param, value)`: For setting the value of any parameter.
 
 Access to lower level polling functions are provided with these functions:
 
--   `vmr.pdirty?`: Returns true if a parameter has been updated.
--   `vmr.mdirty?`: Returns true if a macrobutton has been updated.
+-   `vm.pdirty?`: Returns true if a parameter has been updated.
+-   `vm.mdirty?`: Returns true if a macrobutton has been updated.
 
 example:
 
 ```ruby
-vmr.get('Strip[2].Mute')
-vmr.set('Strip[4].Label', 'stripname')
-vmr.set('Strip[0].Gain', -3.6)
+vm.get('Strip[2].Mute')
+vm.set('Strip[4].Label', 'stripname')
+vm.set('Strip[0].Gain', -3.6)
 ```
 
 #### Voicemeeter::start
