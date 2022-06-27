@@ -47,20 +47,6 @@ class Base
         @@cdll.call(:logout)
     end
 
-    def get_parameter(name, is_string = false)
-        self.polling('get_parameter', name: name) do
-            if is_string
-                c_get = FFI::MemoryPointer.new(:string, 512, true)
-                @@cdll.call(:get_parameter_string, name, c_get)
-                c_get.read_string
-            else
-                c_get = FFI::MemoryPointer.new(:float, SIZE)
-                @@cdll.call(:get_parameter_float, name, c_get)
-                c_get.read_float.round(1)
-            end
-        end
-    end
-
     def type
         c_type = FFI::MemoryPointer.new(:long, SIZE)
         @@cdll.call(:vmtype, c_type)
@@ -76,6 +62,20 @@ class Base
         v3 = (c_ver.read_long & 0x0000FF00) >> 8
         v4 = c_ver.read_long & 0x000000FF
         "#{v1}.#{v2}.#{v3}.#{v4}"
+    end
+
+    def get_parameter(name, is_string = false)
+        self.polling('get_parameter', name: name) do
+            if is_string
+                c_get = FFI::MemoryPointer.new(:string, 512, true)
+                @@cdll.call(:get_parameter_string, name, c_get)
+                c_get.read_string
+            else
+                c_get = FFI::MemoryPointer.new(:float, SIZE)
+                @@cdll.call(:get_parameter_float, name, c_get)
+                c_get.read_float.round(1)
+            end
+        end
     end
 
     def set_parameter(name, value)
