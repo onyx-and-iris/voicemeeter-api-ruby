@@ -16,7 +16,7 @@ Before any major/minor/patch is released all unit tests will be run to verify th
 ### Added
 
 -   type, version added to base class
--   evice class implemented
+-   device class implemented
 -   TOMLStrBuilder added to config, builds a default reset config
 -   support for observers to subscribe to updates
 -   observer example added
