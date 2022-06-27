@@ -1,4 +1,11 @@
 require_relative 'base'
+require_relative 'strip'
+require_relative 'bus'
+require_relative 'button'
+require_relative 'vban'
+require_relative 'command'
+require_relative 'recorder'
+require_relative 'device'
 
 module Voicemeeter
     include RunVM
@@ -14,18 +21,7 @@ module Voicemeeter
 
         Offers a run method for resource closure.
         '
-        def self.make(**kwargs)
-            '
-            Factory function that generates a Remote class for each kind.
-
-            Returns a hash of Remote classes.
-            '
-            Kinds.kinds_all.to_h do |kind|
-                [kind.name, Remote.new(kind, **kwargs)]
-            end
-        end
-
-        def initialize(kind)
+        def initialize(kind, **kwargs)
             super
             self.strip = Strip.make(self, kind.layout[:strip])
             self.bus = Bus.make(self, kind.layout[:bus])
@@ -33,9 +29,11 @@ module Voicemeeter
             self.vban = Vban.new(self, kind.layout[:vban])
             self.command = Command.new(self)
             self.recorder = Recorder.new(self)
+            self.device = Device.new(self)
         end
 
         def run
+            login
             yield if block_given?
         ensure
             logout
@@ -46,16 +44,23 @@ module Voicemeeter
 
     def self.remote(kind_id, **kwargs)
         '
-        Request a Remote class of a kind and login to the API
+        Factory method for remotes.
+
+        Creates a hash of remote classes, one for each kind.
+
+        Handles kind_id request errors.
+
+        Returns a remote class of the kind requested.
         '
-        _remotes = Remote.make(**kwargs)
+        _remotes =
+            Kinds.kinds_all.to_h do |kind|
+                [kind.name.to_s, Remote.new(kind, **kwargs)]
+            end
 
         unless _remotes.key? kind_id
             raise VMRemoteErrors.new('Unknown Voicemeeter Kind.')
         end
-
-        _remotes[kind_id].login
-        return _remotes[kind_id]
+        _remotes[kind_id]
     end
 
     def self.testing
