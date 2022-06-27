@@ -106,6 +106,20 @@ puts strip[0].label
 vmr.bus[4].mono = true
 ```
 
+The following methods are Available
+
+-   `fadeto(amount, time)`: float, int
+-   `fadeby(amount, time)`: float, int
+
+Modify gain to or by the selected amount in db over a time interval in ms.
+
+example:
+
+```ruby
+vmr.strip[0].fadeto(-10.3, 1000)
+vmr.bus[3].fadeby(-5.6, 500)
+```
+
 ### Macrobuttons
 
 Three modes defined: state, stateonly and trigger.
@@ -123,6 +137,14 @@ vmr.button[55].trigger = false
 
 ### Recorder
 
+The following properties accept boolean values.
+
+-   `loop`: boolean
+-   `A1 - A5`: boolean
+-   `B1 - A3`: boolean
+    Load accepts a string:
+-   `load`: string
+
 The following methods are Available
 
 -   `play`
@@ -131,12 +153,6 @@ The following methods are Available
 -   `record`
 -   `ff`
 -   `rew`
-    The following properties accept boolean values.
--   `loop`: boolean
--   `A1 - A5`: boolean
--   `B1 - A3`: boolean
-    Load accepts a string:
--   `load`: string
 
 example:
 
@@ -203,6 +219,17 @@ example:
 ```ruby
 vmr.command.restart
 vmr.command.showvbanchat = true
+```
+
+### Device
+
+-   `ins` `outs` : Returns the number of input/output devices
+-   `input(i)` `output(i)` : Returns a hash of device properties for device[i]
+
+example:
+
+```ruby
+vmr.run { (0...vmr.device.ins).each { |i| puts vmr.device.input(i) } }
 ```
 
 ### Multiple parameters
