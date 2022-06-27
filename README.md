@@ -88,8 +88,10 @@ The following properties exist for audio channels.
 -   `mono`: boolean
 -   `mute`: boolean
 -   `gain`: float, from -60 to 12
--   `mc`, `k`: boolean
--   `comp`, `gate`: float, from 0 to 10
+-   `mc`: boolean
+-   `k`: boolean
+-   `comp`: float, from 0 to 10
+-   `gate`: float, from 0 to 10
 -   `limit`: int, from -40 to 12
 -   `A1 - A5`, `B1 - B3`: boolean
 -   `eq`: boolean
@@ -142,8 +144,6 @@ The following properties accept boolean values.
 -   `loop`: boolean
 -   `A1 - A5`: boolean
 -   `B1 - A3`: boolean
-    Load accepts a string:
--   `load`: string
 
 The following methods are Available
 
@@ -153,6 +153,7 @@ The following methods are Available
 -   `record`
 -   `ff`
 -   `rew`
+-   `load(filepath)`: string
 
 example:
 
@@ -289,16 +290,6 @@ vmr.set('Strip[4].Label', 'stripname')
 vmr.set('Strip[0].Gain', -3.6)
 ```
 
-#### Voicemeeter::start
-
-Use this function to start Voicemeeter of a kind independently of Remote class.
-for example:
-
-```ruby
-require 'voicemeeter'
-Voicemeeter.start('banana')
-```
-
 ## Config Files
 
 `vmr.set_config('config')`
@@ -316,6 +307,16 @@ vmr.run { vmr.set_profile('config') }
 ```
 
 will load a config file at profiles/banana/config.toml for Voicemeeter Banana.
+
+#### Voicemeeter::start
+
+Use this function to start Voicemeeter of a kind independently of Remote class.
+for example:
+
+```ruby
+require 'voicemeeter'
+Voicemeeter.start('banana')
+```
 
 ### Run tests
 
