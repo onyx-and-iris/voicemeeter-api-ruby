@@ -273,18 +273,16 @@ vmr.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
 `vmr.set_config('config')`
 
 You may load config files in TOML format.
-Three example profiles have been included with the package. Remember to save
-current settings before loading a profile. To test them simply rename \_profiles
-directory to profiles. They will be loaded into memory but not set. To set one
-you may do:
+Three example configs have been included with the package. Remember to save
+current settings before loading a config. To set one you may do:
 
 ```ruby
 require 'voicemeeter'
 vmr = Voicemeeter.remote('banana')
-vmr.run { vmr.set_profile('config') }
+vmr.run { vmr.set_profile('example') }
 ```
 
-will load a config file at profiles/banana/config.toml for Voicemeeter Banana.
+will load a config file at configs/banana/example.toml for Voicemeeter Banana.
 
 ## `Voicemeeter Module`
 
