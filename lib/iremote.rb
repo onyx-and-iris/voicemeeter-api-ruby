@@ -1,31 +1,27 @@
 require_relative 'meta'
 require_relative 'errors'
 
-class IChannel
+class IRemote
     '
-    Base Channel class
+    Common interface between base class and higher classes.
     '
-    include Channel_Meta_Functions
+    include Meta_Functions
 
-    def initialize(remote, i)
+    def initialize(remote, i = nil)
         @remote = remote
         @index = i
     end
 
     def getter(param, is_string = false)
-        @remote.get_parameter("#{self.cmd}.#{param}", is_string)
+        @remote.get_parameter("#{self.identifier}.#{param}", is_string)
     end
 
     def setter(param, value)
-        @remote.set_parameter("#{self.cmd}.#{param}", value)
-    end
-
-    def cmd
-        "#{self.identifier}[#{@index}]"
+        @remote.set_parameter("#{self.identifier}.#{param}", value)
     end
 
     def identifier
-        raise 'Called abstract mehod: identifier'
+        raise 'Called abstract method: identifier'
     end
 
     def set_multi(param_hash)
