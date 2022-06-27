@@ -10,13 +10,12 @@ module Configs
         def initialize(kind)
             @p_in, @v_in = kind[:layout][:strip].values
             @p_out, @v_out = kind[:layout][:bus].values
-            @virt_strip_params =
+            @vs_params =
                 ['mute = false', 'mono = false', 'solo = false', 'gain = 0.0'] +
                     (1..@p_out).map { |i| "A#{i} = false" } +
                     (1..@v_out).map { |i| "B#{i} = false" }
 
-            @phys_strip_params =
-                @virt_strip_params + ['comp = 0.0', 'gate = 0.0']
+            @ps_params = @vs_params + ['comp = 0.0', 'gate = 0.0']
             @bus_params = ['mono = false', 'eq = false', 'mute = false']
         end
 
@@ -24,11 +23,11 @@ module Configs
             '
             Builds a TOML script for the parser
             '
-            @ps = (0...@p_in).map { |i| ["[strip_#{i}]"] + @phys_strip_params }
+            @ps = (0...@p_in).map { |i| ["[strip_#{i}]"] + @ps_params }
             @ps.map! { |a| a.map { |s| s.gsub('B1 = false', 'B1 = true') } }
             @vs =
                 (@p_in...(@p_in + @v_in)).map do |i|
-                    ["[strip_#{i}]"] + @virt_strip_params
+                    ["[strip_#{i}]"] + @vs_params
                 end
             @vs.map! { |a| a.map { |s| s.gsub('A1 = false', 'A1 = true') } }
 

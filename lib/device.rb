@@ -6,19 +6,19 @@ class Device
         @remote = remote
     end
 
-    def getter(index = nil, direction = nil)
-        return @remote.get_num_devices(direction) if index.nil?
+    def getter(**kwargs)
+        return @remote.get_num_devices(kwargs[:direction]) if kwargs[:index].nil?
 
-        vals = @remote.get_device_description(index, direction)
+        vals = @remote.get_device_description(kwargs[:index], kwargs[:direction])
         types = { 1 => 'mme', 3 => 'wdm', 4 => 'ks', 5 => 'asio' }
         { 'name': vals[0], 'type': types[vals[1]], 'id': vals[2] }
     end
 
-    def ins() = getter(index = nil, direction = 'in')
+    def ins() = getter(direction: 'in')
 
-    def outs() = getter(index = nil, direction = 'out')
+    def outs() = getter(direction: 'out')
 
-    def input(i) = getter(index = i, direction = 'in')
+    def input(i) = getter(index: i, direction: 'in')
 
-    def output(i) = getter(index = i, direction = 'out')
+    def output(i) = getter(index: i, direction: 'out')
 end
