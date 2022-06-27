@@ -33,9 +33,17 @@ module Voicemeeter
         end
 
         def run
+            '
+            Handles login/logout
+
+            Starts/stops the observable thread.
+            '
             login
+            init_thread
+
             yield if block_given?
         ensure
+            end_thread
             logout
         end
     end

@@ -1,3 +1,5 @@
+require 'observer'
+
 require_relative 'runvm'
 require_relative 'configs'
 require_relative 'errors'
@@ -8,6 +10,7 @@ class Base
 
     Mixin required modules
     '
+    include Observable
     include Configs
     include RunVM
 
@@ -17,6 +20,7 @@ class Base
 
     DELAY = 0.001
     SYNC = false
+    RATELIMIT = 0.033
     SIZE = 1
 
     def initialize(kind, **kwargs)
@@ -25,7 +29,29 @@ class Base
         @p_out, @v_out = kind.layout[:bus].values
         @cache = Hash.new
         @sync = kwargs[:sync] || SYNC
+        @ratelimit = kwargs[:ratelimit] || RATELIMIT
         @delay = DELAY
+        @running = true
+    end
+
+    def init_thread
+        Thread.new do
+            loop do
+                Thread.stop if !@running
+                if pdirty?
+                    changed
+                    notify_observers('pdirty')
+                elsif mdirty?
+                    changed
+                    notify_observers('mdirty')
+                end
+                sleep(@ratelimit)
+            end
+        end
+    end
+
+    def end_thread
+        @running = false
     end
 
     def login
@@ -179,5 +205,5 @@ class Base
     alias_method 'get', :get_parameter
     alias_method 'set', :set_parameter
     alias_method 'pdirty', :pdirty?
-    alias_method 'mdirty', :pdirty?
+    alias_method 'mdirty', :mdirty?
 end
