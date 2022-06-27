@@ -21,7 +21,7 @@ class Bus < IRemote
 
     def initialize(remote, i)
         super
-        self.make_accessor_bool :mute, :mono, :eq
+        self.make_accessor_bool :mute, :mono, :eq, :sel
         self.make_accessor_float :gain
         self.make_accessor_string :label
 
@@ -34,7 +34,12 @@ class Bus < IRemote
 end
 
 class PhysicalBus < Bus
+    def initialize(remote, i)
+        super
+        self.make_reader_only :device, :sr
+    end
 end
+
 class VirtualBus < Bus
 end
 
@@ -58,10 +63,6 @@ class BusModes < IRemote
     end
 
     def identifier
-        :bus
-    end
-
-    def cmd
-        "#{super}.mode"
+        "bus[#{@index}].mode"
     end
 end
