@@ -72,7 +72,7 @@ class GainLayer < IRemote
     end
 
     def identifier
-        :strip
+        "strip[#{@index}]"
     end
 
     def gain
