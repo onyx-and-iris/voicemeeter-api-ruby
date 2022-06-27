@@ -1,12 +1,6 @@
 require_relative 'runvm'
-require_relative 'profiles'
+require_relative 'configs'
 require_relative 'errors'
-require_relative 'strip'
-require_relative 'bus'
-require_relative 'button'
-require_relative 'vban'
-require_relative 'command'
-require_relative 'recorder'
 
 class Base
     '
@@ -14,17 +8,16 @@ class Base
 
     Mixin required modules
     '
-    include Profiles
+    include Configs
     include RunVM
 
-    attr_accessor :strip, :bus, :button, :vban, :command, :recorder
+    attr_accessor :strip, :bus, :button, :vban, :command, :recorder, :device
 
-    attr_reader :kind, :retval, :cache, :profiles, :delay
+    attr_reader :kind, :retval, :cache, :delay
 
     DELAY = 0.001
     SYNC = false
     SIZE = 1
-    BUFF = 512
 
     def initialize(kind, **kwargs)
         @kind = kind
@@ -33,7 +26,6 @@ class Base
         @cache = Hash.new
         @sync = kwargs[:sync] || SYNC
         @delay = DELAY
-        @profiles = get_profiles(@kind)
     end
 
     def login
@@ -58,7 +50,7 @@ class Base
     def get_parameter(name, is_string = false)
         self.polling('get_parameter', name: name) do
             if is_string
-                c_get = FFI::MemoryPointer.new(:string, BUFF, true)
+                c_get = FFI::MemoryPointer.new(:string, 512, true)
                 @@cdll.call(:get_parameter_string, name, c_get)
                 c_get.read_string
             else
@@ -67,6 +59,23 @@ class Base
                 c_get.read_float.round(1)
             end
         end
+    end
+
+    def type
+        c_type = FFI::MemoryPointer.new(:long, SIZE)
+        @@cdll.call(:vmtype, c_type)
+        types = { 1 => 'basic', 2 => 'banana', 3 => 'potato' }
+        types[c_type.read_long]
+    end
+
+    def version
+        c_ver = FFI::MemoryPointer.new(:long, SIZE)
+        @@cdll.call(:vmversion, c_ver)
+        v1 = (c_ver.read_long & 0xFF000000) >> 24
+        v2 = (c_ver.read_long & 0x00FF0000) >> 16
+        v3 = (c_ver.read_long & 0x0000FF00) >> 8
+        v4 = c_ver.read_long & 0x000000FF
+        "#{v1}.#{v2}.#{v3}.#{v4}"
     end
 
     def set_parameter(name, value)
@@ -137,6 +146,33 @@ class Base
         Returns the full level array for buses, before math conversion
         '
         (0...(8 * (@p_out + @v_out))).map { |i| get_level(3, i) }
+    end
+
+    def get_num_devices(direction)
+        unless %w[in out].include? direction
+            raise VMRemoteErrors.new('expected in or out')
+        end
+        if direction == 'in'
+            val = @@cdll.call(:get_num_indevices)
+        else
+            val = @@cdll.call(:get_num_outdevices)
+        end
+        val[0]
+    end
+
+    def get_device_description(index, direction)
+        unless %w[in out].include? direction
+            raise VMRemoteErrors.new('expected in or out')
+        end
+        c_type = FFI::MemoryPointer.new(:long, SIZE)
+        c_name = FFI::MemoryPointer.new(:string, 256, true)
+        c_hwid = FFI::MemoryPointer.new(:string, 256, true)
+        if direction == 'in'
+            @@cdll.call(:get_desc_indevices, index, c_type, c_name, c_hwid)
+        else
+            @@cdll.call(:get_desc_outdevices, index, c_type, c_name, c_hwid)
+        end
+        [c_name.read_string, c_type.read_long, c_hwid.read_string]
     end
 
     alias_method 'set_multi', :set_parameter_multi
