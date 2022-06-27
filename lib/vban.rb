@@ -1,42 +1,13 @@
+require_relative 'iremote'
 require_relative 'meta'
 require_relative 'errors'
 
-class IVban
-    '
-    Base Vban class
-    '
-    include Vban_Meta_Functions
-
-    def initialize(remote, index)
-        @remote = remote
-        @index = index
-    end
-
-    def getter(param, is_string = false)
-        @remote.get_parameter("#{self.cmd}.#{param}", is_string)
-    end
-
-    def setter(param, value)
-        @remote.set_parameter("#{self.cmd}.#{param}", value)
-    end
-
-    def cmd
-        "#{self.identifier}.#{self.direction}stream[#{@index}]"
-    end
-
-    def direction
-        raise 'Called abstract mehod: direction'
-    end
-
-    def set_multi(param_hash)
-        param_hash.each { |(key, val)| self.send("#{key}=", val) }
-    end
-end
-
-class VbanStream < IVban
+class VbanStream < IRemote
     '
     A class representing a VBAN stream
     '
+    include Vban_Meta_Functions
+
     def initialize(remote, i)
         super
         self.make_accessor_bool :on
@@ -45,7 +16,11 @@ class VbanStream < IVban
     end
 
     def identifier
-        :vban
+        "vban.#{self.direction}stream[#{@index}]"
+    end
+
+    def direction
+        raise 'Called abstract mehod: direction'
     end
 end
 

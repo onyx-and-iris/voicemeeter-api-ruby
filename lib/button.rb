@@ -1,13 +1,16 @@
+require_relative 'iremote'
 require_relative 'meta'
 
-class IMacroButton
+class MacroButton < IRemote
     include MacroButton_Meta_Functions
 
-    attr_accessor :remote, :index
+    def self.make(remote, num_buttons)
+        (0...num_buttons).map { |i| MacroButton.new(remote, i) }
+    end
 
-    def initialize(remote, index)
-        self.remote = remote
-        self.index = index
+    def initialize(remote, i)
+        super
+        self.make_accessor_macrobutton :state, :stateonly, :trigger
     end
 
     def getter(mode)
@@ -16,21 +19,5 @@ class IMacroButton
 
     def setter(set, mode)
         @remote.set_buttonstatus(@index, set, mode)
-    end
-
-    def set_multi(param_hash)
-        param_hash.each { |(key, val)| self.send("#{key}=", val) }
-        sleep(remote.delay)
-    end
-end
-
-class MacroButton < IMacroButton
-    def self.make(remote, num_buttons)
-        (0...num_buttons).map { |i| MacroButton.new(remote, i) }
-    end
-
-    def initialize(remote, i)
-        super
-        self.make_accessor_macrobutton :state, :stateonly, :trigger
     end
 end

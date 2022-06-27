@@ -1,9 +1,10 @@
-require_relative 'channel'
+require_relative 'iremote'
 
-class Bus < IChannel
+class Bus < IRemote
     '
     Concrete Bus class
     '
+    include Channel_Meta_Functions
     include Fades
 
     attr_accessor :mode
@@ -28,7 +29,7 @@ class Bus < IChannel
     end
 
     def identifier
-        :bus
+        "bus[#{@index}]"
     end
 end
 
@@ -37,7 +38,9 @@ end
 class VirtualBus < Bus
 end
 
-class BusModes < IChannel
+class BusModes < IRemote
+    include Channel_Meta_Functions
+
     def initialize(remote, i)
         super
         self.make_bus_modes :normal,

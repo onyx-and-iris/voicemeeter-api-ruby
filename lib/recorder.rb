@@ -1,28 +1,11 @@
+require_relative 'iremote'
 require_relative 'meta'
 
-class IRecorder
-    '
-    Base Recorder class
-    '
-    include Meta_Functions
-
-    def initialize(remote)
-        @remote = remote
-    end
-
-    def getter(param)
-        @remote.get_parameter("#{self.identifier}.#{param}")
-    end
-
-    def setter(param, value)
-        @remote.set_parameter("#{self.identifier}.#{param}", value)
-    end
-end
-
-class Recorder < IRecorder
+class Recorder < IRemote
     '
     Concrete Recorder class
     '
+
     def initialize(remote)
         super
         self.make_action_prop :play, :stop, :record, :ff, :rew

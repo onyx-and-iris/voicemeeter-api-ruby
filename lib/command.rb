@@ -1,26 +1,17 @@
+require_relative 'iremote'
 require_relative 'meta'
 
-class ICommand
+class Command < IRemote
     include Commands_Meta_Functions
 
     def initialize(remote)
-        @remote = remote
-    end
-
-    def setter(param, value)
-        @remote.set_parameter("#{self.identifier}.#{param}", value)
+        super
+        self.make_action_prop :show, :restart, :shutdown
+        self.make_writer_bool :showvbanchat, :lock
     end
 
     def identifier
         :command
-    end
-end
-
-class Command < ICommand
-    def initialize(remote)
-        super
-        self.make_action_prop :show, :restart, :reset, :shutdown
-        self.make_writer_bool :showvbanchat, :lock
     end
 
     def hide
@@ -37,5 +28,9 @@ class Command < ICommand
         raise VMRemoteErrors.new('Expected a string') unless value.is_a? String
         self.setter('save', value)
         sleep(0.2)
+    end
+
+    def reset
+        @remote.set_config('reset')
     end
 end

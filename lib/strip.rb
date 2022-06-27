@@ -1,9 +1,10 @@
-require_relative 'channel'
+require_relative 'iremote'
 
-class Strip < IChannel
+class Strip < IRemote
     '
     Concrete Strip class
     '
+    include Channel_Meta_Functions
     include Fades
 
     attr_accessor :gainlayer
@@ -36,7 +37,7 @@ class Strip < IChannel
     end
 
     def identifier
-        :strip
+        "strip[#{@index}]"
     end
 end
 
@@ -64,7 +65,7 @@ class VirtualStrip < Strip
     end
 end
 
-class GainLayer < IChannel
+class GainLayer < IRemote
     def initialize(remote, i, j)
         super(remote, i)
         @j = j
