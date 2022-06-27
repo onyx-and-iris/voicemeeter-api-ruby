@@ -150,7 +150,7 @@ module Channel_Meta_Functions
                 when :device
                     return self.getter("#{cmd}", true)
                 when :sr
-                    return self.getter("#{cmd}", true).to_i
+                    return self.getter("#{cmd}").to_i
                 end
             end
         end

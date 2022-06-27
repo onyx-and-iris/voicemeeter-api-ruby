@@ -44,7 +44,7 @@ end
 class PhysicalStrip < Strip
     def initialize(remote, i)
         super
-        self.make_accessor_float :comp, :gate
+        self.make_accessor_float :comp, :gate, :audibility
         self.make_reader_only :device, :sr
     end
 end
@@ -54,6 +54,7 @@ class VirtualStrip < Strip
         super
         self.make_accessor_bool :mc
         self.make_accessor_int :k
+        self.make_accessor_float :bass, :mid, :treble
     end
 
     def appgain(name, gain)
