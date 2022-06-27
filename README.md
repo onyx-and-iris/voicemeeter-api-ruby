@@ -270,7 +270,7 @@ vmr.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
 
 ## Config Files
 
-`vmr.set_config('config')`
+`vmr.set_config(<configname>)`
 
 You may load config files in TOML format.
 Three example configs have been included with the package. Remember to save
