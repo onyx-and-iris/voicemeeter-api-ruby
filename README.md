@@ -268,6 +268,24 @@ vmr.strip[0].set_multi(mute: true, gain: 3.2, A1: true)
 vmr.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
 ```
 
+## Config Files
+
+`vmr.set_config('config')`
+
+You may load config files in TOML format.
+Three example profiles have been included with the package. Remember to save
+current settings before loading a profile. To test them simply rename \_profiles
+directory to profiles. They will be loaded into memory but not set. To set one
+you may do:
+
+```ruby
+require 'voicemeeter'
+vmr = Voicemeeter.remote('banana')
+vmr.run { vmr.set_profile('config') }
+```
+
+will load a config file at profiles/banana/config.toml for Voicemeeter Banana.
+
 ## `Voicemeeter Module`
 
 ### Remote class
@@ -289,24 +307,6 @@ vmr.get('Strip[2].Mute')
 vmr.set('Strip[4].Label', 'stripname')
 vmr.set('Strip[0].Gain', -3.6)
 ```
-
-## Config Files
-
-`vmr.set_config('config')`
-
-You may load config files in TOML format.
-Three example profiles have been included with the package. Remember to save
-current settings before loading a profile. To test them simply rename \_profiles
-directory to profiles. They will be loaded into memory but not set. To set one
-you may do:
-
-```ruby
-require 'voicemeeter'
-vmr = Voicemeeter.remote('banana')
-vmr.run { vmr.set_profile('config') }
-```
-
-will load a config file at profiles/banana/config.toml for Voicemeeter Banana.
 
 #### Voicemeeter::start
 
