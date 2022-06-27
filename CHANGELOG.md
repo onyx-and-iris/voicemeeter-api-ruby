@@ -9,7 +9,14 @@ Before any major/minor/patch is released all unit tests will be run to verify th
 
 ## [Unreleased] - These changes have not been added to RubyGems yet
 
--   [ ] Update Readme for version 3 changes.
+-   [x] type, version added to base class
+-   [x] device class implemented
+-   [x] common interface iremote defined
+-   [x] configs reworked. configs are now loaded lazily.
+-   [x] TOMLStrBuilder added to config, builds a default reset config
+-   [x] command.reset now applies reset config from toml parser.
+-   [x] profiles dir renamed to configs
+-   [x] major version bump
 
 ## [3.0.0] - 2022-05-03
 

@@ -69,7 +69,7 @@ vmr.run do
 end
 ```
 
-Otherwise you must remember to call `vmr.logout` at the end of your code.
+Otherwise you must remember to call `vmr.login` `vmr.logout` at the start/end of your code.
 
 ## `kind_id`
 
@@ -274,7 +274,7 @@ Voicemeeter.start('banana')
 
 ## Config Files
 
-`vmr.set_profile('config')`
+`vmr.set_config('config')`
 
 You may load config files in TOML format.
 Three example profiles have been included with the package. Remember to save

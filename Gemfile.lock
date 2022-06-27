@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    voicemeeter_api_ruby (3.0.0)
+    voicemeeter_api_ruby (4.0.0)
       ffi (~> 1.9, >= 1.9.10)
       toml (~> 0.3.0)
 
@@ -36,4 +36,4 @@ DEPENDENCIES
   voicemeeter_api_ruby!
 
 BUNDLED WITH
-   2.3.7
+   2.3.12
