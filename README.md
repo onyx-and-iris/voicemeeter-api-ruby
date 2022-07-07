@@ -23,21 +23,17 @@ For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
 
 ## Installation
 
-### Gem
-
-Install voicemeeter_api_ruby gem from your console
-
-`gem 'voicemeeter_api_ruby'`
-
 ### Bundler
 
 Put this in your Gemfile:
 
 `gem 'voicemeeter_api_ruby'`
 
-or use bundlers built in git functionality:
+### Gem
 
-`gem "voicemeeter_api_ruby", :git => "git://github.com/onyx-and-iris/voicemeeter-api-ruby"`
+Install voicemeeter_api_ruby gem from your console
+
+`gem 'voicemeeter_api_ruby'`
 
 ## `Use`
 
@@ -110,7 +106,7 @@ vm.strip[3].gain = 3.7
 puts vm.strip[0].label
 ```
 
-The following methods are Available.
+The following methods are available.
 
 -   `appgain(name, value)`: string, float, from 0.0 to 1.0
 
@@ -123,8 +119,8 @@ Set mute state as value for the app matching name.
 example:
 
 ```ruby
-vm.strip[5].appmute('Spotify', true)
 vm.strip[5].appgain('Spotify', 0.5)
+vm.strip[5].appmute('Spotify', true)
 ```
 
 ##### Gainlayers
@@ -357,7 +353,7 @@ current settings before loading a config. To set one you may do:
 ```ruby
 require 'voicemeeter'
 vm = Voicemeeter.remote('banana')
-vm.run { vm.set_profile('example') }
+vm.run { vm.set_config('example') }
 ```
 
 will load a config file at configs/banana/example.toml for Voicemeeter Banana.
