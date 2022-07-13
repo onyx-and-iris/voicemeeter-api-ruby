@@ -33,7 +33,7 @@ Put this in your Gemfile:
 
 Install voicemeeter_api_ruby gem from your console
 
-`gem 'voicemeeter_api_ruby'`
+`gem install 'voicemeeter_api_ruby'`
 
 ## `Use`
 
