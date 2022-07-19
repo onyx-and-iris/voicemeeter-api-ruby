@@ -21,6 +21,7 @@ Before any major/minor/patch is released all unit tests will be run to verify th
 ### Changed
 
 -   1, 0 switched for true false in example configs
+-   observer example updated.
 -   minor version bump
 
 ### Removed
