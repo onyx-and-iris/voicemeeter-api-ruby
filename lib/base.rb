@@ -15,8 +15,10 @@ class Base
     include RunVM
 
     attr_accessor :strip, :bus, :button, :vban, :command, :recorder, :device
+    attr_accessor :strip_mode
 
-    attr_reader :kind, :retval, :cache, :delay
+    attr_reader :kind, :p_in, :v_in, :p_out, :v_out, :retval, :cache
+    attr_reader :running, :_strip_comp, :_bus_comp
 
     DELAY = 0.001
     SYNC = false
@@ -30,11 +32,13 @@ class Base
         @cache = Hash.new
         @sync = kwargs[:sync] || SYNC
         @ratelimit = kwargs[:ratelimit] || RATELIMIT
-        @delay = DELAY
-        @running = true
+        @running = false
+        @strip_mode = 0
     end
 
     def init_thread
+        @running = true
+        @cache['strip_level'], @cache['bus_level'] = _get_levels
         Thread.new do
             loop do
                 Thread.stop if !@running
@@ -44,6 +48,19 @@ class Base
                 elsif mdirty?
                     changed
                     notify_observers('mdirty')
+                elsif ldirty?
+                    changed
+                    @_strip_comp =
+                        @cache['strip_level'].map.with_index do |x, i|
+                            !(x == @strip_buf[i])
+                        end
+                    @_bus_comp =
+                        @cache['bus_level'].map.with_index do |x, i|
+                            !(x == @bus_buf[i])
+                        end
+                    @cache['strip_level'] = @strip_buf
+                    @cache['bus_level'] = @bus_buf
+                    notify_observers('ldirty')
                 end
                 sleep(@ratelimit)
             end
@@ -159,19 +176,10 @@ class Base
         c_get.read_float
     end
 
-    def strip_levels
-        '
-        Returns the full level array for strips, PREFADER mode,
-        before math conversion
-        '
-        (0...(2 * @p_in + 8 * @v_in)).map { |i| get_level(0, i) }
-    end
-
-    def bus_levels
-        '
-        Returns the full level array for buses, before math conversion
-        '
-        (0...(8 * (@p_out + @v_out))).map { |i| get_level(3, i) }
+    def _get_levels
+        s = (0...(2 * @p_in + 8 * @v_in)).map { |i| get_level(0, i) }
+        b = (0...(8 * (@p_out + @v_out))).map { |i| get_level(3, i) }
+        [s, b]
     end
 
     def get_num_devices(direction)
@@ -206,4 +214,5 @@ class Base
     alias_method 'set', :set_parameter
     alias_method 'pdirty', :pdirty?
     alias_method 'mdirty', :mdirty?
+    alias_method 'ldirty', :ldirty?
 end

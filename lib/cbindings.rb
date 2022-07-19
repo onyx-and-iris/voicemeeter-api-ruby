@@ -85,7 +85,6 @@ module CBindings
                     :long
 
 
-
     @@cdll =
         lambda do |func, *args|
             self.retval = [send("vm_#{func}", *args), func]
@@ -119,4 +118,11 @@ module CBindings
     def pdirty?() =  vm_pdirty&.nonzero?
 
     def mdirty?() =  vm_mdirty&.nonzero?
+
+    def ldirty?
+        @strip_buf, @bus_buf = _get_levels
+        return !(
+            @cache['strip_level'] == @strip_buf && @cache['bus_level'] == @bus_buf
+        )
+    end
 end

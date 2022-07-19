@@ -1,4 +1,5 @@
 require_relative 'iremote'
+require_relative 'mixin'
 
 class Bus < IRemote
     '
@@ -7,7 +8,7 @@ class Bus < IRemote
     include Channel_Meta_Functions
     include Fades
 
-    attr_accessor :mode
+    attr_accessor :mode, :levels
 
     def self.make(remote, layout_bus)
         '
@@ -26,6 +27,7 @@ class Bus < IRemote
         self.make_accessor_string :label
 
         @mode = BusModes.new(remote, i)
+        @levels = BusLevels.new(remote, i)
     end
 
     def identifier
@@ -65,4 +67,31 @@ class BusModes < IRemote
     def identifier
         "bus[#{@index}].mode"
     end
+end
+
+class BusLevels < IRemote
+    def initialize(remote, i)
+        super
+        @init = i * 8
+        @offset = 8
+    end
+
+    def identifier
+        "bus[#{@index}]"
+    end
+
+    def getter(mode)
+        if @remote.running
+            vals = @remote.cache['bus_level'][@init, @offset]
+        else
+            vals = (@init...@offset).map { |i| @remote.get_level(mode, i) }
+        end
+        vals.map { |x| x > 0 ? (20 * Math.log(x, 10)).round(1) : -200.0 }
+    end
+
+    def all
+        getter(3)
+    end
+
+    def isdirty?() = @remote._bus_comp[@init, @offset].any?
 end
