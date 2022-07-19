@@ -79,7 +79,7 @@ module Voicemeeter
             raise VMRemoteErrors.new('Not in developer mode')
         end
 
-        return Remote.new(Kinds.kinds_all.sample)
+        Remote.new(Kinds.kinds_all.sample)
     end
 
     module_function :start

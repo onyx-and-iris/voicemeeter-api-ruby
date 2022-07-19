@@ -74,6 +74,6 @@ module Configs
 
         self.send('set_multi', @@configs[value])
         puts "config #{@kind.name}/#{value} applied!"
-        sleep(@delay)
+        sleep(@remote.DELAY)
     end
 end
