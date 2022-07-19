@@ -74,6 +74,8 @@ module Configs
 
         self.send('set_multi', @@configs[value])
         puts "config #{@kind.name}/#{value} applied!"
-        sleep(@remote.DELAY)
+        sleep(@delay)
     end
+
+    alias_method 'apply_config', :set_config
 end

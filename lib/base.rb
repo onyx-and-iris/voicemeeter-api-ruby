@@ -34,6 +34,7 @@ class Base
         @ratelimit = kwargs[:ratelimit] || RATELIMIT
         @running = false
         @strip_mode = 0
+        @delay = DELAY
     end
 
     def init_thread
