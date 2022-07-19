@@ -28,15 +28,3 @@ class IRemote
         param_hash.each { |(key, val)| self.send("#{key}=", val) }
     end
 end
-
-module Fades
-    def fadeto(target, time)
-        self.setter('FadeTo', "(#{target}, #{time})")
-        sleep(@remote.delay)
-    end
-
-    def fadeby(change, time)
-        self.setter('FadeBy', "(#{change}, #{time})")
-        sleep(@remote.delay)
-    end
-end
