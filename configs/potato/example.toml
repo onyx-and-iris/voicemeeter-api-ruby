@@ -1,82 +1,82 @@
 [strip_0]
-A1 = 0
-A2 = 0
-A3 = 0
-B1 = 0
-B2 = 0
-mono = 0
-solo = 0
-mute = 0
+A1 = false
+A2 = false
+A3 = false
+B1 = false
+B2 = false
+mono = false
+solo = false
+mute = false
 gain = 0.0
 
 [strip_1]
-A1 = 0
-A2 = 0
-A3 = 0
-B1 = 0
-B2 = 0
-mono = 0
-solo = 0
-mute = 0
+A1 = false
+A2 = false
+A3 = false
+B1 = false
+B2 = false
+mono = false
+solo = false
+mute = false
 gain = 0.0
 
 [strip_2]
-A1 = 1
-A2 = 1
-A3 = 1
-A4 = 1
-A5 = 1
-B1 = 1
-B2 = 1
-B3 = 1
-mono = 1
-solo = 1
-mute = 1
+A1 = true
+A2 = true
+A3 = true
+A4 = true
+A5 = true
+B1 = true
+B2 = true
+B3 = true
+mono = true
+solo = true
+mute = true
 gain = 0.0
 
 [strip_3]
-A1 = 0
-A2 = 0
-A3 = 0
-B1 = 0
-B2 = 0
-mono = 0
-solo = 0
-mute = 0
+A1 = false
+A2 = false
+A3 = false
+B1 = false
+B2 = false
+mono = false
+solo = false
+mute = false
 gain = 0.0
 
 [strip_4]
-A1 = 0
-A2 = 0
-A3 = 0
-B1 = 0
-B2 = 0
-mono = 0
-solo = 0
-mute = 0
+A1 = false
+A2 = false
+A3 = false
+B1 = false
+B2 = false
+mono = false
+solo = false
+mute = false
 gain = 0.0
 
 [bus_0]
-eq = 0
-mute = 0
+eq = false
+mute = false
 gain = 0.0
 
 [bus_1]
-eq = 0
-mute = 0
+eq = false
+mute = false
 gain = 0.0
 
 [bus_2]
-eq = 0
-mute = 0
+eq = false
+mute = false
 gain = 0.0
 
 [bus_3]
-eq = 0
-mute = 0
+eq = false
+mute = false
 gain = 0.0
 
 [bus_4]
-eq = 0
-mute = 0
+eq = false
+mute = false
 gain = 0.0

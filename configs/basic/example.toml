@@ -1,29 +1,29 @@
 [strip_0]
-A1 = 1
-B1 = 1
-mono = 1
-solo = 1
-mute = 1
+A1 = true
+B1 = true
+mono = true
+solo = true
+mute = true
 gain = 0.0
 
 [strip_1]
-A1 = 0
-B1 = 0
-mute = 0
+A1 = false
+B1 = false
+mute = false
 gain = 0.0
 
 [strip_2]
-A1 = 0
-B1 = 0
-mute = 0
+A1 = false
+B1 = false
+mute = false
 gain = 0.0
 
 [bus_0]
-eq = 0
-mute = 0
+eq = false
+mute = false
 gain = 0.0
 
 [bus_1]
-eq = 0
-mute = 0
+eq = false
+mute = false
 gain = 0.0
