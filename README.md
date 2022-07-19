@@ -135,6 +135,22 @@ vm.strip[3].gainlayer[3].gain = 3.7
 
 Gainlayers are defined for potato version only.
 
+##### Levels
+
+The following properties are available.
+
+-   `prefader`
+-   `postfader`
+-   `postmute`
+
+example:
+
+```ruby
+puts vm.strip[3].levels.prefader
+```
+
+Level properties will return -200.0 if no audio detected.
+
 ### Bus
 
 The following properties are available.
@@ -177,6 +193,20 @@ example:
 ```ruby
 vm.bus[4].mode.amix = true
 ```
+
+##### Levels
+
+The following properties are available.
+
+-   `all`
+
+example:
+
+```ruby
+puts vm.bus[0].levels.all
+```
+
+`levels.all` will return -200.0 if no audio detected.
 
 ### Strip | Bus
 

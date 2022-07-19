@@ -9,7 +9,24 @@ Before any major/minor/patch is released all unit tests will be run to verify th
 
 ## [Unreleased] - These changes have not been added to RubyGems yet
 
--   [ ]
+-   [ ] add xy parameters to strip/bus
+
+## [4.1.0] - 2022-07-19
+
+### Added
+
+-   Conversion module in meta
+-   strip/bus levels implemented, ldirty added to notifications.
+
+### Changed
+
+-   1, 0 switched for true false in example configs
+-   minor version bump
+
+### Removed
+
+-   Boolean class monkey patch
+-   type checks
 
 ## [4.0.0] - 2022-06-27
 
