@@ -1,18 +1,25 @@
 require_relative 'errors'
 
-class FalseClass
-    def to_i
-        0
-    end
-end
-class TrueClass
-    def to_i
-        1
+module Conversions
+    module_function
+
+    def Boolean(value)
+        case value
+        when true, 1
+            true
+        when false, nil, 0
+            false
+        else
+            raise ArgumentError,
+                  "invalid value for Boolean(): \"#{value.inspect}\""
+        end
     end
 end
 
 module Meta_Functions
     private
+
+    include Conversions
 
     def make_accessor_bool(*params)
         params.each do |param|
@@ -20,10 +27,8 @@ module Meta_Functions
                 return !(self.getter("#{param}")).zero?
             end
 
-            opts = [false, true, 0, 1]
             define_singleton_method("#{param}=") do |value|
-                raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{param}", value.to_i == 1 ? 1 : 0)
+                self.setter("#{param}", Boolean(value) ? 1 : 0)
             end
         end
     end
@@ -89,6 +94,9 @@ module Meta_Functions
 end
 
 module Channel_Meta_Functions
+    private
+
+    include Conversions
     include Meta_Functions
 
     def make_accessor_bool(*params)
@@ -104,10 +112,8 @@ module Channel_Meta_Functions
                 return !(self.getter("#{cmd}")).zero?
             end
 
-            opts = [false, true, 0, 1]
             define_singleton_method("#{param}=") do |value|
-                raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{cmd}", value.to_i == 1 ? 1 : 0)
+                self.setter("#{cmd}", Boolean(value) ? 1 : 0)
             end
         end
     end
@@ -163,16 +169,17 @@ module Channel_Meta_Functions
                 return !(self.getter("#{param}")).zero?
             end
 
-            opts = [false, true, 0, 1]
             define_singleton_method("#{param}=") do |value|
-                raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{param}", value.to_i == 1 ? 1 : 0)
+                self.setter("#{param}", Boolean(value) ? 1 : 0)
             end
         end
     end
 end
 
 module Vban_Meta_Functions
+    private
+
+    include Conversions
     include Meta_Functions
 
     def make_reader_int(*params)
@@ -234,6 +241,10 @@ module Vban_Meta_Functions
 end
 
 module MacroButton_Meta_Functions
+    private
+
+    include Conversions
+
     def make_accessor_macrobutton(*params)
         params.each do |param|
             mode = { state: 1, stateonly: 2, trigger: 3 }
@@ -242,18 +253,17 @@ module MacroButton_Meta_Functions
                 return !(self.getter(mode[param])).zero?
             end
 
-            opts = [false, true, 0, 1]
             define_singleton_method("#{param}=") do |value|
-                unless opts.include? value
-                    raise OutOfBoundsErrors.new(opts[param])
-                end
-                self.setter(value.to_i == 1 ? 1 : 0, mode[param])
+                self.setter(Boolean(value) ? 1 : 0, mode[param])
             end
         end
     end
 end
 
 module Commands_Meta_Functions
+    private
+
+    include Conversions
     include Meta_Functions
     def make_writer_bool(*params)
         params.each do |param|
@@ -264,10 +274,8 @@ module Commands_Meta_Functions
                 cmd = param
             end
 
-            opts = [false, true]
             define_singleton_method("#{param}=") do |value|
-                raise OutOfBoundsErrors.new(opts) unless opts.include? value
-                self.setter("#{cmd}", value.to_i == 1 ? 1 : 0)
+                self.setter("#{cmd}", Boolean(value) ? 1 : 0)
             end
         end
     end
