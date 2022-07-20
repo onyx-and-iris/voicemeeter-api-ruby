@@ -3,7 +3,7 @@ PATH
   specs:
     voicemeeter_api_ruby (4.1.2)
       ffi (~> 1.9, >= 1.9.10)
-      observer
+      observer (~> 0.1.1)
       toml (~> 0.3.0)
 
 GEM
