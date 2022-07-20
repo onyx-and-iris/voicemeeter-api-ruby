@@ -1,6 +1,6 @@
-require 'drb/drb'
+require "drb/drb"
 
-hostname = 'ws.local'
+hostname = "ws.local"
 port = 3030
 
 # Change the hostname from ws.local to ip of drb server.

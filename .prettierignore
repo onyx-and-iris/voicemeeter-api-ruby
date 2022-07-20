@@ -17,6 +17,8 @@
 *.txt
 *.gem
 *.ps1
+*.md
 
 /spec/higher/*.rb
 /spec/lower/*.rb
+/lib/cbindings.rb

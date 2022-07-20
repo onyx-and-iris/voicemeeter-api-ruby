@@ -374,7 +374,7 @@ vm.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
 
 ## Config Files
 
-`vm.set_config(<configname>)`
+`vm.apply_config(<configname>)`
 
 You may load config files in TOML format.
 Three example configs have been included with the package. Remember to save
@@ -383,10 +383,10 @@ current settings before loading a config. To set one you may do:
 ```ruby
 require 'voicemeeter'
 vm = Voicemeeter.remote('banana')
-vm.run { vm.set_config('example') }
+vm.run { vm.apply_config('example') }
 ```
 
-will load a config file at configs/banana/example.toml for Voicemeeter Banana.
+will load a config file at mydir/configs/banana/example.toml for Voicemeeter Banana.
 
 ## `Voicemeeter Module`
 
