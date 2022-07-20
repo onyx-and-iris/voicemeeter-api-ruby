@@ -1,12 +1,10 @@
 require_relative "iremote"
-require_relative "mixin"
 
 class Strip < IRemote
   "
   Concrete Strip class
   "
   include Channel_Meta_Functions
-  include Fades
 
   attr_accessor :gainlayer, :levels
 
@@ -36,6 +34,16 @@ class Strip < IRemote
 
   def identifier
     "strip[#{@index}]"
+  end
+
+  def fadeto(target, time)
+    self.setter("FadeTo", "(#{target}, #{time})")
+    sleep(@remote.delay)
+  end
+
+  def fadeby(change, time)
+    self.setter("FadeBy", "(#{change}, #{time})")
+    sleep(@remote.delay)
   end
 end
 

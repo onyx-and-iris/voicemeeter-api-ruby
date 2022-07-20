@@ -1,12 +1,10 @@
 require_relative "iremote"
-require_relative "mixin"
 
 class Bus < IRemote
   "
   Concrete Bus class
   "
   include Channel_Meta_Functions
-  include Fades
 
   attr_accessor :mode, :levels
 
@@ -32,6 +30,16 @@ class Bus < IRemote
 
   def identifier
     "bus[#{@index}]"
+  end
+
+  def fadeto(target, time)
+    self.setter("FadeTo", "(#{target}, #{time})")
+    sleep(@remote.delay)
+  end
+
+  def fadeby(change, time)
+    self.setter("FadeBy", "(#{change}, #{time})")
+    sleep(@remote.delay)
   end
 end
 

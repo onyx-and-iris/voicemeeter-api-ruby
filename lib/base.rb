@@ -18,7 +18,7 @@ class Base
   attr_accessor :strip_mode
 
   attr_reader :kind, :p_in, :v_in, :p_out, :v_out, :retval, :cache
-  attr_reader :running, :_strip_comp, :_bus_comp
+  attr_reader :running, :_strip_comp, :_bus_comp, :delay
 
   DELAY = 0.001
   SYNC = false
