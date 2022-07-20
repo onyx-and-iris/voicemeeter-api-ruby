@@ -10,14 +10,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['solo', 'mono', "A#{VMUnit.num_A}"].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, true)
-                        expect(when_get(param)).to eq true
-                    end
-                    it do
-                        does_set(param, false)
-                        expect(when_get(param)).to eq false
-                    end
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
                 end
             end
 
@@ -26,14 +20,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['solo', "B#{VMUnit.num_B}"].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, true)
-                        expect(when_get(param)).to eq true
-                    end
-                    it do
-                        does_set(param, false)
-                        expect(when_get(param)).to eq false
-                    end
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
                 end
             end
         end
@@ -45,14 +33,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['eq'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, true)
-                        expect(when_get(param)).to eq true
-                    end
-                    it do
-                        does_set(param, false)
-                        expect(when_get(param)).to eq false
-                    end
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
                 end
             end
 
@@ -61,14 +43,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['mute'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, true)
-                        expect(when_get(param)).to eq true
-                    end
-                    it do
-                        does_set(param, false)
-                        expect(when_get(param)).to eq false
-                    end
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
                 end
             end
         end
@@ -80,14 +56,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['stateonly'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, true)
-                        expect(when_get(param)).to eq true
-                    end
-                    it do
-                        does_set(param, false)
-                        expect(when_get(param)).to eq false
-                    end
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
                 end
             end
 
@@ -96,14 +66,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['stateonly'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, true)
-                        expect(when_get(param)).to eq true
-                    end
-                    it do
-                        does_set(param, false)
-                        expect(when_get(param)).to eq false
-                    end
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
                 end
             end
         end
@@ -121,28 +85,16 @@ RSpec.describe 'All Higher Tests', :higher do
             describe 'vban.instream' do
                 include_context 'vban.instream, set and get higher'
                 ['on'].each do |param|
-                    it do
-                        does_set(param, true)
-                        expect(when_get(param)).to eq true
-                    end
-                    it do
-                        does_set(param, false)
-                        expect(when_get(param)).to eq false
-                    end
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
                 end
             end
 
             describe 'vban.outstream' do
                 include_context 'vban.outstream, set and get higher'
                 ['on'].each do |param|
-                    it do
-                        does_set(param, true)
-                        expect(when_get(param)).to eq true
-                    end
-                    it do
-                        does_set(param, false)
-                        expect(when_get(param)).to eq false
-                    end
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
                 end
             end
         end
@@ -150,14 +102,8 @@ RSpec.describe 'All Higher Tests', :higher do
         describe 'recorder', :if => %w[banana potato].include?(VMUnit.kind_name) do
             include_context 'recorder, set and get higher'
             %w[A1 B1].each do |param|
-                it do
-                    does_set(param, true)
-                    expect(when_get(param)).to eq true
-                end
-                it do
-                    does_set(param, false)
-                    expect(when_get(param)).to eq false
-                end
+                it { does_set(param, true); expect(when_get(param)).to eq true }
+                it { does_set(param, false); expect(when_get(param)).to eq false }
             end
         end
     end
@@ -170,14 +116,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['gain'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, 4.7)
-                        expect(when_get(param)).to eq 4.7
-                    end
-                    it do
-                        does_set(param, -30.8)
-                        expect(when_get(param)).to eq -30.8
-                    end
+                    it { does_set(param, 4.7); expect(when_get(param)).to eq 4.7 }
+                    it { does_set(param, -30.8); expect(when_get(param)).to eq -30.8 }
                 end
             end
 
@@ -186,14 +126,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['gain'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, 0.8)
-                        expect(when_get(param)).to eq 0.8
-                    end
-                    it do
-                        does_set(param, -60.0)
-                        expect(when_get(param)).to eq -60.0
-                    end
+                    it { does_set(param, 0.8); expect(when_get(param)).to eq 0.8 }
+                    it { does_set(param, -60.0); expect(when_get(param)).to eq -60.0 }
                 end
             end
         end
@@ -206,14 +140,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['gain'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, -4.7)
-                        expect(when_get(param)).to eq -4.7
-                    end
-                    it do
-                        does_set(param, -30.8)
-                        expect(when_get(param)).to eq -30.8
-                    end
+                    it { does_set(param, -4.7); expect(when_get(param)).to eq -4.7 }
+                    it { does_set(param, -30.8); expect(when_get(param)).to eq -30.8 }
                 end
             end
         end        
@@ -225,14 +153,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['gain'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, -12.2)
-                        expect(when_get(param)).to eq -12.2
-                    end
-                    it do
-                        does_set(param, 5.6)
-                        expect(when_get(param)).to eq 5.6
-                    end
+                    it { does_set(param, -12.2); expect(when_get(param)).to eq -12.2 }
+                    it { does_set(param, 5.6); expect(when_get(param)).to eq 5.6 }
                 end
             end
 
@@ -241,14 +163,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['gain'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, 6.9)
-                        expect(when_get(param)).to eq 6.9
-                    end
-                    it do
-                        does_set(param, -18.3)
-                        expect(when_get(param)).to eq -18.3
-                    end
+                    it { does_set(param, 6.9); expect(when_get(param)).to eq 6.9 }
+                    it { does_set(param, -18.3); expect(when_get(param)).to eq -18.3 }
                 end
             end
         end
@@ -262,14 +178,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['label'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, 'test0')
-                        expect(when_get(param)).to eq 'test0'
-                    end
-                    it do
-                        does_set(param, 'test1')
-                        expect(when_get(param)).to eq 'test1'
-                    end
+                    it { does_set(param, 'test0'); expect(when_get(param)).to eq 'test0' }
+                    it { does_set(param, 'test1'); expect(when_get(param)).to eq 'test1' }
                 end
             end
 
@@ -278,14 +188,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['label'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, 'test0')
-                        expect(when_get(param)).to eq 'test0'
-                    end
-                    it do
-                        does_set(param, 'test1')
-                        expect(when_get(param)).to eq 'test1'
-                    end
+                    it { does_set(param, 'test0'); expect(when_get(param)).to eq 'test0' }
+                    it { does_set(param, 'test1'); expect(when_get(param)).to eq 'test1' }
                 end
             end
         end
@@ -297,14 +201,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['label'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, 'test0')
-                        expect(when_get(param)).to eq 'test0'
-                    end
-                    it do
-                        does_set(param, 'test1')
-                        expect(when_get(param)).to eq 'test1'
-                    end
+                    it { does_set(param, 'test0'); expect(when_get(param)).to eq 'test0' }
+                    it { does_set(param, 'test1'); expect(when_get(param)).to eq 'test1' }
                 end
             end
 
@@ -313,14 +211,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['label'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, 'test0')
-                        expect(when_get(param)).to eq 'test0'
-                    end
-                    it do
-                        does_set(param, 'test1')
-                        expect(when_get(param)).to eq 'test1'
-                    end
+                    it { does_set(param, 'test0'); expect(when_get(param)).to eq 'test0' }
+                    it { does_set(param, 'test1'); expect(when_get(param)).to eq 'test1' }
                 end
             end
         end
@@ -330,28 +222,16 @@ RSpec.describe 'All Higher Tests', :higher do
             describe 'vban.instream' do
                 include_context 'vban.instream, set and get higher'
                 ['name'].each do |param|
-                    it do
-                        does_set(param, 'streamname0')
-                        expect(when_get(param)).to eq 'streamname0'
-                    end
-                    it do
-                        does_set(param, 'streamname1')
-                        expect(when_get(param)).to eq 'streamname1'
-                    end
+                    it { does_set(param, 'streamname0'); expect(when_get(param)).to eq 'streamname0' }
+                    it { does_set(param, 'streamname1'); expect(when_get(param)).to eq 'streamname1' }
                 end
             end
 
             describe 'vban.outstream' do
                 include_context 'vban.outstream, set and get higher'
                 ['name'].each do |param|
-                    it do
-                        does_set(param, 'streamname0')
-                        expect(when_get(param)).to eq 'streamname0'
-                    end
-                    it do
-                        does_set(param, 'streamname1')
-                        expect(when_get(param)).to eq 'streamname1'
-                    end
+                    it { does_set(param, 'streamname0'); expect(when_get(param)).to eq 'streamname0' }
+                    it { does_set(param, 'streamname1'); expect(when_get(param)).to eq 'streamname1' }
                 end
             end
         end
@@ -365,14 +245,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['limit'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, -40)
-                        expect(when_get(param)).to eq -40
-                    end
-                    it do
-                        does_set(param, 12)
-                        expect(when_get(param)).to eq 12
-                    end
+                    it { does_set(param, -40); expect(when_get(param)).to eq -40 }
+                    it { does_set(param, 12); expect(when_get(param)).to eq 12 }
                 end
             end
 
@@ -381,14 +255,8 @@ RSpec.describe 'All Higher Tests', :higher do
                 ['limit'].each do |param|
                     let(:param) { param }
 
-                    it do
-                        does_set(param, -5)
-                        expect(when_get(param)).to eq -5
-                    end
-                    it do
-                        does_set(param, 3)
-                        expect(when_get(param)).to eq 3
-                    end
+                    it { does_set(param, -5); expect(when_get(param)).to eq -5 }
+                    it { does_set(param, 3); expect(when_get(param)).to eq 3 }
                 end
             end
         end

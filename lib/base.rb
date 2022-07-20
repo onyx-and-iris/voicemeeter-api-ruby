@@ -46,10 +46,12 @@ class Base
                 if pdirty?
                     changed
                     notify_observers('pdirty')
-                elsif mdirty?
+                end
+                if mdirty?
                     changed
                     notify_observers('mdirty')
-                elsif ldirty?
+                end
+                if ldirty?
                     changed
                     @_strip_comp =
                         @cache['strip_level'].map.with_index do |x, i|
@@ -178,7 +180,7 @@ class Base
     end
 
     def _get_levels
-        s = (0...(2 * @p_in + 8 * @v_in)).map { |i| get_level(0, i) }
+        s = (0...(2 * @p_in + 8 * @v_in)).map { |i| get_level(@strip_mode, i) }
         b = (0...(8 * (@p_out + @v_out))).map { |i| get_level(3, i) }
         [s, b]
     end

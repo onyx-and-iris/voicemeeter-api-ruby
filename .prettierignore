@@ -17,3 +17,6 @@
 *.txt
 *.gem
 *.ps1
+
+/spec/higher/*.rb
+/spec/lower/*.rb

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    voicemeeter_api_ruby (4.1.1)
+    voicemeeter_api_ruby (4.1.2)
       ffi (~> 1.9, >= 1.9.10)
       observer
       toml (~> 0.3.0)
@@ -11,21 +11,22 @@ GEM
   specs:
     diff-lcs (1.5.0)
     ffi (1.15.5-x64-mingw-ucrt)
+    ffi (1.15.5-x64-mingw32)
     observer (0.1.1)
     parslet (2.0.0)
-    rspec (3.10.0)
-      rspec-core (~> 3.10.0)
-      rspec-expectations (~> 3.10.0)
-      rspec-mocks (~> 3.10.0)
-    rspec-core (3.10.1)
-      rspec-support (~> 3.10.0)
-    rspec-expectations (3.10.2)
+    rspec (3.11.0)
+      rspec-core (~> 3.11.0)
+      rspec-expectations (~> 3.11.0)
+      rspec-mocks (~> 3.11.0)
+    rspec-core (3.11.0)
+      rspec-support (~> 3.11.0)
+    rspec-expectations (3.11.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.10.0)
-    rspec-mocks (3.10.2)
+      rspec-support (~> 3.11.0)
+    rspec-mocks (3.11.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.10.0)
-    rspec-support (3.10.3)
+      rspec-support (~> 3.11.0)
+    rspec-support (3.11.0)
     toml (0.3.0)
       parslet (>= 1.8.0, < 3.0.0)
 
