@@ -17,18 +17,8 @@ class Main
 
       # Request methods return Future values that can be waited for by `value!`.
       version = obs.get_version.value!
+      puts "Logged into OBS successfully!"
       puts "OBS version: #{version.obs_studio_version}; OBS-websocket version: #{version.obs_websocket_version}"
-
-      # Pass request parameters using keyword arguments. Composite types are mapped to Hash objects.
-      obs.broadcast_custom_message(
-        realm: "helloworld",
-        data: {
-          greeting: "Hello, World!"
-        }
-      ).wait!
-    rescue => e
-      $stderr.puts e.message
-      exit! 1
     end
 
     # Listen for events using `on_*` methods. The event payload is yielded to the block.
@@ -54,7 +44,7 @@ class Main
     end
 
     obs.on_close(executor: :immediate) do |code, reason|
-      puts "Bye! (code: #{code})"
+      puts "Logged out of OBS! (code: #{code})"
     end
 
     start_driver
