@@ -2,7 +2,7 @@
 
 -   [OBS Studio](https://obsproject.com/)
 -   [OBS Websocket Plugin](https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-from-websockets.466/)
--   [OBS Websocket Ruby](https://github.com/onyx-and-iris/ruby-obs-websocket)
+-   [OBS Websocket Ruby](https://github.com/hanazuki/ruby-obs-websocket)
 -   [TOML parser for Ruby](https://github.com/jm/toml)
 -   [Websocket Driver](https://github.com/faye/websocket-driver-ruby)
 
