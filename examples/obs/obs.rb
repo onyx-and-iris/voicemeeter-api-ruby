@@ -23,22 +23,43 @@ class Main
 
     # Listen for events using `on_*` methods. The event payload is yielded to the block.
     obs.on_switch_scenes do |ev|
-      puts "Switched to scene #{ev.scene_name}"
+      scene = ev.scene_name
+      puts "Switched to scene #{scene}"
 
-      case ev.scene_name
+      case scene
       when "START"
         vm.strip[0].mute = true
+        vm.strip[1].B1 = true
+        vm.strip[2].B2 = true
       when "LIVE"
         vm.strip[0].mute = false
-        vm.strip[0].B1 = true
+        vm.strip[7].A3 = true
         vm.strip[7].fadeto(-6, 500)
+        vm.vban.instream[0].on = True
       when "BRB"
         vm.strip[0].mute = false
         vm.strip[5].A1 = true
         vm.strip[5].A2 = true
         vm.strip[7].fadeto(0, 500)
       when "END"
-        vm.strip[0].mute = true
+        vm.apply(
+          {
+            strip_0: {
+              mute: true
+            },
+            strip_1: {
+              mute: true,
+              B1: false
+            },
+            strip_2: {
+              mute: true,
+              B1: false
+            },
+            vban_instream_0: {
+              on: false
+            }
+          }
+        )
         obs.close
       end
     end

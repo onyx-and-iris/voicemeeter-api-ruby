@@ -211,6 +211,7 @@ class Base
   end
 
   alias_method "set_multi", :set_parameter_multi
+  alias_method "apply", :set_parameter_multi
   alias_method "get", :get_parameter
   alias_method "set", :set_parameter
   alias_method "pdirty", :pdirty?

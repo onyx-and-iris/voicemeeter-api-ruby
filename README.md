@@ -339,11 +339,11 @@ vm.run { (0...vm.device.ins).each { |i| puts vm.device.input(i) } }
 
 ### Multiple parameters
 
--   `set_multi`
+-   `apply`
     Set many strip/bus/macrobutton/vban parameters at once, for example:
 
 ```ruby
-vm.set_multi(
+vm.apply(
     {
         strip_0: {
             mute: true,
@@ -368,8 +368,8 @@ vm.set_multi(
 Or for each class you may do:
 
 ```ruby
-vm.strip[0].set_multi(mute: true, gain: 3.2, A1: true)
-vm.vban.outstream[0].set_multi(on: true, name: 'streamname', bit: 24)
+vm.strip[0].apply(mute: true, gain: 3.2, A1: true)
+vm.vban.outstream[0].apply(on: true, name: 'streamname', bit: 24)
 ```
 
 ## Config Files

@@ -27,4 +27,6 @@ class IRemote
   def set_multi(param_hash)
     param_hash.each { |(key, val)| self.send("#{key}=", val) }
   end
+
+  alias_method "apply", :set_multi
 end
