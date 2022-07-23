@@ -1,0 +1,26 @@
+require "voicemeeter/iremote"
+require "voicemeeter/meta"
+
+module Voicemeeter
+  class Device
+    def initialize(remote)
+      @remote = remote
+    end
+
+    def getter(**kwargs)
+      return @remote.get_num_devices(kwargs[:direction]) if kwargs[:index].nil?
+
+      vals = @remote.get_device_description(kwargs[:index], kwargs[:direction])
+      types = { 1 => "mme", 3 => "wdm", 4 => "ks", 5 => "asio" }
+      { name: vals[0], type: types[vals[1]], id: vals[2] }
+    end
+
+    def ins = getter(direction: "in")
+
+    def outs = getter(direction: "out")
+
+    def input(i) = getter(index: i, direction: "in")
+
+    def output(i) = getter(index: i, direction: "out")
+  end
+end

@@ -1,4 +1,4 @@
-require_relative "errors"
+require "voicemeeter/errors"
 
 module Conversions
   module_function
@@ -37,6 +37,7 @@ module Meta_Functions
       define_singleton_method("#{param}") do
         return self.getter("#{param}").to_i
       end
+
       define_singleton_method("#{param}=") do |value|
         self.setter("#{param}", value)
       end
@@ -46,6 +47,7 @@ module Meta_Functions
   def make_accessor_float(*params)
     params.each do |param|
       define_singleton_method("#{param}") { return self.getter("#{param}") }
+
       define_singleton_method("#{param}=") do |value|
         self.setter("#{param}", value)
       end
@@ -57,6 +59,7 @@ module Meta_Functions
       define_singleton_method("#{param}") do
         return self.getter("#{param}", true)
       end
+
       define_singleton_method("#{param}=") do |value|
         self.setter("#{param}", value)
       end
@@ -91,7 +94,6 @@ end
 module Channel_Meta_Functions
   private
 
-  include Conversions
   include Meta_Functions
 
   def make_accessor_bool(*params)
@@ -109,28 +111,6 @@ module Channel_Meta_Functions
 
       define_singleton_method("#{param}=") do |value|
         self.setter("#{cmd}", Boolean(value) ? 1 : 0)
-      end
-    end
-  end
-
-  def make_accessor_float(*params)
-    params.each do |param|
-      define_singleton_method("#{param}") { return self.getter("#{param}") }
-
-      define_singleton_method("#{param}=") do |value|
-        self.setter("#{param}", value)
-      end
-    end
-  end
-
-  def make_accessor_int(*params)
-    params.each do |param|
-      define_singleton_method("#{param}") do
-        return self.getter("#{param}").to_i
-      end
-
-      define_singleton_method("#{param}=") do |value|
-        self.setter("#{param}", value)
       end
     end
   end
@@ -172,7 +152,6 @@ end
 module Vban_Meta_Functions
   private
 
-  include Conversions
   include Meta_Functions
 
   def make_reader_int(*params)
@@ -256,7 +235,6 @@ end
 module Commands_Meta_Functions
   private
 
-  include Conversions
   include Meta_Functions
   def make_writer_bool(*params)
     params.each do |param|

@@ -1,4 +1,5 @@
 [strip_0]
+label = "PhysStrip0"
 A1 = false
 A2 = false
 A3 = false
@@ -10,17 +11,7 @@ mute = false
 gain = 0.0
 
 [strip_1]
-A1 = true
-A2 = true
-A3 = true
-B1 = true
-B2 = true
-mono = true
-solo = true
-mute = true
-gain = 0.0
-
-[strip_2]
+label = "PhysStrip1"
 A1 = false
 A2 = false
 A3 = false
@@ -31,7 +22,20 @@ solo = false
 mute = false
 gain = 0.0
 
+[strip_2]
+label = "PhysStrip2"
+A1 = true
+A2 = true
+A3 = true
+B1 = true
+B2 = true
+mono = true
+solo = true
+mute = true
+gain = 0.0
+
 [strip_3]
+label = "VirtStrip0"
 A1 = false
 A2 = false
 A3 = false
@@ -43,6 +47,7 @@ mute = false
 gain = 0.0
 
 [strip_4]
+label = "VirtStrip1"
 A1 = false
 A2 = false
 A3 = false
@@ -54,26 +59,31 @@ mute = false
 gain = 0.0
 
 [bus_0]
+label = "PhysBus0"
 eq = false
 mute = false
 gain = 0.0
 
 [bus_1]
+label = "PhysBus1"
 eq = false
 mute = false
 gain = 0.0
 
 [bus_2]
+label = "PhysBus2"
 eq = false
 mute = false
 gain = 0.0
 
 [bus_3]
+label = "VirtBus0"
 eq = false
 mute = false
 gain = 0.0
 
 [bus_4]
+label = "VirtBus1"
 eq = false
 mute = false
 gain = 0.0

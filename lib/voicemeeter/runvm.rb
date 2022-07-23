@@ -1,7 +1,7 @@
-require_relative "cbindings"
-require_relative "kinds"
+require "voicemeeter/cbindings"
+require "voicemeeter/kinds"
 
-include CBindings
+include Voicemeeter::CBindings
 include Kinds
 
 module RunVM

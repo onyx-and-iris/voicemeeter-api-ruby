@@ -1,4 +1,12 @@
 [strip_0]
+label = "PhysStrip0"
+A1 = false
+B1 = false
+mute = false
+gain = 0.0
+
+[strip_1]
+label = "PhysStrip1"
 A1 = true
 B1 = true
 mono = true
@@ -6,24 +14,21 @@ solo = true
 mute = true
 gain = 0.0
 
-[strip_1]
-A1 = false
-B1 = false
-mute = false
-gain = 0.0
-
 [strip_2]
+label = "VirtStrip0"
 A1 = false
 B1 = false
 mute = false
 gain = 0.0
 
 [bus_0]
+label = "PhysBus0"
 eq = false
 mute = false
 gain = 0.0
 
 [bus_1]
+label = "VirtBus0"
 eq = false
 mute = false
 gain = 0.0
