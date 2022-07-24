@@ -6,6 +6,9 @@ module Voicemeeter
     Concrete Bus class
     "
     include Channel_Meta_Functions
+    include Mixins::Fades
+    include Mixins::XY
+    include Mixins::FX
 
     attr_accessor :mode, :levels
 
@@ -21,7 +24,7 @@ module Voicemeeter
 
     def initialize(remote, i)
       super
-      self.make_accessor_bool :mute, :mono, :eq, :sel
+      self.make_accessor_bool :mute, :mono, :eq, :eq_ab, :sel, :monitor
       self.make_accessor_float :gain
       self.make_accessor_string :label
 
@@ -31,16 +34,6 @@ module Voicemeeter
 
     def identifier
       "bus[#{@index}]"
-    end
-
-    def fadeto(target, time)
-      self.setter("FadeTo", "(#{target}, #{time})")
-      sleep(@remote.delay)
-    end
-
-    def fadeby(change, time)
-      self.setter("FadeBy", "(#{change}, #{time})")
-      sleep(@remote.delay)
     end
   end
 

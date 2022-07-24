@@ -1,4 +1,5 @@
 require "voicemeeter/iremote"
+require "voicemeeter/mixin"
 
 module Voicemeeter
   class Strip < IRemote
@@ -6,6 +7,7 @@ module Voicemeeter
     Concrete Strip class
     "
     include Channel_Meta_Functions
+    include Mixins::Fades
 
     attr_accessor :gainlayer, :levels
 
@@ -36,19 +38,12 @@ module Voicemeeter
     def identifier
       "strip[#{@index}]"
     end
-
-    def fadeto(target, time)
-      self.setter("FadeTo", "(#{target}, #{time})")
-      sleep(@remote.delay)
-    end
-
-    def fadeby(change, time)
-      self.setter("FadeBy", "(#{change}, #{time})")
-      sleep(@remote.delay)
-    end
   end
 
   class PhysicalStrip < Strip
+    include Mixins::XY
+    include Mixins::FX
+
     def initialize(remote, i)
       super
       self.make_accessor_float :comp, :gate, :audibility
@@ -57,19 +52,13 @@ module Voicemeeter
   end
 
   class VirtualStrip < Strip
+    include Mixins::Apps
+
     def initialize(remote, i)
       super
       self.make_accessor_bool :mc
       self.make_accessor_int :k
       self.make_accessor_float :bass, :mid, :treble
-    end
-
-    def appgain(name, gain)
-      self.setter("AppGain", "(\"#{name}\", #{gain})")
-    end
-
-    def appmute(name, mute)
-      self.setter("AppMute", "(\"#{name}\", #{mute ? 1 : 0})")
     end
   end
 

@@ -85,7 +85,7 @@ module Voicemeeter
                     :long
 
     @@cdll =
-      lambda { |func, *args| self.retval = [send("vm_#{func}", *args), func] }
+      lambda { |func, *args| retval = [send("vm_#{func}", *args), func] }
 
     def clear_polling = while pdirty? || mdirty?; end
 

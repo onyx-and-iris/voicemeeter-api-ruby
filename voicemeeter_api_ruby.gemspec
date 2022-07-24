@@ -4,7 +4,7 @@ lib = File.expand_path("./lib")
 
 Gem::Specification.new do |spec|
   spec.name = "voicemeeter_api_ruby"
-  spec.version = Voicemeeter_API_Ruby::VERSION
+  spec.version = Voicemeeter::Version
   spec.summary = "Voicemeeter API wrapper"
   spec.description = "A wrapper for Voicemeeter virtual mixer API in Ruby"
   spec.authors = ["onyx_online"]

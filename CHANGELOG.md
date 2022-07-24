@@ -9,7 +9,11 @@ Before any major/minor/patch is released all unit tests will be run to verify th
 
 ## [Unreleased] - These changes have not been added to RubyGems yet
 
--   [ ] add xy parameters to strip/bus
+-   [x] add Mixins module
+-   [x] add xy, fx parameters to strip/bus
+-   [x] moved gem files into voicemeeter/ dir
+-   [ ] add unit tests for xy, fx
+-   [x] config tests added
 
 ## [4.1.0] - 2022-07-19
 
