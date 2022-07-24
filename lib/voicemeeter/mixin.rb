@@ -1,5 +1,5 @@
 module Voicemeeter
-  module Mixins
+  module Mixin
     module Fades
       def fadeto(target, time)
         self.setter("FadeTo", "(#{target}, #{time})")
@@ -22,7 +22,7 @@ module Voicemeeter
       end
     end
 
-    module XY
+    module Xy
       include Channel_Meta_Functions
 
       def initialize(remote, i)
@@ -36,7 +36,7 @@ module Voicemeeter
       end
     end
 
-    module FX
+    module Fx
       include Channel_Meta_Functions
 
       def initialize(remote, i)

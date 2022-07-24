@@ -7,7 +7,7 @@ module Voicemeeter
     Concrete Strip class
     "
     include Channel_Meta_Functions
-    include Mixins::Fades
+    include Mixin::Fades
 
     attr_accessor :gainlayer, :levels
 
@@ -41,8 +41,8 @@ module Voicemeeter
   end
 
   class PhysicalStrip < Strip
-    include Mixins::XY
-    include Mixins::FX
+    include Mixin::Xy
+    include Mixin::Fx
 
     def initialize(remote, i)
       super
@@ -52,7 +52,7 @@ module Voicemeeter
   end
 
   class VirtualStrip < Strip
-    include Mixins::Apps
+    include Mixin::Apps
 
     def initialize(remote, i)
       super

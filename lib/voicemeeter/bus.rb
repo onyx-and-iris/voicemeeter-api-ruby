@@ -6,9 +6,9 @@ module Voicemeeter
     Concrete Bus class
     "
     include Channel_Meta_Functions
-    include Mixins::Fades
-    include Mixins::XY
-    include Mixins::FX
+    include Mixin::Fades
+    include Mixin::Xy
+    include Mixin::Fx
 
     attr_accessor :mode, :levels
 
