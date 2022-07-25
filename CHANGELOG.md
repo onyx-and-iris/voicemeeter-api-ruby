@@ -9,11 +9,13 @@ Before any major/minor/patch is released all unit tests will be run to verify th
 
 ## [Unreleased] - These changes have not been added to RubyGems yet
 
--   [x] add Mixins module
+-   [x] add Mixin module
 -   [x] add xy, fx parameters to strip/bus
 -   [x] moved gem files into voicemeeter/ dir
 -   [ ] add unit tests for xy, fx
+-   [ ] add xy, fx to readme
 -   [x] config tests added
+-   [x] update obs example
 
 ## [4.1.0] - 2022-07-19
 
