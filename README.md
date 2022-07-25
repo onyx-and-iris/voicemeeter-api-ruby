@@ -98,6 +98,20 @@ The following properties are available.
 -   `bass`: float, from -12.0 to 12.0
 -   `mid`: float, from -12.0 to 12.0
 -   `treble`: float, from -12.0 to 12.0
+-   `reverb`: float, from 0.0 to 10.0
+-   `delay`: float, from 0.0 to 10.0
+-   `fx1`: float, from 0.0 to 10.0
+-   `fx2`: float, from 0.0 to 10.0
+-   `pan_x`: float, from -0.5 to 0.5
+-   `pan_y`: float, from 0.0 to 1.0
+-   `color_x`: float, from -0.5 to 0.5
+-   `color_y`: float, from 0.0 to 1.0
+-   `fx_x`: float, from -0.5 to 0.5
+-   `fx_y`: float, from 0.0 to 1.0
+-   `postreverb`: boolean
+-   `postdelay`: boolean
+-   `postfx1`: boolean
+-   `postfx2`: boolean
 
 example:
 
@@ -164,6 +178,11 @@ The following properties are available.
 -   `label`: string
 -   `device`: string
 -   `sr`: int
+-   `returnreverb`: float, from 0.0 to 10.0
+-   `returndelay`: float, from 0.0 to 10.0
+-   `returnfx1`: float, from 0.0 to 10.0
+-   `returnfx2`: float, from 0.0 to 10.0
+-   `monitor`: boolean
 
 example:
 

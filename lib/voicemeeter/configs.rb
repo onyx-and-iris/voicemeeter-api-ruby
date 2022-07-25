@@ -1,5 +1,5 @@
-require "voicemeeter/kinds"
 require "toml"
+require_relative "kinds"
 
 module Voicemeeter
   module Configs

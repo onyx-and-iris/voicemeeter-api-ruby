@@ -49,7 +49,7 @@ class Main
         vm.strip[5].A2 = true
         vm.strip[7].fadeto(0, 500)
       when "END"
-        vm.set_multi(
+        vm.apply(
           {
             strip_0: {
               mute: true

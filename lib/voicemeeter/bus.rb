@@ -1,4 +1,4 @@
-require "voicemeeter/iremote"
+require_relative "iremote"
 
 module Voicemeeter
   class Bus < IRemote
@@ -7,8 +7,7 @@ module Voicemeeter
     "
     include Channel_Meta_Functions
     include Mixin::Fades
-    include Mixin::Xy
-    include Mixin::Fx
+    include Mixin::Return
 
     attr_accessor :mode, :levels
 

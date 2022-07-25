@@ -1,6 +1,6 @@
-require "voicemeeter/iremote"
-require "voicemeeter/meta"
-require "voicemeeter/errors"
+require_relative "iremote"
+require_relative "meta"
+require_relative "errors"
 
 module Voicemeeter
   class VbanStream < IRemote

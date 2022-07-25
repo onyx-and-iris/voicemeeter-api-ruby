@@ -1,5 +1,5 @@
-require "voicemeeter/cbindings"
-require "voicemeeter/kinds"
+require_relative "cbindings"
+require_relative "kinds"
 
 module Voicemeeter
   module RunVM

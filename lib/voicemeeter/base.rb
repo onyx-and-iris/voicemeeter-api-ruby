@@ -1,8 +1,8 @@
 require "observer"
 
-require "voicemeeter/runvm"
-require "voicemeeter/configs"
-require "voicemeeter/errors"
+require_relative "runvm"
+require_relative "configs"
+require_relative "errors"
 
 module Voicemeeter
   class Base

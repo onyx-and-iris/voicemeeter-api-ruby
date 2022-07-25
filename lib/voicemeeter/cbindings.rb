@@ -1,5 +1,5 @@
 require "ffi"
-require "voicemeeter/inst"
+require_relative "inst"
 
 module Voicemeeter
   module CBindings

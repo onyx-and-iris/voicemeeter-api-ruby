@@ -1,6 +1,6 @@
 require "win32/registry"
 require "pathname"
-require "voicemeeter/errors"
+require_relative "errors"
 
 module Voicemeeter
   module InstallationFunctions

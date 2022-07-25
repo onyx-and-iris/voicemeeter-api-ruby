@@ -1,11 +1,11 @@
-require "voicemeeter/base"
-require "voicemeeter/strip"
-require "voicemeeter/bus"
-require "voicemeeter/button"
-require "voicemeeter/vban"
-require "voicemeeter/command"
-require "voicemeeter/recorder"
-require "voicemeeter/device"
+require_relative "voicemeeter/base"
+require_relative "voicemeeter/strip"
+require_relative "voicemeeter/bus"
+require_relative "voicemeeter/button"
+require_relative "voicemeeter/vban"
+require_relative "voicemeeter/command"
+require_relative "voicemeeter/recorder"
+require_relative "voicemeeter/device"
 
 module Voicemeeter
   include RunVM

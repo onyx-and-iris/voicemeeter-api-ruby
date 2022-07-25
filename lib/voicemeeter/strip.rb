@@ -1,5 +1,5 @@
-require "voicemeeter/iremote"
-require "voicemeeter/mixin"
+require_relative "iremote"
+require_relative "mixin"
 
 module Voicemeeter
   class Strip < IRemote

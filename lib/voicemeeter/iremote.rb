@@ -1,5 +1,5 @@
-require "voicemeeter/meta"
-require "voicemeeter/errors"
+require_relative "meta"
+require_relative "errors"
 
 module Voicemeeter
   class IRemote

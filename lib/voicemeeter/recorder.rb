@@ -1,5 +1,5 @@
-require "voicemeeter/iremote"
-require "voicemeeter/meta"
+require_relative "iremote"
+require_relative "meta"
 
 module Voicemeeter
   class Recorder < IRemote

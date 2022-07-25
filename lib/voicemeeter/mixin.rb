@@ -45,5 +45,17 @@ module Voicemeeter
         self.make_accessor_bool :postreverb, :postdelay, :postfx1, :postfx2
       end
     end
+
+    module Return
+      include Channel_Meta_Functions
+
+      def initialize(remote, i)
+        super
+        self.make_accessor_float :returnreverb,
+                                 :returndelay,
+                                 :returnfx1,
+                                 :returnfx2
+      end
+    end
   end
 end

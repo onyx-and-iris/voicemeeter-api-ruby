@@ -16,6 +16,7 @@ Before any major/minor/patch is released all unit tests will be run to verify th
 -   [ ] add xy, fx to readme
 -   [x] config tests added
 -   [x] update obs example
+-   [x] prefer require_relative in case using direct download.
 
 ## [4.1.0] - 2022-07-19
 
