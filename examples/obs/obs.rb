@@ -42,7 +42,7 @@ class Main
         vm.strip[0].mute = false
         vm.strip[7].A3 = true
         vm.strip[7].fadeto(-6, 500)
-        vm.vban.instream[0].on = True
+        vm.vban.instream[0].on = true
       when "BRB"
         vm.strip[0].mute = false
         vm.strip[5].A1 = true

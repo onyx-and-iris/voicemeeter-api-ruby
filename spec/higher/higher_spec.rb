@@ -7,7 +7,17 @@ RSpec.describe 'All Higher Tests', :higher do
             include_context 'strip, set and get higher'
             describe 'strip, physical' do
                 let(:index) { VMUnit.phys_in }
-                ['solo', 'mono', "A#{VMUnit.num_A}"].each do |param|
+                ['solo', 'mono', "A#{VMUnit.num_A}", 'postreverb', 'postdelay'].each do |param|
+                    let(:param) { param }
+
+                    it { does_set(param, true); expect(when_get(param)).to eq true }
+                    it { does_set(param, false); expect(when_get(param)).to eq false }
+                end
+            end
+
+            describe 'strip, physical effects', :if => %w[potato].include?(VMUnit.kind_name) do
+                let(:index) { VMUnit.phys_in }
+                ['postreverb', 'postdelay'].each do |param|
                     let(:param) { param }
 
                     it { does_set(param, true); expect(when_get(param)).to eq true }
@@ -119,6 +129,37 @@ RSpec.describe 'All Higher Tests', :higher do
                     it { does_set(param, 4.7); expect(when_get(param)).to eq 4.7 }
                     it { does_set(param, -30.8); expect(when_get(param)).to eq -30.8 }
                 end
+
+                ['reverb', 'delay', 'fx1'].each do |param|
+                    let(:param) { param }
+
+                    it { does_set(param, 0.8); expect(when_get(param)).to eq 0.8 }
+                    it { does_set(param, 8.7); expect(when_get(param)).to eq 8.7 }
+                end
+
+                ['pan_x', 'color_x', 'fx_x'].each do |param|
+                    let(:param) { param }
+
+                    it { does_set(param, -0.3); expect(when_get(param)).to eq -0.3 }
+                    it { does_set(param, 0.2); expect(when_get(param)).to eq 0.2 }
+                end
+
+                ['pan_y', 'color_y', 'fx_y'].each do |param|
+                    let(:param) { param }
+
+                    it { does_set(param, 0.1); expect(when_get(param)).to eq 0.1 }
+                    it { does_set(param, 0.8); expect(when_get(param)).to eq 0.8 }
+                end 
+            end
+
+            describe 'strip, physical effects', :if => %w[potato].include?(VMUnit.kind_name) do
+                let(:index) { VMUnit.phys_in }
+                ['reverb', 'delay', 'fx1'].each do |param|
+                    let(:param) { param }
+
+                    it { does_set(param, 0.8); expect(when_get(param)).to eq 0.8 }
+                    it { does_set(param, 8.7); expect(when_get(param)).to eq 8.7 }
+                end
             end
 
             describe 'strip, virtual' do
@@ -158,6 +199,16 @@ RSpec.describe 'All Higher Tests', :higher do
                 end
             end
 
+            describe 'bus, physical', :if => %w[potato].include?(VMUnit.kind_name) do
+                let(:index) { VMUnit.phys_out }
+                ['returnreverb', 'returnfx1'].each do |param|
+                    let(:param) { param }
+
+                    it { does_set(param, 3.2); expect(when_get(param)).to eq 3.2 }
+                    it { does_set(param, 8.1); expect(when_get(param)).to eq 8.1 }
+                end
+            end
+
             describe 'bus, virtual' do
                 let(:index) { VMUnit.virt_out }
                 ['gain'].each do |param|
@@ -165,6 +216,16 @@ RSpec.describe 'All Higher Tests', :higher do
 
                     it { does_set(param, 6.9); expect(when_get(param)).to eq 6.9 }
                     it { does_set(param, -18.3); expect(when_get(param)).to eq -18.3 }
+                end
+            end
+
+            describe 'bus, virtual', :if => %w[potato].include?(VMUnit.kind_name) do
+                let(:index) { VMUnit.virt_out }
+                ['returnreverb', 'returnfx1'].each do |param|
+                    let(:param) { param }
+
+                    it { does_set(param, 3.2); expect(when_get(param)).to eq 3.2 }
+                    it { does_set(param, 8.1); expect(when_get(param)).to eq 8.1 }
                 end
             end
         end

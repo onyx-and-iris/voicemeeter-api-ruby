@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "voicemeeter_api_ruby", "~> 4.3.0"
+
+gem "toml", "~> 0.3.0"
+
+gem "obs-websocket", git: "https://github.com/hanazuki/ruby-obs-websocket"
+
+gem "websocket-driver", "~> 0.7.5"

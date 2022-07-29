@@ -9,14 +9,24 @@ Before any major/minor/patch is released all unit tests will be run to verify th
 
 ## [Unreleased] - These changes have not been added to RubyGems yet
 
--   [x] add Mixin module
--   [x] add xy, fx parameters to strip/bus
--   [x] moved gem files into voicemeeter/ dir
--   [ ] add unit tests for xy, fx
--   [ ] add xy, fx to readme
--   [x] config tests added
--   [x] update obs example
--   [x] prefer require_relative in case using direct download.
+-   [ ]
+
+## [4.3.0] - 2022-07-29
+
+### Added
+
+-   Mixin module
+-   xy, fx parameters to strip/bus
+-   unit tests for xy, fx
+-   xy, fx to readme
+-   config tests added
+-   gemfile to obs example
+
+### Changed
+
+-   moved gem files into voicemeeter/ dir
+-   update obs example
+-   using require_relative in case using direct download.
 
 ## [4.1.0] - 2022-07-19
 

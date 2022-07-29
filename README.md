@@ -283,10 +283,10 @@ vm.recorder.play
 vm.recorder.stop
 
 # Enable loop play
-vm.recorder.loop = True
+vm.recorder.loop = true
 
 # Disable recorder out channel B2
-vm.recorder.B2 = False
+vm.recorder.B2 = false
 
 # filepath as string
 vm.recorder.load('C:\music\mytune.mp3')
@@ -319,7 +319,7 @@ example:
 vm.vban.enable
 
 # turn on vban instream 0
-vm.vban.instream[0].on = True
+vm.vban.instream[0].on = true
 
 # set bit property for outstream 3 to 24
 vm.vban.outstream[3].bit = 24
